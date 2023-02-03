@@ -1,0 +1,16 @@
+.container{
+  width: 500px;
+  margin: auto;
+}
+
+.form-control {
+  width: 400px;
+}
+
+#password {
+  display: inline;
+}
+
+.far:hover {
+  color:grey;
+}

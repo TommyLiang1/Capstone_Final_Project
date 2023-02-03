@@ -1,0 +1,13 @@
+.main-nav {
+  display: flex;
+  padding: 10px;
+  background-color: lightgrey;
+}
+
+.nav-item-right {
+  margin-left: auto;
+}
+
+.nav-item {
+  margin: 25px 25px;
+}
