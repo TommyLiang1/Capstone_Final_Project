@@ -1,7 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const userAuthFromLocalStorage = () => {
+  const isAuth = localStorage.getItem('isAuth')
+
+  if(isAuth && JSON.parse(isAuth) === true) {
+    return true
+  }
+  return false
+}
+
 const initialState = {
-  isAuth: false,
+  isAuth: userAuthFromLocalStorage(),
 }
 
 export const authSlice = createSlice({
@@ -19,4 +28,4 @@ export const authSlice = createSlice({
 
 export const { authenticateUser, unauthenticateUser } = authSlice.actions
 
-export default authSlice.reducer
+export default authSlice.reducer;

@@ -23,9 +23,14 @@ const Register = () => {
 
     try {
       const res = await onRegistration(values)
-      console.log(res);
+      setError('')
+      setSuccess(res.data.message)
+      setValues({username: '', email: '', password: ''})
+
     } catch (err) {
-      console.error(err.res);
+      console.error(err.response.data.errors[0].msg)
+      setError(err.response.data.errors[0].msg)
+      setSuccess('')
     }
   }
 
@@ -58,11 +63,13 @@ const Register = () => {
             <input onChange={(e) => onChange(e)} id="password" name="password" type={passwordShown? 'text' : 'password'} className="form-control" value={values.password} placeholder="password" required />
             <i onClick={() => togglePasswordVisibility()} className={passwordShown? "far fa-eye-slash" : "far fa-eye"} id="togglePassword" style={{marginLeft: -30}}></i>
           </div>
-
         </div>
 
+        <div style={{color:'red', margin: '10px 0' }}>{error}</div>
+        <div style={{color:'green', margin: '10px 0' }}>{success}</div>
+
         <button type="submit" className="btn btn-primary">
-          Sign Up
+          Create Account
         </button>
       </form>
     </Layout>

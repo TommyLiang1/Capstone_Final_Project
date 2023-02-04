@@ -9,6 +9,6 @@ CREATE TABLE users(
   created_at DATE DEFAULT current_date
 );
 
---inser fake users
+--insert fake users
 
 INSERT INTO users (user_name, user_email, user_password) VALUES ('tommy', 'tommy@gmail.com', 'tommy');
