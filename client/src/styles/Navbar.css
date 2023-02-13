@@ -1,5 +1,6 @@
 .main-nav {
   display: flex;
+  justify-content: space-between;
   padding: 10px;
   background-color: lightgrey;
 }
@@ -9,5 +10,13 @@
 }
 
 .nav-item {
-  margin: 25px 25px;
+  color:black;
+}
+
+.nav-item:hover {
+  color: black;
+}
+
+.nav-item {
+  margin: 15px 25px;
 }

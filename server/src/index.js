@@ -16,9 +16,11 @@ app.use(passport.initialize());
 
 //import routes
 const authRoutes = require('./routes/auth')
+const profileRoutes = require('./routes/profile')
 
 //initialize routes
 app.use('/api', authRoutes)
+app.use('/api', profileRoutes)
 
 //app Start
 const appStart = () => {
