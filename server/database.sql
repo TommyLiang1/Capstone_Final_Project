@@ -13,8 +13,8 @@ CREATE TABLE profiles(
 );
 
 --insert fake profiles
-INSERT INTO profiles (profile_name, profile_email, img, city, education, bio, hobbies) VALUES ('tommy', 'tommy@gmail.com', 'img', 'city', 'edu', 'bio', 'hobbies');
-INSERT INTO profiles (profile_name, profile_email) VALUES ('tommytest', 'tommytest@gmail.com');
+--INSERT INTO profiles (profile_name, profile_email, img, city, education, bio, hobbies) VALUES ('tommy', 'tommy@gmail.com', 'img', 'city', 'edu', 'bio', 'hobbies');
+--INSERT INTO profiles (profile_name, profile_email) VALUES ('tommytest', 'tommytest@gmail.com');
 
 -- Create Users Table
 CREATE TABLE users(
@@ -27,6 +27,27 @@ CREATE TABLE users(
 );
 
 --insert fake users
-INSERT INTO users (user_name, user_email, user_password) VALUES ('tommy', 'tommy@gmail.com', 'tommy');
+--INSERT INTO users (user_name, user_email, user_password) VALUES ('tommy', 'tommy@gmail.com', 'tommy');
 
 DROP TABLE users, profiles;
+
+CREATE TABLE posts(
+  post_id SERIAL PRIMARY KEY,
+  post_name VARCHAR(255) NOT NULL,
+  title VARCHAR(255),
+  description_text VARCHAR(255) NOT NULL,
+  likes INT,
+  comments INT,
+  created_at DATE DEFAULT current_date
+);
+
+CREATE TABLE comments(
+  comment_id SERIAL PRIMARY KEY,
+  comment_name VARCHAR(255) NOT NULL,
+  description_text VARCHAR(255) NOT NULL,
+  likes INT,
+  post_id INT,
+  created_at DATE DEFAULT current_date
+);
+
+DROP TABLE posts, comments;
