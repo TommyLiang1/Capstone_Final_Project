@@ -29,7 +29,7 @@ CREATE TABLE users(
 --insert fake users
 --INSERT INTO users (user_name, user_email, user_password) VALUES ('tommy', 'tommy@gmail.com', 'tommy');
 
-DROP TABLE users, profiles;
+-- DROP TABLE users, profiles;
 
 CREATE TABLE posts(
   post_id SERIAL PRIMARY KEY,
@@ -50,4 +50,4 @@ CREATE TABLE comments(
   created_at DATE DEFAULT current_date
 );
 
-DROP TABLE posts, comments;
+-- DROP TABLE posts, comments;
