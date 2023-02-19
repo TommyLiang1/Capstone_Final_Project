@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import Layout from "./Layout";
 import { useParams } from "react-router-dom";
-import { getProfile } from "../api/auth";
+import { getProfile } from "../api/profile";
 
 const Profile = () => {
   const { id } = useParams();
