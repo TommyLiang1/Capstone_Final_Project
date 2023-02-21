@@ -7,7 +7,10 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useDispatch } from 'react-redux';
 import { authenticateUser } from "../redux/slices/authSlice";
+import { FcGoogle } from 'react-icons/fc';
+
 import '../styles/Form.css';
+import '../styles/Login.css';
 
 const Login = () => {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -41,7 +44,6 @@ const Login = () => {
 
   
   // const googleLogin = useGoogleLogin({
-    
   //   onSuccess: async (res) => {
   //     const data = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
   //       headers: {
@@ -81,13 +83,35 @@ const Login = () => {
         <button type="submit" className="form-btn btn btn-primary">
           Log In
         </button>
-        <div className="g-signin2" data-onsuccess="onSignIn"></div>
 
-        <button className="google-btn form-btn" onClick={googleLogin}>
-          Continue With Google
-          {/* <i className="fa-brands fa-google"></i> */}
-        </button>
-        {/* <GoogleLogin
+        <div className="or">or</div>
+
+        <div id="g_id_onload"
+          data-client_id="689025333147-lsi1p9fufm2m0hu6cn8ee5jpd07empe7.apps.googleusercontent.com"
+          data-context="signin"
+          data-ux_mode="popup"
+          data-login_uri="http://localhost:3000/login"
+          data-itp_support="true"
+          data-auto_prompt="true">
+        </div>
+
+        <div className="g_id_signin"
+          data-type="standard"
+          data-shape="rectangular"
+          data-theme="filled_black"
+          data-text="continue_with"
+          data-size="large"
+          data-logo_alignment="left"
+          data-width="400px">
+        </div>
+
+        {/* <div className="google-btn-container">
+          <button className="google-btn form-btn">
+            <FcGoogle size={25}/>
+            <span>Continue with Google</span>
+          </button>
+        </div> */}
+        <GoogleLogin
           className="form-btn google-btn"
           onSuccess={credentialResponse => {
             console.log(credentialResponse)
@@ -98,7 +122,7 @@ const Login = () => {
             console.log('Login Failed');
           }}
           useOneTap
-        /> */}
+        />
       </form>
     </Layout>
   );
