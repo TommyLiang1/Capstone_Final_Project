@@ -1,6 +1,8 @@
 import React from "react";
 import Layout from "./Layout";
 
+import '../styles/Home.css';
+
 const Home = () => {
   return (
     <Layout>

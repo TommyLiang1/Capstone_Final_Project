@@ -1,8 +1,13 @@
 import React, {useState} from "react";
 import Layout from "./Layout";
 import { onLogin } from "../api/auth";
+import { GoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import jwt_decode from "jwt-decode";
 import { useDispatch } from 'react-redux';
 import { authenticateUser } from "../redux/slices/authSlice";
+import '../styles/Form.css';
 
 const Login = () => {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -34,9 +39,24 @@ const Login = () => {
     setPasswordShown(passwordShown ? false : true)
   }
 
+  
+  // const googleLogin = useGoogleLogin({
+    
+  //   onSuccess: async (res) => {
+  //     const data = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+  //       headers: {
+  //         "Authorization": `Bearer ${res.access_token}`,
+  //         "Access-Control-Allow-Origin": window.location.origin
+  //       }
+  //     })
+  //     console.log(data)
+  //   },
+  //   onError: err => console.log(err),
+  // });
+
   return (
     <Layout>
-      <form onSubmit={(e) => onSubmit(e)} className='container mt-3'>
+      <form onSubmit={(e) => onSubmit(e)} className='form-container mt-3'>
         <h1>Log In</h1>
 
         <div className="mb-3">
@@ -58,9 +78,27 @@ const Login = () => {
 
         <div style={{color:'red', margin: '10px 0' }}>{error}</div>
 
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="form-btn btn btn-primary">
           Log In
         </button>
+        <div className="g-signin2" data-onsuccess="onSignIn"></div>
+
+        <button className="google-btn form-btn" onClick={googleLogin}>
+          Continue With Google
+          {/* <i className="fa-brands fa-google"></i> */}
+        </button>
+        {/* <GoogleLogin
+          className="form-btn google-btn"
+          onSuccess={credentialResponse => {
+            console.log(credentialResponse)
+            let decoded = jwt_decode(credentialResponse.credential)
+            console.log(decoded)
+          }}
+          onError={() => {
+            console.log('Login Failed');
+          }}
+          useOneTap
+        /> */}
       </form>
     </Layout>
   );
