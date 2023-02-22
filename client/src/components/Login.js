@@ -40,9 +40,9 @@ const Login = () => {
     let decoded = jwt_decode(credentialResponse.credential)
     //console.log(decoded)
     try {
-      await onGoogleLogin(decoded)
-    dispatch(authenticateUser())
-    localStorage.setItem('isAuth', 'true')
+      // await onGoogleLogin(decoded)
+      // dispatch(authenticateUser())
+      // localStorage.setItem('isAuth', 'true')
     } catch (err) {
       console.error(err)
     }
@@ -82,12 +82,6 @@ const Login = () => {
 
         <div className="or">or</div>
 
-        {/* <div className="google-btn-container">
-          <button className="google-btn form-btn">
-            <FcGoogle size={25}/>
-            <span>Continue with Google</span>
-          </button>
-        </div> */}
         <GoogleLogin
           className="form-btn google-btn"
           onSuccess={(credentialResponse) => onSuccess(credentialResponse)}
