@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import Layout from "./Layout";
-import { onLogin, onGoogleLogin } from "../api/auth";
+import { onLogin } from "../api/auth";
 import { GoogleLogin } from '@react-oauth/google';
-import jwt_decode from "jwt-decode";
+//import jwt_decode from "jwt-decode";
 import { useDispatch } from 'react-redux';
 import { authenticateUser } from "../redux/slices/authSlice";
 
@@ -37,7 +37,7 @@ const Login = () => {
 
   const onSuccess = async (credentialResponse) => {
     //console.log(credentialResponse)
-    let decoded = jwt_decode(credentialResponse.credential)
+    //let decoded = jwt_decode(credentialResponse.credential)
     //console.log(decoded)
     try {
       // await onGoogleLogin(decoded)
