@@ -18,7 +18,7 @@ passport.use(
   new Strategy(opts, async ({id}, done) => {
     try {
       const {rows} = await db.query(
-        'SELECT user_id, user_id FROM users where user_id = $1',
+        'SELECT user_id, user_id FROM users WHERE user_id = $1',
         [id]
       )
 

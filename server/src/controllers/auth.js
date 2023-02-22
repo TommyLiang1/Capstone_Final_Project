@@ -50,7 +50,7 @@ exports.register = async (req, res) => {
 
     return res.status(201).json({
       success: true,
-      message: "The registration was successful"
+      message: "Registered successfully"
     })
   } catch (err) {
     console.log(err.message)
@@ -64,16 +64,47 @@ exports.login = async (req, res) => {
   let user = req.user
   let payload = {
     id: user.user_id,
-    username: user.user_name,
     email: user.user_email,
   }
 
   try {
     const token = await sign(payload, SECRET)
-    
+
     return res.status(200).cookie('token', token, { httpOnly: true }).json({      
       success: true,
       message: 'Logged in successfully',
+    })
+  } catch (err) {
+    console.log(err.message)
+    return res.status(500).json({
+      error: err.message,
+    })
+  }
+}
+
+exports.googleLogin = async (req, res) => {
+  const { name, email, picture } = req.body;
+  try {
+    //check if email already exists
+    const user = await db.query(
+      'SELECT * FROM users WHERE user_email = $1', 
+      [email]
+    )
+
+    if(user.rows.length) {
+      //link google account to current user?
+    }
+    else {
+      console.log('Creating profile for google user')
+      // await db.query(
+      //   'INSERT INTO profiles (profile_name, profile_email, img) VALUES ($1, $2, $3)', 
+      //   [name, email, picture]
+      // )
+    }
+    
+    return res.status(201).json({
+      success: true,
+      message: "Logged in with Google successfully"
     })
   } catch (err) {
     console.log(err.message)

@@ -1,13 +1,10 @@
 import React, {useState} from "react";
 import Layout from "./Layout";
-import { onLogin } from "../api/auth";
+import { onLogin, onGoogleLogin } from "../api/auth";
 import { GoogleLogin } from '@react-oauth/google';
-import { useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useDispatch } from 'react-redux';
 import { authenticateUser } from "../redux/slices/authSlice";
-import { FcGoogle } from 'react-icons/fc';
 
 import '../styles/Form.css';
 import '../styles/Login.css';
@@ -38,23 +35,22 @@ const Login = () => {
     }
   }
 
+  const onSuccess = async (credentialResponse) => {
+    //console.log(credentialResponse)
+    let decoded = jwt_decode(credentialResponse.credential)
+    //console.log(decoded)
+    try {
+      await onGoogleLogin(decoded)
+    dispatch(authenticateUser())
+    localStorage.setItem('isAuth', 'true')
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   const togglePasswordVisibility = () => {
     setPasswordShown(passwordShown ? false : true)
   }
-
-  
-  // const googleLogin = useGoogleLogin({
-  //   onSuccess: async (res) => {
-  //     const data = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
-  //       headers: {
-  //         "Authorization": `Bearer ${res.access_token}`,
-  //         "Access-Control-Allow-Origin": window.location.origin
-  //       }
-  //     })
-  //     console.log(data)
-  //   },
-  //   onError: err => console.log(err),
-  // });
 
   return (
     <Layout>
@@ -86,25 +82,6 @@ const Login = () => {
 
         <div className="or">or</div>
 
-        <div id="g_id_onload"
-          data-client_id="689025333147-lsi1p9fufm2m0hu6cn8ee5jpd07empe7.apps.googleusercontent.com"
-          data-context="signin"
-          data-ux_mode="popup"
-          data-login_uri="http://localhost:3000/login"
-          data-itp_support="true"
-          data-auto_prompt="true">
-        </div>
-
-        <div className="g_id_signin"
-          data-type="standard"
-          data-shape="rectangular"
-          data-theme="filled_black"
-          data-text="continue_with"
-          data-size="large"
-          data-logo_alignment="left"
-          data-width="400px">
-        </div>
-
         {/* <div className="google-btn-container">
           <button className="google-btn form-btn">
             <FcGoogle size={25}/>
@@ -113,13 +90,9 @@ const Login = () => {
         </div> */}
         <GoogleLogin
           className="form-btn google-btn"
-          onSuccess={credentialResponse => {
-            console.log(credentialResponse)
-            let decoded = jwt_decode(credentialResponse.credential)
-            console.log(decoded)
-          }}
-          onError={() => {
-            console.log('Login Failed');
+          onSuccess={(credentialResponse) => onSuccess(credentialResponse)}
+          onError={(err) => {
+            console.log('Login Failed', err);
           }}
           useOneTap
         />
