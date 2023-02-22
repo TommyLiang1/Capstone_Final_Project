@@ -15,7 +15,8 @@ const Navbar = () => {
   }
 
   useEffect(() => {
-    protectedInfo()
+    if(isAuth)
+      protectedInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

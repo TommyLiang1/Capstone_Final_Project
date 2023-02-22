@@ -1,8 +1,13 @@
 import React, {useState} from "react";
 import Layout from "./Layout";
-import { onLogin } from "../api/auth";
+import { onLogin, onGoogleLogin } from "../api/auth";
+import { GoogleLogin } from '@react-oauth/google';
+import jwt_decode from "jwt-decode";
 import { useDispatch } from 'react-redux';
 import { authenticateUser } from "../redux/slices/authSlice";
+
+import '../styles/Form.css';
+import '../styles/Login.css';
 
 const Login = () => {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -30,13 +35,26 @@ const Login = () => {
     }
   }
 
+  const onSuccess = async (credentialResponse) => {
+    //console.log(credentialResponse)
+    let decoded = jwt_decode(credentialResponse.credential)
+    //console.log(decoded)
+    try {
+      // await onGoogleLogin(decoded)
+      // dispatch(authenticateUser())
+      // localStorage.setItem('isAuth', 'true')
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   const togglePasswordVisibility = () => {
     setPasswordShown(passwordShown ? false : true)
   }
 
   return (
     <Layout>
-      <form onSubmit={(e) => onSubmit(e)} className='container mt-3'>
+      <form onSubmit={(e) => onSubmit(e)} className='form-container mt-3'>
         <h1>Log In</h1>
 
         <div className="mb-3">
@@ -58,9 +76,20 @@ const Login = () => {
 
         <div style={{color:'red', margin: '10px 0' }}>{error}</div>
 
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="form-btn btn btn-primary">
           Log In
         </button>
+
+        <div className="or">or</div>
+
+        <GoogleLogin
+          className="form-btn google-btn"
+          onSuccess={(credentialResponse) => onSuccess(credentialResponse)}
+          onError={(err) => {
+            console.log('Login Failed', err);
+          }}
+          useOneTap
+        />
       </form>
     </Layout>
   );

@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { onRegistration } from "../api/auth";
 import Layout from "./Layout";
 import '../styles/Register.css';
+import '../styles/Form.css';
 
 const Register = () => {
   const [values, setValues] = useState({
@@ -40,7 +41,7 @@ const Register = () => {
 
   return (
     <Layout>
-      <form onSubmit={(e) => onSubmit(e)} className='container mt-3'>
+      <form onSubmit={(e) => onSubmit(e)} className='form-container mt-3'>
         <h1>Register</h1>
 
         <div className="mb-3">
@@ -68,7 +69,7 @@ const Register = () => {
         <div style={{color:'red', margin: '10px 0' }}>{error}</div>
         <div style={{color:'green', margin: '10px 0' }}>{success}</div>
 
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="form-btn btn btn-primary">
           Create Account
         </button>
       </form>

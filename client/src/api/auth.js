@@ -12,6 +12,11 @@ export async function onLogin(loginData) {
   return await axios.post('http://localhost:8000/api/login', loginData)
 }
 
+// Google Log In
+export async function onGoogleLogin(googleData) {
+  return await axios.post('http://localhost:8000/api/google/login', googleData)
+}
+
 // Log Out
 export async function onLogout() {
   return await axios.get('http://localhost:8000/api/logout')
