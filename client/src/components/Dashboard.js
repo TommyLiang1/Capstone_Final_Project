@@ -50,6 +50,10 @@ const Dashboard = () => {
     message.current.value = "";
     setSuccess("Post created successfully")
     setError("");
+    reloadPosts();
+  }
+
+  const reloadPosts = () => {
     getPosts()
       .then(res => {
         setPosts(res.data.posts)
@@ -111,7 +115,7 @@ const Dashboard = () => {
       </div>
       {
         posts.map(post => {
-          return <Post key={post.post_id} postData = {post}/>
+          return <Post key={post.post_id} postData={post} reloadPosts={reloadPosts}/>
         })
       }
     </Layout>

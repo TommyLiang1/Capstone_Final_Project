@@ -7,9 +7,74 @@
   padding: 10px;
 }
 
-.like-comment {
-  margin: 10px 10px;
+/* POST HEADER */
+.post-name {
+  display: inline-block;
+}
+
+/* DROP DOWN */
+.dropdown {
+  position: relative;
   float: right;
+}
+
+.dropdown-btn {
+  background-color: white;
+  font-size: 15px;
+  border-radius: 50%;
+}
+
+.dropdown-btn:hover {
+  background-color: lightgrey;
+}
+
+.dropdown > .dropdown-btn:focus, .dropdown-btn:hover {
+  color: lightgrey;
+}
+
+.dropdown-menu {
+  width: 10px; 
+  display: block;
+  position: absolute;
+  left: 0;
+  top: calc(100% + .1rem);
+  background-color: white;
+  border-radius: .25rem;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: opacity 200ms ease-in-out, transform 150ms ease-in-out;;
+}
+
+.dropdown > .dropdown-btn:focus + .dropdown-menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* LIKE AND COMMENT SECTION */
+.lc {
+  display: inline-block;
+  width: 95%;
+  margin: 10px 10px 0px 10px;
+}
+
+.like {
+  float: left;
+}
+
+.comment {
+  float: right;
+}
+
+.lc-btn-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.lc-btn {
+  margin: 0px 2px;
 }
 
 .message-container {
@@ -19,4 +84,8 @@
 
 .message {
   overflow-x: hidden;
+}
+
+.lc-btn-sep {
+  margin: 0px 10px 10px 10px;
 }

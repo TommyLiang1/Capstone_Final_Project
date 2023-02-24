@@ -4,12 +4,12 @@ axios.defaults.withCredentials = true
 
 // Get Comments
 export async function getComments() {
-  return await axios.put('http://localhost:8000/api/comments')
+  return await axios.get('http://localhost:8000/api/comments')
 }
 
 // Get Comments by Post Id
-export async function getCommentByPostId(id) {
-  return await axios.put(`http://localhost:8000/api/comment/${id}`)
+export async function getCommentsByPostId(id) {
+  return await axios.get(`http://localhost:8000/api/comments/${id}`)
 }
 
 // Create Comment
