@@ -30,11 +30,12 @@ exports.getPostById = async (req, res) => {
 }
 
 exports.createPost = async (req, res) => {
-  const {username, title, description} = req.body;
+  const {id, username, message} = req.body;
   try {
+    console.log(req.body)
     await db.query(
-      'INSERT INTO posts (post_name, title, description_text, likes, comments) VALUES ($1, $2, $3, $4, $5)',
-      [username, title, description, 0, 0]
+      'INSERT INTO posts (post_name, description_text, likes, comments, user_id) VALUES ($1, $2, $3, $4, $5)',
+      [username, message, 0, 0, id]
     )
 
     return res.status(200).json({

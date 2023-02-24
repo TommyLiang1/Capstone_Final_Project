@@ -6,7 +6,7 @@ import { getProfile } from "../api/profile";
 import '../styles/Profile.css';
 
 const Profile = () => {
-  const { id } = useParams();
+  const {id} = useParams();
   const [userInfo, setUserInfo] = useState({
     profile_id: '',
     profile_name: '',
@@ -20,7 +20,17 @@ const Profile = () => {
 
   const retrieveInfo = async () => {
     const {data} = await getProfile(id);
-    setUserInfo(data.profile[0]) 
+    setUserInfo({
+      profile_id: data.profile.profile_id,
+      profile_name: data.profile.profile_name,
+      profile_email: data.profile.profile_email,
+      img: data.profile.img,
+      city: data.profile.city,
+      bio: data.profile.bio,
+      education: data.profile.education,
+      hobbies: data.profile.hobbies,
+    });
+    
   }
 
   useEffect(() => {

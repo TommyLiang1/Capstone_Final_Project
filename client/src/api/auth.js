@@ -26,3 +26,18 @@ export async function onLogout() {
 export async function fetchProtectedInfo() {
   return await axios.get('http://localhost:8000/api/protected')
 }
+
+// Get Users
+export async function getUsers() {
+  return await axios.get('http://localhost:8000/api/users')
+}
+
+// Get User By Id
+export async function getUserById(id) {
+  return await axios.get(`http://localhost:8000/api/user/${id}`)
+}
+
+// Get User By Email
+export async function getUserByEmail(email) {
+  return await axios.get('http://localhost:8000/api/user', email)
+}

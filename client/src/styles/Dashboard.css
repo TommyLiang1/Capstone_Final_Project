@@ -1,0 +1,15 @@
+.text-container {
+  width: 500px;
+  margin: auto;
+}
+
+.text {
+  text-align: left;
+  padding: 5px;
+  width: 100%;
+}
+
+.text-btn {
+  width: 100%;
+  color: black;
+}

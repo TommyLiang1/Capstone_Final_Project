@@ -4,12 +4,12 @@ axios.defaults.withCredentials = true
 
 // Get Posts
 export async function getPosts() {
-  return await axios.put('http://localhost:8000/api/posts')
+  return await axios.get('http://localhost:8000/api/posts')
 }
 
 // Get Post by Id
-export async function getPosts(id) {
-  return await axios.put(`http://localhost:8000/api/posts/${id}`)
+export async function getPostById(id) {
+  return await axios.get(`http://localhost:8000/api/posts/${id}`)
 }
 
 // Create Post

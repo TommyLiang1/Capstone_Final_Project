@@ -3,18 +3,6 @@
   align-items: center;
 }
 
-.google-btn {
-  padding: 7px;
-  border-radius: 5px;
-  border: none;
-  background-color: rgb(65, 62, 71);
-  color: white;
-}
-
-.google-btn > span {
-  margin-left: 5px;
-}
-
 .or {
   text-align: center;
   margin: 10px 0px;

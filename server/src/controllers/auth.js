@@ -22,7 +22,21 @@ exports.getUserById = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      users: rows,
+      user: rows,
+    })
+  } catch (err) {
+    console.log(err.message);
+  }
+}
+
+exports.getUserByEmail = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const { rows } = await db.query('SELECT user_id, user_name, user_email, profile_id FROM users WHERE user_email = $1', [email]);
+
+    return res.status(200).json({
+      success: true,
+      user: rows,
     })
   } catch (err) {
     console.log(err.message);
@@ -73,6 +87,7 @@ exports.login = async (req, res) => {
     return res.status(200).cookie('token', token, { httpOnly: true }).json({      
       success: true,
       message: 'Logged in successfully',
+      user: user,
     })
   } catch (err) {
     console.log(err.message)

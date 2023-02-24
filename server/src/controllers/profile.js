@@ -2,11 +2,12 @@ const db = require('../db/db');
 
 exports.getProfile = async (req, res) => {
   try {
-    const { rows } = await db.query('SELECT * FROM profiles WHERE profile_id = $1', [req.params.id]);
+    const profile = await db.query('SELECT profile_id FROM users WHERE user_id = $1', [req.params.id])
+    const { rows } = await db.query('SELECT * FROM profiles WHERE profile_id = $1', [profile.rows[0].profile_id]);
 
     return res.status(200).json({
       success: true,
-      profile: rows,
+      profile: rows[0],
     })
   } catch (err) {
     console.log(err.message);

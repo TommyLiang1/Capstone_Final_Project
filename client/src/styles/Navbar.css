@@ -20,3 +20,12 @@
 .nav-item {
   margin: 15px 25px;
 }
+
+.logout-btn {
+  border: none;
+  background-color: lightgrey;
+}
+
+.logout-btn:hover {
+  color: white;
+}
