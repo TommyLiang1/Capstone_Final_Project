@@ -9,6 +9,7 @@ const Dashboard = () => {
   const [quoteoftheday, setquoteoftheday] = useState(0)
   const [loading, setLoading] = useState(true)
   const [protectedData, setProtectedData] = useState(null)
+ 
 
   const logout = async () => {
     try {
@@ -31,10 +32,13 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    const URL ="https://zenquotes.io/api/today";
+    const URL ="https://thingproxy.freeboard.io/fetch/https://zenquotes.io/api/today";
     const fetchData = async () =>{
-      const result = await fetch(URL, {mode: "no-cors"})
-      console.log(result);      
+      const result = await fetch(URL);
+      result.json().then(json => {
+     // console.log(json[0].a);
+      setquoteoftheday(json[0].h);
+      })
     }
       fetchData();
     }, []);
