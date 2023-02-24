@@ -6,6 +6,7 @@ import { unauthenticateUser } from "../redux/slices/authSlice";
 
 const Dashboard = () => {
   const dispatch = useDispatch()
+  const [quoteoftheday, setquoteoftheday] = useState(0)
   const [loading, setLoading] = useState(true)
   const [protectedData, setProtectedData] = useState(null)
 
@@ -30,6 +31,15 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
+    const URL ="https://zenquotes.io/api/today";
+    const fetchData = async () =>{
+      const result = await fetch(URL, {mode: "no-cors"})
+      console.log(result);      
+    }
+      fetchData();
+    }, []);
+
+  useEffect(() => {
     protectedInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -42,7 +52,7 @@ const Dashboard = () => {
     <Layout>
       <h1>Dashboard</h1>
       <h2>Welcome Back {protectedData}!</h2>
-
+      <h2>{quoteoftheday}</h2>
       <button onClick={() => logout()} className='btn btn-primary'>
         Log Out
       </button>
