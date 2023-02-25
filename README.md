@@ -30,13 +30,13 @@
 
 ### Additional psql commands
 - to quit psql shell = `\q` 
-- to connect to database = `\c dbname`
+- to connect to database = `\c dbname`  
 More psql commands below
 `https://www.geeksforgeeks.org/postgresql-psql-commands/`
 
 ### To change admin user (postgres) password
 - `sudo passwd postgres`
 - Enter new password
-- restart terminal
+- restart terminal  
 More postgres details below
 `https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-postgresql`
