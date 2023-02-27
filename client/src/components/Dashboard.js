@@ -37,7 +37,7 @@ const Dashboard = () => {
       const result = await fetch(URL);
       result.json().then(json => {
      // console.log(json[0].a);
-      setquoteoftheday(json[0].h);
+      setquoteoftheday(json[0].q + ' - ' + json[0].a);
       })
     }
       fetchData();
@@ -54,9 +54,8 @@ const Dashboard = () => {
     </Layout>
   ) : (
     <Layout>
-      <h1>Dashboard</h1>
+      <h1>{quoteoftheday}</h1>
       <h2>Welcome Back {protectedData}!</h2>
-      <h2>{quoteoftheday}</h2>
       <button onClick={() => logout()} className='btn btn-primary'>
         Log Out
       </button>
