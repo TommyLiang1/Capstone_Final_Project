@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 // import { addLikePost, removeLikePost } from "../../api/post";
 import { getCommentsByPostId } from "../../api/comment";
-
 import Comment from "../Comments/Comment";
 
 import '../../styles/Post.css';
@@ -24,11 +23,8 @@ import '../../styles/Post.css';
 
 const Post = (props) => {
   const { post_id, post_name, description_text, likes, comments } = props.postData;
+  const [commentVisibility, setCommentVisibility] = useState(false);
   const [postComments, setPostComments] = useState([]);
-    
-  const test = () => {
-    console.log(":d")
-  }
 
   const likePost = (e) => {
     e.preventDefault()
@@ -44,13 +40,19 @@ const Post = (props) => {
     e.preventDefault()
   }
 
-  const loadComments = () => {
-    const { rows } = getCommentsByPostId(post_id)
-    setPostComments(rows);
+  const toggleCommentVisibility = () => {
+    setCommentVisibility(!commentVisibility);
+  }
+
+  const loadComments = async () => {
+    await getCommentsByPostId(post_id)
+      .then(res => {
+        setPostComments(res.data.comments)
+      });
   }
 
   useEffect(() => {
-    loadComments()
+    loadComments();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -80,11 +82,13 @@ const Post = (props) => {
         <button className="lc-btn" color={'black'} onClick={(e) => likePost(e)}>Like</button>
         <button className="lc-btn" onClick={(e) => test(e)}>Comment</button>
       </div>
-      {/* {
+      <button className="vc-btn" onClick={() => toggleCommentVisibility()}>View comments</button>
+      {
+        postComments.length > 0 ?
         postComments.map(comment => {
-          return <Comment key={comment.comment_id} commentData={comment} />
-        })
-      } */}
+          return <Comment key={comment.comment_id} commentData={comment} hidden={!commentVisibility} />
+        }) : <div hidden={!commentVisibility}>No Comments</div>
+      }
     </div>
   );
 };

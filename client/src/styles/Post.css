@@ -89,3 +89,13 @@
 .lc-btn-sep {
   margin: 0px 10px 10px 10px;
 }
+
+.vc-btn {
+  background-color: white;
+  font-size: 14px;
+}
+
+.vc-btn:hover {
+  background-color: white;
+  text-decoration: underline;
+}

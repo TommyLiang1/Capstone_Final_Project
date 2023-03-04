@@ -23,9 +23,12 @@
 
 .logout-btn {
   border: none;
+  padding: 3px 10px;
+  border-radius: 20px;
   background-color: lightgrey;
 }
 
 .logout-btn:hover {
-  color: white;
+  border: none;
+  background-color: darkgray;
 }

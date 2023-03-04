@@ -20,7 +20,6 @@ removeComment = async (req, res) => {
       'UPDATE posts SET comments = comments - 1 WHERE post_id = $1',
       [req]
     )
-
   } catch (err) {
     console.log(err.message);
   }
@@ -46,10 +45,12 @@ exports.getCommentsByPostId = async (req, res) => {
       [req.params.id]
     );
 
+    console.log(rows);
+
     return res.status(200).json({
       success: true,
       comments: rows,
-    })    
+    })
 
   } catch (err) {
     console.log(err.message);
@@ -57,10 +58,11 @@ exports.getCommentsByPostId = async (req, res) => {
 }
 
 exports.getCommentById = async (req, res) => {
+  const { commentId } = req.body;
   try {
     const { rows } = await db.query(
       'SELECT * FROM comments WHERE comment_id = $1',
-      [req.params.id]
+      [commentId]
     );
 
     return res.status(200).json({

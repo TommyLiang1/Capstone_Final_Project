@@ -1,8 +1,13 @@
 import React from "react";
 
-const Comment = () => {
+const Comment = (props) => {
+  // console.log(props.commentData)
+  const { visibility } = props.hidden; 
+  const { comment_id, comment_name, description_text, likes } = props.commentData;
   return (
-    <h1>Comment</h1>
+    <div hidden = {!visibility}>
+      <h1>Comment</h1>
+    </div>
   );
 };
 
