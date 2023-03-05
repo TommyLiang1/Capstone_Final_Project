@@ -1,5 +1,25 @@
-.profile-container {
-  border: 1px solid;
-  padding: 20px;
-  margin: auto;
+.name {
+  text-align: center;
+  font-size: 100px;
+}
+
+.email {
+  text-align: center;
+  font-size: 30px;
+}
+
+.description {
+  text-align: center;
+  font-size: 20px;
+}
+
+button {
+  text-align: center;
+  border: none;
+  outline: 0 !important;
+  background: none;
+  font-size: 30px;
+  cursor: pointer;
+  padding-right: 50px;
+  padding-right: 50px;
 }
