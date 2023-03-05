@@ -32,7 +32,6 @@ exports.getPostById = async (req, res) => {
 exports.createPost = async (req, res) => {
   const {id, username, message} = req.body;
   try {
-    console.log(req.body)
     await db.query(
       'INSERT INTO posts (post_name, description_text, likes, comments, user_id) VALUES ($1, $2, $3, $4, $5)',
       [username, message, 0, 0, id]
@@ -48,11 +47,11 @@ exports.createPost = async (req, res) => {
 }
 
 exports.editPost = async (req, res) => {
-  const {title, description} = req.body;
+  const {message} = req.body;
   try {
     await db.query(
-      'UPDATE posts SET title = $1, description_text = $2 WHERE post_id = $3',
-      [title, description, req.params.id]
+      'UPDATE posts SET description_text = $1 WHERE post_id = $2',
+      [message, req.params.id]
     )
 
     return res.status(200).json({

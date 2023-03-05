@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from "react";
 // import { addLikePost, removeLikePost } from "../../api/post";
-import { getCommentsByPostId } from "../../api/comment";
+import { getCommentsByPostId, deleteComment } from "../../api/comment";
+import { deletePost, editPost } from "../../api/post";
 import Comment from "../Comments/Comment";
+import EditPost from "./EditPost";
 
 import '../../styles/Post.css';
 
@@ -23,8 +25,12 @@ import '../../styles/Post.css';
 
 const Post = (props) => {
   const { post_id, post_name, description_text, likes, comments } = props.postData;
+  const reloadPosts = props.reloadPosts;
   const [commentVisibility, setCommentVisibility] = useState(false);
   const [postComments, setPostComments] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [editPostText, setEditPostText] = useState(description_text);
+  const [editPostError, setEditPostError] = useState("");
 
   const likePost = (e) => {
     e.preventDefault()
@@ -35,13 +41,35 @@ const Post = (props) => {
     //   addLikePost(post_id)
     // props.ReloadPosts();
   }
-  
-  const dropdown = (e) => {
-    e.preventDefault()
-  }
 
   const toggleCommentVisibility = () => {
     setCommentVisibility(!commentVisibility);
+  }
+
+  const handleDeletePost = async(e) => {
+    e.preventDefault();
+    await deletePost(post_id).then(() => {
+      reloadPosts();
+    })
+  }
+
+  const handleEditPost = async(e) => {
+    e.preventDefault();
+    if(editPostText === "") {
+      setEditPostError("Post is empty!")
+      return;
+    } else if (description_text === editPostText) {
+      setOpenModal(false);
+      return;
+    }
+    let editPostData = {
+      message: editPostText
+    }
+    await editPost(post_id, editPostData).then(() => {
+      setEditPostError("");
+      setOpenModal(false);
+      reloadPosts();
+    });
   }
 
   const loadComments = async () => {
@@ -60,14 +88,37 @@ const Post = (props) => {
     <div className="post-container">
       <div className="post-header">
         <h5 className="post-name"> {post_name} </h5>
-        <div className="dropdown">
-          <button className="dropdown-btn" onClick={(e) => dropdown(e)}>...</button>
+        <button className="dropdown-item" onClick={() => setOpenModal(true)}>Edit</button>
+        <button className="dropdown-item" onClick={(e) => handleDeletePost(e)}>Delete</button>
+        {/* <div className="dropdown">
+          <button className="dropdown-btn">...</button>
           <div className="dropdown-menu">
-            <button className="dropdown-item">Edit</button>
+            <button className="dropdown-item"
+              onClick={() => {
+                console.log("clicked button")
+                setOpenModal(true)
+              }
+            }>Edit</button>
             <button className="dropdown-item">Delete</button>
           </div>
-        </div>
+        </div> */}
       </div>
+      
+      <div styles={{position: 'relative', zindex: 1}}>
+        <EditPost open={openModal}
+          closeModal={() => {
+            setEditPostText(description_text)
+            setEditPostError("")
+            setOpenModal(false)
+          }}
+        >
+          <h5>{post_name}</h5>
+          <textarea className='edit-post-text' value={editPostText} onChange={(e) => setEditPostText(e.target.value)}></textarea>
+          <div style={{color:'red', margin: '5px 0' }}>{editPostError}</div>
+          <button className='edit-post-btn' onClick={(e) => handleEditPost(e)}>Edit Post</button>
+        </EditPost>
+      </div>
+
       <div className="message-container">
         <div className="message">
           {description_text}
@@ -82,12 +133,15 @@ const Post = (props) => {
         <button className="lc-btn" color={'black'} onClick={(e) => likePost(e)}>Like</button>
         <button className="lc-btn" onClick={(e) => test(e)}>Comment</button>
       </div>
-      <button className="vc-btn" onClick={() => toggleCommentVisibility()}>View comments</button>
+      <button className="vc-btn" onClick={() => toggleCommentVisibility()} hidden={postComments.length === 0 ? true : false}>View comments</button>
       {
-        postComments.length > 0 ?
         postComments.map(comment => {
-          return <Comment key={comment.comment_id} commentData={comment} hidden={!commentVisibility} />
-        }) : <div hidden={!commentVisibility}>No Comments</div>
+          return (
+            <div key={comment.comment_id} hidden={!commentVisibility}>
+              <Comment commentData={comment} />
+            </div>
+          )
+        })
       }
     </div>
   );

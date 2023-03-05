@@ -45,8 +45,6 @@ exports.getCommentsByPostId = async (req, res) => {
       [req.params.id]
     );
 
-    console.log(rows);
-
     return res.status(200).json({
       success: true,
       comments: rows,
