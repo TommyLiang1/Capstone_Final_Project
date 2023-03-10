@@ -4,4 +4,6 @@
 
 .modal-child {
   margin-top: 40px;
+  height: 90%;
+  overflow-y: scroll !important;
 }

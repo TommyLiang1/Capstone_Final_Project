@@ -35,6 +35,7 @@ const Post = (props) => {
   const comment = useRef("");
   const [commentError, setCommentError] = useState("");
 
+  // TODO: IMPLEMENT POST/COMMENT LIKE LOGIC
   const likePost = (e) => {
     e.preventDefault()
     e.target.style.color = e.target.style.color === 'black' ? 'blue' : 'black'
@@ -45,17 +46,18 @@ const Post = (props) => {
     // props.ReloadPosts();
   }
 
+  // Toggle View Comment Button
   const toggleCommentVisibility = () => {
     setCommentVisibility(!commentVisibility);
   }
 
+  // Delete Post
   const handleDeletePost = async(e) => {
     e.preventDefault();
-    await deletePost(post_id).then(() => {
-      reloadPosts();
-    })
+    await deletePost(post_id).then(() => reloadPosts())
   }
 
+  // Edit Post
   const handleEditPost = async(e) => {
     e.preventDefault();
     if(editPostText === "") {
@@ -75,13 +77,13 @@ const Post = (props) => {
     });
   }
 
+  // Create Comment
   const handleCreateComment = async(e) => {
     e.preventDefault();
     if(comment.current.value === "") {
       setCommentError("Please enter a comment!")
       return;
     }
-
     let commentData = {
       username: props.userName,
       comment: comment.current.value
@@ -96,6 +98,7 @@ const Post = (props) => {
       })
   }
 
+  // Get all Comments
   const getComments = async () => {
     await getCommentsByPostId(post_id)
       .then(res => {

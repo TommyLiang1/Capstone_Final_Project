@@ -10,8 +10,9 @@ const Comment = (props) => {
   const [editCommentText, setEditCommentText] = useState(description_text);
   const [editCommentError, setEditCommentError] = useState("");
 
+  // Delete Comment
   const handleDeleteComment = async(e) => {
-    // e.preventDefault();
+    e.preventDefault();
     await deleteComment(comment_id)
       .then(() => {
         props.getComments()
@@ -19,8 +20,9 @@ const Comment = (props) => {
       })
   }
 
+  // Edit Comment
   const handleEditComment = async(e) => {
-    // e.preventDefault();
+    e.preventDefault();
     if(editCommentText === "") {
       setEditCommentError("Comment is empty!")
       return;
