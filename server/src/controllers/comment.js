@@ -93,11 +93,11 @@ exports.createComment = async (req, res) => {
 }
 
 exports.editComment = async (req, res) => {
-  const {description} = req.body;
+  const {message} = req.body;
   try {
     await db.query(
       'UPDATE comments SET description_text = $1 WHERE comment_id = $2',
-      [description, req.params.id]
+      [message, req.params.id]
     )
 
     return res.status(200).json({

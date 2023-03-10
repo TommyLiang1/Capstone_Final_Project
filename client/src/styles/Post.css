@@ -120,8 +120,3 @@
 .edit-post-btn {
   width: 100%;
 }
-
-/* Comment Modal */
-.modal-comments {
-  overflow: auto;
-}

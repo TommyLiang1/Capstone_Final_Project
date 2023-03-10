@@ -91,7 +91,6 @@ const Dashboard = () => {
 
     await getPosts()
       .then(res => {
-        console.log(res.data.posts)
         setPosts(res.data.posts)
       })
   }
@@ -117,7 +116,7 @@ const Dashboard = () => {
       </div>
       {
         posts.map(post => {
-          return <Post key={post.post_id} postData={post} reloadPosts={reloadPosts}/>
+          return <Post key={post.post_id} postData={post} userName={user.name} reloadPosts={reloadPosts}/>
         })
       }
     </Layout>

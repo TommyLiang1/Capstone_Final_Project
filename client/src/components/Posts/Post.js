@@ -30,13 +30,10 @@ const Post = (props) => {
   const [postComments, setPostComments] = useState([]);
   const [openPostModal, setOpenPostModal] = useState(false);
   const [openCommentModal, setOpenCommentModal] = useState(false);
-  // const [openEditCommentModal, setOpenEditCommentModal] = useState(false);
   const [editPostText, setEditPostText] = useState(description_text);
   const [editPostError, setEditPostError] = useState("");
   const comment = useRef("");
   const [commentError, setCommentError] = useState("");
-  // const [editCommentText, setEditCommentText] = useState("");
-  // const [editCommentError, setEditCommentError] = useState("");
 
   const likePost = (e) => {
     e.preventDefault()
@@ -65,7 +62,7 @@ const Post = (props) => {
       setEditPostError("Post is empty!")
       return;
     } else if (description_text === editPostText) {
-      setOpenPostModal(false);
+      setOpenPostModal(false)
       return;
     }
     let editPostData = {
@@ -86,7 +83,7 @@ const Post = (props) => {
     }
 
     let commentData = {
-      username: post_name,
+      username: props.userName,
       comment: comment.current.value
     }
     await createComment(post_id, commentData)
@@ -94,12 +91,12 @@ const Post = (props) => {
         comment.current.value = "";
         setCommentError("")
         setOpenCommentModal(false);
-        loadComments();
+        getComments();
         reloadPosts();
       })
   }
 
-  const loadComments = async () => {
+  const getComments = async () => {
     await getCommentsByPostId(post_id)
       .then(res => {
         setPostComments(res.data.comments)
@@ -107,7 +104,7 @@ const Post = (props) => {
   }
 
   useEffect(() => {
-    loadComments();
+    getComments();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -115,26 +112,17 @@ const Post = (props) => {
     <div className="post-container">
       <div className="post-header">
         <h5 className="post-name"> {post_name} </h5>
-        <div className="extra">
-          <button className="post-edit-btn" onClick={() => setOpenPostModal(true)}>Edit</button>
-          <button className="post-delete-btn" onClick={(e) => handleDeletePost(e)}>Delete</button>
-        </div>
-        {/* <div className="dropdown">
-          <button className="dropdown-btn">...</button>
-          <div className="dropdown-menu">
-            <button className="dropdown-item"
-              onClick={() => {
-                console.log("clicked button")
-                setOpenModal(true)
-              }
-            }>Edit</button>
-            <button className="dropdown-item">Delete</button>
+        {
+          props.userName === post_name && 
+          <div className="extra">
+            <button className="post-edit-btn" onClick={() => setOpenPostModal(true)}>Edit</button>
+            <button className="post-delete-btn" onClick={(e) => handleDeletePost(e)}>Delete</button>
           </div>
-        </div> */}
+        }
       </div>
-      
-      {/* EDIT POST MODAL */}
+     
       <div styles={{position: 'relative', zindex: 1}}>
+         {/* EDIT POST MODAL */}
         <Modal open={openPostModal}
           closeModal={() => {
             setEditPostText(description_text)
@@ -144,13 +132,11 @@ const Post = (props) => {
         >
           <h5>{post_name}</h5>
           <textarea className='edit-post-text' value={editPostText} onChange={(e) => setEditPostText(e.target.value)}></textarea>
-          <div style={{color:'red', margin: '5px 0' }}>{editPostError}</div>
+          <div style={{color:'red', margin: '5px 0px' }}>{editPostError}</div>
           <button className='edit-post-btn' onClick={(e) => handleEditPost(e)}>Edit Post</button>
         </Modal>
-      </div>
 
-      {/* CREATE COMMENT MODAL */}
-      <div styles={{position: 'relative', zindex: 1}} >
+        {/* CREATE COMMENT MODAL */}
         <Modal
           open={openCommentModal}
           closeModal={() => {
@@ -167,12 +153,7 @@ const Post = (props) => {
               postComments.map(comment => {
                 return (
                   <div key={comment.comment_id}>
-                    <Comment commentData={comment}
-                      reloadComments={() => {
-                        loadComments();
-                        reloadPosts();
-                      }}
-                    />
+                    <Comment commentData={comment} userName={props.userName} reloadPosts={props.reloadPosts} getComments={getComments} modal={true}/>
                   </div>
                 )
               })
@@ -201,7 +182,7 @@ const Post = (props) => {
         postComments.map(comment => {
           return (
             <div key={comment.comment_id} hidden={!commentVisibility}>
-              <Comment commentData={comment} />
+              <Comment commentData={comment} userName={props.userName} reloadPosts={props.reloadPosts} getComments={getComments} modal={false}/>
             </div>
           )
         })
