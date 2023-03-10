@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import '../../styles/EditPost.css';
+import '../styles/Modal.css';
 
 const MODAL_STYLES = {
   width:  '50%',
@@ -26,7 +26,7 @@ const OVERLAY_STYLES = {
 }
 
 
-const EditPost = (props) => {
+const Modal = (props) => {
   if(!props.open) return null
 
   return ReactDOM.createPortal(
@@ -41,4 +41,4 @@ const EditPost = (props) => {
   );
 };
 
-export default EditPost;
+export default Modal;

@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 // import { addLikePost, removeLikePost } from "../../api/post";
-import { getCommentsByPostId, deleteComment } from "../../api/comment";
+import { getCommentsByPostId, createComment} from "../../api/comment";
 import { deletePost, editPost } from "../../api/post";
 import Comment from "../Comments/Comment";
-import EditPost from "./EditPost";
+import Modal from "../Modal";
 
 import '../../styles/Post.css';
 
@@ -28,9 +28,15 @@ const Post = (props) => {
   const reloadPosts = props.reloadPosts;
   const [commentVisibility, setCommentVisibility] = useState(false);
   const [postComments, setPostComments] = useState([]);
-  const [openModal, setOpenModal] = useState(false);
+  const [openPostModal, setOpenPostModal] = useState(false);
+  const [openCommentModal, setOpenCommentModal] = useState(false);
+  // const [openEditCommentModal, setOpenEditCommentModal] = useState(false);
   const [editPostText, setEditPostText] = useState(description_text);
   const [editPostError, setEditPostError] = useState("");
+  const comment = useRef("");
+  const [commentError, setCommentError] = useState("");
+  // const [editCommentText, setEditCommentText] = useState("");
+  // const [editCommentError, setEditCommentError] = useState("");
 
   const likePost = (e) => {
     e.preventDefault()
@@ -59,7 +65,7 @@ const Post = (props) => {
       setEditPostError("Post is empty!")
       return;
     } else if (description_text === editPostText) {
-      setOpenModal(false);
+      setOpenPostModal(false);
       return;
     }
     let editPostData = {
@@ -67,9 +73,30 @@ const Post = (props) => {
     }
     await editPost(post_id, editPostData).then(() => {
       setEditPostError("");
-      setOpenModal(false);
+      setOpenPostModal(false);
       reloadPosts();
     });
+  }
+
+  const handleCreateComment = async(e) => {
+    e.preventDefault();
+    if(comment.current.value === "") {
+      setCommentError("Please enter a comment!")
+      return;
+    }
+
+    let commentData = {
+      username: post_name,
+      comment: comment.current.value
+    }
+    await createComment(post_id, commentData)
+      .then(() => {
+        comment.current.value = "";
+        setCommentError("")
+        setOpenCommentModal(false);
+        loadComments();
+        reloadPosts();
+      })
   }
 
   const loadComments = async () => {
@@ -88,8 +115,10 @@ const Post = (props) => {
     <div className="post-container">
       <div className="post-header">
         <h5 className="post-name"> {post_name} </h5>
-        <button className="dropdown-item" onClick={() => setOpenModal(true)}>Edit</button>
-        <button className="dropdown-item" onClick={(e) => handleDeletePost(e)}>Delete</button>
+        <div className="extra">
+          <button className="post-edit-btn" onClick={() => setOpenPostModal(true)}>Edit</button>
+          <button className="post-delete-btn" onClick={(e) => handleDeletePost(e)}>Delete</button>
+        </div>
         {/* <div className="dropdown">
           <button className="dropdown-btn">...</button>
           <div className="dropdown-menu">
@@ -104,19 +133,53 @@ const Post = (props) => {
         </div> */}
       </div>
       
+      {/* EDIT POST MODAL */}
       <div styles={{position: 'relative', zindex: 1}}>
-        <EditPost open={openModal}
+        <Modal open={openPostModal}
           closeModal={() => {
             setEditPostText(description_text)
             setEditPostError("")
-            setOpenModal(false)
+            setOpenPostModal(false)
           }}
         >
           <h5>{post_name}</h5>
           <textarea className='edit-post-text' value={editPostText} onChange={(e) => setEditPostText(e.target.value)}></textarea>
           <div style={{color:'red', margin: '5px 0' }}>{editPostError}</div>
           <button className='edit-post-btn' onClick={(e) => handleEditPost(e)}>Edit Post</button>
-        </EditPost>
+        </Modal>
+      </div>
+
+      {/* CREATE COMMENT MODAL */}
+      <div styles={{position: 'relative', zindex: 1}} >
+        <Modal
+          open={openCommentModal}
+          closeModal={() => {
+            setCommentError("")
+            setOpenCommentModal(false)
+          }}
+        >
+          <div className="modal-comments">
+            <h5>{post_name}</h5>
+            <div>{description_text}</div>
+            <textarea className='edit-post-text' ref={comment} placeholder="Write your comment here."></textarea>
+            <div style={{color:'red', margin: '5px 0' }}>{commentError}</div>
+            {
+              postComments.map(comment => {
+                return (
+                  <div key={comment.comment_id}>
+                    <Comment commentData={comment}
+                      reloadComments={() => {
+                        loadComments();
+                        reloadPosts();
+                      }}
+                    />
+                  </div>
+                )
+              })
+            }
+            <button className='edit-post-btn' onClick={(e) => handleCreateComment(e)}>Comment</button>
+          </div>
+        </Modal>
       </div>
 
       <div className="message-container">
@@ -131,7 +194,7 @@ const Post = (props) => {
       <hr className="lc-btn-sep"/>
       <div className="lc-btn-container">
         <button className="lc-btn" color={'black'} onClick={(e) => likePost(e)}>Like</button>
-        <button className="lc-btn" onClick={(e) => test(e)}>Comment</button>
+        <button className="lc-btn" onClick={() => setOpenCommentModal(true)}>Comment</button>
       </div>
       <button className="vc-btn" onClick={() => toggleCommentVisibility()} hidden={postComments.length === 0 ? true : false}>View comments</button>
       {

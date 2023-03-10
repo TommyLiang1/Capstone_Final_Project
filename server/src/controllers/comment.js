@@ -74,11 +74,11 @@ exports.getCommentById = async (req, res) => {
 }
 
 exports.createComment = async (req, res) => {
-  const {username, description} = req.body;
+  const {username, comment} = req.body;
   try {
     await db.query(
       'INSERT INTO comments (comment_name, description_text, likes, post_id) VALUES ($1, $2, $3, $4)',
-      [username, description, 0, req.params.id]
+      [username, comment, 0, req.params.id]
     )
 
     addComment(req.params.id);

@@ -75,6 +75,7 @@
 
 .lc-btn {
   margin: 0px 2px;
+  border-radius: 5px;
 }
 
 .message-container {
@@ -100,6 +101,16 @@
   text-decoration: underline;
 }
 
+/* Edit and Delete Buttons */
+.extra {
+  float: right;
+}
+
+.post-edit-btn, .post-delete-btn {
+  margin: 0px 5px;
+  border-radius: 5px;
+}
+
 /* Edit Post Modal */
 .edit-post-text {
   width: 100%;
@@ -108,4 +119,9 @@
 
 .edit-post-btn {
   width: 100%;
+}
+
+/* Comment Modal */
+.modal-comments {
+  overflow: auto;
 }

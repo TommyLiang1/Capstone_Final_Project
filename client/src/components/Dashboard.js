@@ -34,7 +34,7 @@ const Dashboard = () => {
   }
 
   // Creating a new post
-  const submitPost = (e) => {
+  const submitPost = async(e) => {
     e.preventDefault()
     if(message.current.value === "") {
       setError("Please enter a message!")
@@ -46,11 +46,13 @@ const Dashboard = () => {
       username: user.name,
       message: message.current.value,
     }
-    createPost(postData);
-    message.current.value = "";
-    setSuccess("Post created successfully")
-    setError("");
-    reloadPosts();
+    await createPost(postData)
+      .then(() => {
+        message.current.value = "";
+        setSuccess("Post created successfully");
+        setError("");
+        reloadPosts();
+      })
   }
 
   const reloadPosts = () => {
