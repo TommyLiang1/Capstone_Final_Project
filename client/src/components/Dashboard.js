@@ -4,10 +4,14 @@ import { fetchProtectedInfo, onLogout } from "../api/auth";
 import Layout from "./Layout";
 import { unauthenticateUser } from "../redux/slices/authSlice";
 
+import '../styles/Dashboard.css';
+
 const Dashboard = () => {
   const dispatch = useDispatch()
+  const [quoteoftheday, setquoteoftheday] = useState(0)
   const [loading, setLoading] = useState(true)
   const [protectedData, setProtectedData] = useState(null)
+ 
 
   const logout = async () => {
     try {
@@ -30,6 +34,18 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
+    const URL ="https://corsproxy.io/?https://zenquotes.io/api/today";
+    const fetchData = async () =>{
+      const result = await fetch(URL);
+      result.json().then(json => {
+     // console.log(json[0].a);
+      setquoteoftheday(json[0].q + ' - ' + json[0].a);
+      })
+    }
+      fetchData();
+    }, []);
+
+  useEffect(() => {
     protectedInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -40,9 +56,8 @@ const Dashboard = () => {
     </Layout>
   ) : (
     <Layout>
-      <h1>Dashboard</h1>
+      <div class="banner"><h1>{quoteoftheday}</h1></div>
       <h2>Welcome Back {protectedData}!</h2>
-
       <button onClick={() => logout()} className='btn btn-primary'>
         Log Out
       </button>
