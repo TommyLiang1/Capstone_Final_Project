@@ -3,6 +3,8 @@ import { editProfile } from "../api/profile";
 import Layout from "./Layout";
 import { useParams } from "react-router-dom";
 import { getProfile } from "../api/profile";
+import { fetchProtectedInfo } from "../api/auth";
+import axios from 'axios';
 
 import '../styles/Profile.css';
 
@@ -22,13 +24,40 @@ const Profile = () => {
   const [editMode, setEditMode] = useState(false);
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
-
+  const [image, setImage] = useState('');
+  const [protectedData, setProtectedData] = useState(null)
+  
   const onChange = (e) => {
     setUserInfo({...userInfo, [e.target.name]: e.target.value})
   }
 
+  function isFileImage(file) {
+    return file && file['type'].split('/')[0] === 'image';
+  }
+  
+  const imageUpload = (e) => {
+    if(e.target.files[0].name === undefined || !isFileImage(e.target.files[0])){
+      return;
+    }
+    console.log(e.target.files[0].name)
+    userInfo.img = "profile-picture-" + userInfo.profile_id + "_" + e.target.files[0].name
+    console.log(userInfo.img)
+    const formData = new FormData();
+    formData.append('my-image-file', e.target.files[0], userInfo.img);
+    setImage(formData);
+  }
+
+  const handleSubmit = () => {
+    axios.post('http://localhost:4000/image-upload', image)
+    .then(res => {
+      console.log('Axios response: ', res)
+    })
+  }
+
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    handleSubmit();
 
     try {
       const res = await editProfile(id, userInfo)
@@ -42,7 +71,6 @@ const Profile = () => {
       setSuccess('')
     }
 
-    
   }
 
   const cancelEdit = () => {
@@ -55,31 +83,50 @@ const Profile = () => {
     setUserInfo(data.profile[0]) 
   }
 
+  function importAll(r) {
+    let images = [];
+    r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+    return images;
+  }
+
+  const images = importAll(require.context('./images', false, ));
+
+  const protectedInfo = async () => {
+    try {
+      const {data} = await fetchProtectedInfo()
+      setProtectedData(data.info)
+    } catch (err) {
+    }
+  }
+
   useEffect(() => {
     retrieveInfo()
+    protectedInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
 
   return (
     <Layout>
       {editMode ? (
         <div>
         <div class ="name"> Edit Profile </div>
-        <div class ="description">
+        <div class ="edit">
           Username: <input onChange={(e) => onChange(e)} id="profile_name" name="profile_name" type='text' placeholder="Username" required />
         </div>
-        <div class ="description">
+        <div class ="edit">
           Bio: <input onChange={(e) => onChange(e)} id="bio" name="bio" type='text' placeholder="Bio" required />
         </div>
-        <div class ="description">
+        <div class ="edit">
           City: <input onChange={(e) => onChange(e)} id="city" name="city" type='text' placeholder="City" required />
         </div>
-        <div class ="description">
+        <div class ="edit">
           Education: <input onChange={(e) => onChange(e)} id="education" name="education" type='text' placeholder="Education" required />
         </div>
-        <div class ="description">
+        <div class ="edit">
           Hobbies: <input onChange={(e) => onChange(e)} id="hobbies" name="hobbies" type='text' placeholder="Hobbies" required />
+        </div>
+        <div class ="edit">
+          Image: <input onChange={imageUpload} type='file'/>
         </div>
         <br></br>
         <div class ="email">
@@ -92,9 +139,14 @@ const Profile = () => {
       ) : (
         <div>
           <div class ="name"> {userInfo.profile_name}
-          {userInfo.profile_id === 1 ? (<button onClick={() => setEditMode(true)}> <i class="fas fa-pen"> </i> </button>) : (null)}
+          {userInfo.profile_id === protectedData ? (<button onClick={() => setEditMode(true)}> <i class="fas fa-pen"> </i> </button>) : (null)}
           </div>
           <div class = "description" style={{color:'green', margin: '10px 0' }}>{success}</div>
+
+          <div id = "center">
+            {images[userInfo.img] !== undefined ? (<img src={images[userInfo.img]}/>) :  (<img src={images["default-profile-picture.jpg"]}/>)}
+          </div>
+
           <div class ="email"><i class="fas fa-envelope"></i> {userInfo.profile_email} </div>
           <br></br>
           {userInfo.bio != null ? (<div class ="description"> {userInfo.bio} </div>) : (<div class ="description">No Description Listed</div>)}
