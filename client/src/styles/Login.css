@@ -7,3 +7,18 @@
   text-align: center;
   margin: 10px 0px;
 }
+
+.form-container {
+  width: 475px;
+  box-shadow: 10px 10px 10px rgba(100, 100, 100, .6);
+}
+
+.login-text {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: -10px;
+}
+
+.register-link {
+  margin-left: 5px;
+}

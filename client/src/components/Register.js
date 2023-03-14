@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { onRegistration } from "../api/auth";
-import Layout from "./Layout";
+import { NavLink } from "react-router-dom";
+
 import '../styles/Register.css';
 import '../styles/Form.css';
 
@@ -40,40 +41,45 @@ const Register = () => {
   }
 
   return (
-    <Layout>
-      <form onSubmit={(e) => onSubmit(e)} className='form-container mt-3'>
-        <h1>Register</h1>
+    <form onSubmit={(e) => onSubmit(e)} className='form-container mt-3'>
+      <h1>Register</h1>
 
-        <div className="mb-3">
-          <label htmlFor="username" className="form-label">
-            Username
-          </label>
-          <input onChange={(e) => onChange(e)} id="username" name="username" type='text' className="form-control" value={values.username} placeholder="username" required />
+      <div className="mb-3">
+        <label htmlFor="username" className="form-label">
+          Username
+        </label>
+        <input onChange={(e) => onChange(e)} id="username" name="username" type='text' className="form-control" value={values.username} placeholder="username" required />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="email" className="form-label">
+          Email Address
+        </label>
+        <input onChange={(e) => onChange(e)} id="email" name="email" type='email' className="form-control" value={values.email} placeholder="email" required />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="password" className="form-label">
+          Password
+        </label>
+        <div>
+          <input onChange={(e) => onChange(e)} id="password" name="password" type={passwordShown? 'text' : 'password'} className="form-control" value={values.password} placeholder="password" required />
+          <i onClick={() => togglePasswordVisibility()} className={passwordShown? "far fa-eye-slash" : "far fa-eye"} id="togglePassword" style={{marginLeft: -30}}></i>
         </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email Address
-          </label>
-          <input onChange={(e) => onChange(e)} id="email" name="email" type='email' className="form-control" value={values.email} placeholder="email" required />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <div>
-            <input onChange={(e) => onChange(e)} id="password" name="password" type={passwordShown? 'text' : 'password'} className="form-control" value={values.password} placeholder="password" required />
-            <i onClick={() => togglePasswordVisibility()} className={passwordShown? "far fa-eye-slash" : "far fa-eye"} id="togglePassword" style={{marginLeft: -30}}></i>
-          </div>
-        </div>
+      </div>
 
-        <div style={{color:'red', margin: '10px 0' }}>{error}</div>
-        <div style={{color:'green', margin: '10px 0' }}>{success}</div>
+      <div style={{color:'red', margin: '10px 0' }}>{error}</div>
+      <div style={{color:'green', margin: '10px 0' }}>{success}</div>
 
-        <button type="submit" className="form-btn btn btn-primary">
-          Create Account
-        </button>
-      </form>
-    </Layout>
+      <button type="submit" className="form-btn btn btn-primary">
+        Create Account
+      </button>
+
+      <div className="register-text">
+        Have an account?
+        <NavLink className="login-link" to='/'>
+          <span>Log In</span>
+        </NavLink>
+      </div>
+    </form>
   );
 };
 

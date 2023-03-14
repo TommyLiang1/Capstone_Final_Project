@@ -1,15 +1,22 @@
+body {
+  background-color: rgb(240, 240, 240);
+}
+
 .text-container {
   width: 500px;
   margin: auto;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .text {
   text-align: left;
   padding: 5px;
-  width: 100%;
+  width: 99%;
 }
 
 .text-btn {
-  width: 100%;
+  width: 99%;
   color: black;
 }

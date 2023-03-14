@@ -1,13 +1,18 @@
 import React from "react";
-import Layout from "./Layout";
+// import Layout from "./Layout";
+import Login from "./Login";
 
 import '../styles/Home.css';
 
 const Home = () => {
   return (
-    <Layout>
-      <h1>Home</h1>
-    </Layout>
+    <div className="home-page">
+      <div className="title">
+        <div className="app-name">Mending</div>
+        {/* replace with image of our app logo */}
+      </div>
+      <Login />
+    </div>
   );
 };
 

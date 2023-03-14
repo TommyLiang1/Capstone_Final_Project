@@ -106,8 +106,7 @@ const Dashboard = () => {
     </Layout>
   ) : (
     <Layout>
-      <h1>Dashboard</h1>
-      <h1>Welcome Back {user.name}!</h1>
+      <div>Welcome back {user.name}</div>
       <div className="text-container">
         <textarea className="text" ref={message} placeholder="Whats on your mind?"></textarea>
         <div style={{color:'red', margin: '5px 0' }}>{error}</div>

@@ -1,3 +1,8 @@
+/* .form-container {
+  width: 475px;
+  box-shadow: 10px 10px 10px rgba(100, 100, 100, .6);
+} */
+
 .form-control, .form-btn {
   width: 400px;
 }
@@ -7,5 +12,15 @@
 }
 
 .far:hover {
-  color:grey;
+  color: grey;
+}
+
+.register-text {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: -10px;
+}
+
+.login-link {
+  margin-left: 5px;
 }
