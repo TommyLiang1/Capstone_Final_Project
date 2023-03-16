@@ -40,7 +40,7 @@ const Post = (props) => {
     e.preventDefault()
     e.target.style.color = e.target.style.color === 'black' ? 'blue' : 'black'
     if(e.target.style.color === 'black')
-      addLikePost(post_id)
+      addLikePost(post_id) 
     else
       removeLikePost(post_id)
     props.reloadPosts();
