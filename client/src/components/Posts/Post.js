@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
-// import { addLikePost, removeLikePost } from "../../api/post";
+import { addLikePost, removeLikePost } from "../../api/post";
 import { getCommentsByPostId, createComment} from "../../api/comment";
 import { deletePost, editPost } from "../../api/post";
 import Comment from "../Comments/Comment";
@@ -39,11 +39,11 @@ const Post = (props) => {
   const likePost = (e) => {
     e.preventDefault()
     e.target.style.color = e.target.style.color === 'black' ? 'blue' : 'black'
-    // if(e.target.style.color === 'black')
-    //   removeLikePost(post_id)
-    // else
-    //   addLikePost(post_id)
-    // props.ReloadPosts();
+    if(e.target.style.color === 'black')
+      addLikePost(post_id)
+    else
+      removeLikePost(post_id)
+    props.reloadPosts();
   }
 
   // Toggle View Comment Button
