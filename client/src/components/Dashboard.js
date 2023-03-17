@@ -2,6 +2,7 @@ import React, {useEffect, useState, useRef} from "react";
 import { useDispatch } from "react-redux";
 import { fetchProtectedInfo, onLogout, getUserById } from "../api/auth";
 import { getPosts, createPost } from "../api/post";
+import { getPostsLikedByUser } from "../api/like";
 // import { getProfile } from "../api/profile";
 import { unauthenticateUser } from "../redux/slices/authSlice";
 import Layout from "./Layout";
@@ -15,12 +16,15 @@ const Dashboard = () => {
   const [success, setSuccess] = useState("")
   const message = useRef("")
   const [posts, setPosts] = useState([])
+  const [postIds, setPostIds] = useState([]);
+  const [likeIds, setLikeIds] = useState([]);
   const [user, setUser] = useState({
     id: '',
     name: '',
     email: '',
     profId: '',
   })
+  let like_id = -1;
   
   // Log Out
   const logout = async () => {
@@ -87,11 +91,28 @@ const Dashboard = () => {
         console.log(err)
         logout()
       })
+
     setLoading(false)
 
+    // Get all Posts
     await getPosts()
       .then(res => {
         setPosts(res.data.posts)
+      })
+    
+    // Get postIds like by User
+    await getPostsLikedByUser(tmpId)
+      .then(res => {
+        if(res.data.postIds.length === 0) return;
+        let tmpPostIds = [];
+        let tmpLikeIds = [];
+        res.data.postIds.forEach(postId => {
+          // console.log(postId)
+          tmpPostIds = [...tmpPostIds, postId.post_id]
+          tmpLikeIds = [...tmpLikeIds, postId.like_id]
+        })
+        setPostIds(tmpPostIds)
+        setLikeIds(tmpLikeIds)
       })
   }
 
@@ -115,9 +136,26 @@ const Dashboard = () => {
       </div>
       {
         posts.map(post => {
-          return <Post key={post.post_id} postData={post} userName={user.name} reloadPosts={reloadPosts}/>
+          // check if post is liked by current user
+          let liked = postIds.includes(post.post_id)
+          // retreive like_id is post is liked else nothing
+          if(liked) {
+            like_id = likeIds[postIds.indexOf(post.post_id)]
+          }
+          console.log(like_id, post.post_id, liked)
+          return <Post key={post.post_id} userId={user.id} userName={user.name} postData={post} color={liked?"blue":"black"} likeId={like_id} reloadPosts={reloadPosts}/>
         })
       }
+      {/* {
+        postIds.map(postId => {
+          return <div>{postId}</div>
+        })
+      }
+      {
+        likeIds.map(postId => {
+          return <div>{postId}</div>
+        })
+      } */}
     </Layout>
   );
 };

@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from "react";
-import { addLikePost, removeLikePost } from "../../api/post";
+import { addLikePost, removeLikePost, deletePost, editPost } from "../../api/post";
 import { getCommentsByPostId, createComment} from "../../api/comment";
-import { deletePost, editPost } from "../../api/post";
+import { likePostFromUser, unlikePostFromUser } from "../../api/like";
 import Comment from "../Comments/Comment";
 import Modal from "../Modal";
 
@@ -18,16 +18,39 @@ const Post = (props) => {
   const [editPostError, setEditPostError] = useState("");
   const comment = useRef("");
   const [commentError, setCommentError] = useState("");
+  const [likeColor, setLikeColor] = useState(props.color);
 
   // TODO: IMPLEMENT POST/COMMENT LIKE LOGIC
-  const likePost = (e) => {
+  const likePost = async(e) => {
     e.preventDefault()
-    e.target.style.color = e.target.style.color === 'black' ? 'blue' : 'black'
-    if(e.target.style.color === 'black')
-      addLikePost(post_id) 
-    else
-      removeLikePost(post_id)
-    props.reloadPosts();
+    let likeData = {
+        userId: props.userId,
+        postId: post_id
+      }
+    if(likeColor === 'black') {
+      await addLikePost(post_id)
+        .then(() => {
+        props.reloadPosts();
+      })
+
+      await likePostFromUser(likeData)
+        .then(() => {
+          props.reloadPosts();
+        })
+    } else {
+      await removeLikePost(post_id)
+        .then(() => {
+          props.reloadPosts();
+        })
+
+      // if(props.likeId === -1) return;
+      console.log(props.likeId)
+      await unlikePostFromUser(props.likeId)
+        .then(() => {
+          props.reloadPosts();
+        })
+    }
+    setLikeColor(likeColor === 'black' ? 'blue' : 'black')
   }
 
   // Toggle View Comment Button
@@ -161,7 +184,7 @@ const Post = (props) => {
       </div>
       <hr className="lc-btn-sep"/>
       <div className="lc-btn-container">
-        <button className="lc-btn" color={'black'} onClick={(e) => likePost(e)}>Like</button>
+        <button className="lc-btn" style={{color: likeColor}} onClick={(e) => likePost(e)}>Like</button>
         <button className="lc-btn" onClick={() => setOpenCommentModal(true)}>Comment</button>
       </div>
       <button className="vc-btn" onClick={() => toggleCommentVisibility()} hidden={postComments.length === 0 ? true : false}>View comments</button>
@@ -173,6 +196,9 @@ const Post = (props) => {
             </div>
           )
         })
+      }
+      {
+        <div>{likeColor}, {props.likeId}</div>
       }
     </div>
   );
