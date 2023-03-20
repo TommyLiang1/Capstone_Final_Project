@@ -59,6 +59,7 @@ const Dashboard = () => {
       })
   }
 
+  // Refresh posts
   const reloadPosts = () => {
     getPosts()
       .then(res => {
@@ -107,7 +108,6 @@ const Dashboard = () => {
         let tmpPostIds = [];
         let tmpLikeIds = [];
         res.data.postIds.forEach(postId => {
-          // console.log(postId)
           tmpPostIds = [...tmpPostIds, postId.post_id]
           tmpLikeIds = [...tmpLikeIds, postId.like_id]
         })
@@ -136,22 +136,11 @@ const Dashboard = () => {
       </div>
       {
         posts.map(post => {
-          // retreive like_id is post is liked by current user
+          // retreive like_id if post is liked by current user
           like_id = postIds.includes(post.post_id) ? likeIds[postIds.indexOf(post.post_id)] : -1
-          // console.log(like_id, post.post_id, postIds.includes(post.post_id))
-          return <Post key={post.post_id} userId={user.id} userName={user.name} postData={post} likeId={like_id} reloadPosts={reloadPosts} reloadLikes={getPostsLikedByUser}/>
+          return <Post key={post.post_id} userId={user.id} userName={user.name} postData={post} likeId={like_id} reloadPosts={reloadPosts} />
         })
       }
-      {/* {
-        postIds.map(postId => {
-          return <div>{postId}</div>
-        })
-      }
-      {
-        likeIds.map(postId => {
-          return <div>{postId}</div>
-        })
-      } */}
     </Layout>
   );
 };

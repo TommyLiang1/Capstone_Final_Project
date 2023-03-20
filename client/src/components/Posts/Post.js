@@ -12,7 +12,6 @@ const Post = (props) => {
   const initialLikeId = props.likeId;
   const initialColor = props.likeId === -1 ? "black" : "blue";
   const reloadPosts = props.reloadPosts;
-  const reloadLikes = props.reloadLikes;
   const [commentVisibility, setCommentVisibility] = useState(false);
   const [postComments, setPostComments] = useState([]);
   const [openPostModal, setOpenPostModal] = useState(false);
@@ -21,11 +20,10 @@ const Post = (props) => {
   const [editPostError, setEditPostError] = useState("");
   const comment = useRef("");
   const [commentError, setCommentError] = useState("");
-  
   const [likeId, setLikeId] = useState(initialLikeId);
   const [likeColor, setLikeColor] = useState(initialColor);
 
-  // TODO: IMPLEMENT POST/COMMENT LIKE LOGIC
+  // Like Post
   const likePost = async(e) => {
     e.preventDefault()
     let likeData = {
@@ -39,15 +37,12 @@ const Post = (props) => {
       })
     } else {
       await removeLikePost(post_id)
-      await unlikePostFromUser(likeId).then(
+      await unlikePostFromUser(likeId).then(() => {
         setLikeId(-1)
-      )
+      })
     }
     setLikeColor(likeColor === 'black' ? 'blue' : 'black')
-    await reloadLikes().then(async() => {
-      await reloadPosts();
-    });
-    
+    reloadPosts()
   }
 
   // Toggle View Comment Button
@@ -102,7 +97,7 @@ const Post = (props) => {
       })
   }
 
-  // Get all Comments
+  // Get All Comments
   const getComments = async () => {
     await getCommentsByPostId(post_id)
       .then(res => {
@@ -114,6 +109,13 @@ const Post = (props) => {
     getComments();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if(initialLikeId !== -1) {
+      setLikeId(initialLikeId);
+      setLikeColor("blue");
+    }
+  }, [initialLikeId])
 
   return (
     <div className="post-container">
@@ -129,7 +131,7 @@ const Post = (props) => {
       </div>
      
       <div styles={{position: 'relative', zindex: 1}}>
-         {/* EDIT POST MODAL */}
+        {/* EDIT POST MODAL */}
         <Modal open={openPostModal}
           closeModal={() => {
             setEditPostText(description_text)
@@ -193,9 +195,6 @@ const Post = (props) => {
             </div>
           )
         })
-      }
-      {
-        <div>{likeColor}, {likeId}, {props.likeId}, {initialLikeId}</div>
       }
     </div>
   );

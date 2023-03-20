@@ -18,7 +18,6 @@ exports.getLikesToPosts = async (req, res) => {
       success: true,
       postIds: rows
     })
-    
   } catch (err) {
     console.log(err.message);
   }
@@ -37,7 +36,6 @@ exports.addUserLikeToPost = async (req, res) => {
       [userId, postId]
     );
 
-    console.log("Liked", userId, postId)
     return res.status(200).json({
       success: true,
       message: "Like post successful",
@@ -55,7 +53,6 @@ exports.removeUserLikeToPost = async (req, res) => {
       [req.params.id]
     );
     
-    console.log("Unliked", req.params.id)
     return res.status(200).json({
       success: true,
       message: "Unlike post succesful",
@@ -97,9 +94,15 @@ exports.addUserLikeToComment = async (req, res) => {
       [userId, commentId]
     )
 
+    const rows = await db.query(
+      'SELECT like_id FROM likes WHERE user_id = $1 AND comment_id = $2',
+      [userId, commentId]
+    );
+
     return res.status(200).json({
       success: true,
-      message: 'Like comment successful'
+      message: 'Like comment successful',
+      likeId: rows.rows[0].like_id
     })
   } catch (err) {
     console.log(err.message);
