@@ -9,7 +9,10 @@ import '../../styles/Post.css';
 
 const Post = (props) => {
   const { post_id, post_name, description_text, likes, comments } = props.postData;
+  const initialLikeId = props.likeId;
+  const initialColor = props.likeId === -1 ? "black" : "blue";
   const reloadPosts = props.reloadPosts;
+  const reloadLikes = props.reloadLikes;
   const [commentVisibility, setCommentVisibility] = useState(false);
   const [postComments, setPostComments] = useState([]);
   const [openPostModal, setOpenPostModal] = useState(false);
@@ -18,7 +21,9 @@ const Post = (props) => {
   const [editPostError, setEditPostError] = useState("");
   const comment = useRef("");
   const [commentError, setCommentError] = useState("");
-  const [likeColor, setLikeColor] = useState(props.color);
+  
+  const [likeId, setLikeId] = useState(initialLikeId);
+  const [likeColor, setLikeColor] = useState(initialColor);
 
   // TODO: IMPLEMENT POST/COMMENT LIKE LOGIC
   const likePost = async(e) => {
@@ -29,28 +34,20 @@ const Post = (props) => {
       }
     if(likeColor === 'black') {
       await addLikePost(post_id)
-        .then(() => {
-        props.reloadPosts();
+      await likePostFromUser(likeData).then((res) => {
+        setLikeId(res.data.likeId)
       })
-
-      await likePostFromUser(likeData)
-        .then(() => {
-          props.reloadPosts();
-        })
     } else {
       await removeLikePost(post_id)
-        .then(() => {
-          props.reloadPosts();
-        })
-
-      // if(props.likeId === -1) return;
-      console.log(props.likeId)
-      await unlikePostFromUser(props.likeId)
-        .then(() => {
-          props.reloadPosts();
-        })
+      await unlikePostFromUser(likeId).then(
+        setLikeId(-1)
+      )
     }
     setLikeColor(likeColor === 'black' ? 'blue' : 'black')
+    await reloadLikes().then(async() => {
+      await reloadPosts();
+    });
+    
   }
 
   // Toggle View Comment Button
@@ -198,7 +195,7 @@ const Post = (props) => {
         })
       }
       {
-        <div>{likeColor}, {props.likeId}</div>
+        <div>{likeColor}, {likeId}, {props.likeId}, {initialLikeId}</div>
       }
     </div>
   );

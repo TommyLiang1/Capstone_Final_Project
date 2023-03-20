@@ -100,12 +100,17 @@ exports.removeLike = async (req, res) => {
 exports.deletePost = async (req, res) => {
   try {
     await db.query(
-      'DELETE FROM posts WHERE post_id = $1',
+      'DELETE FROM likes WHERE post_id = $1',
       [req.params.id]
     )
 
     await db.query(
       'DELETE FROM comments WHERE post_id = $1',
+      [req.params.id]
+    )
+
+    await db.query(
+      'DELETE FROM posts WHERE post_id = $1',
       [req.params.id]
     )
 

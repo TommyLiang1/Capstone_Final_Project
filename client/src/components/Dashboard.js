@@ -136,14 +136,10 @@ const Dashboard = () => {
       </div>
       {
         posts.map(post => {
-          // check if post is liked by current user
-          let liked = postIds.includes(post.post_id)
-          // retreive like_id is post is liked else nothing
-          if(liked) {
-            like_id = likeIds[postIds.indexOf(post.post_id)]
-          }
-          console.log(like_id, post.post_id, liked)
-          return <Post key={post.post_id} userId={user.id} userName={user.name} postData={post} color={liked?"blue":"black"} likeId={like_id} reloadPosts={reloadPosts}/>
+          // retreive like_id is post is liked by current user
+          like_id = postIds.includes(post.post_id) ? likeIds[postIds.indexOf(post.post_id)] : -1
+          // console.log(like_id, post.post_id, postIds.includes(post.post_id))
+          return <Post key={post.post_id} userId={user.id} userName={user.name} postData={post} likeId={like_id} reloadPosts={reloadPosts} reloadLikes={getPostsLikedByUser}/>
         })
       }
       {/* {
