@@ -28,10 +28,8 @@ const Dashboard = () => {
     profId: '',
   })
   let like_id = -1;
-  
-  // Log Out
-  const [protectedData, setProtectedData] = useState(null)
 
+  // Log Out
   const logout = async () => {
     try {
       await onLogout();
@@ -121,21 +119,21 @@ const Dashboard = () => {
       })
   }
 
+  // Set Up Banner
   useEffect(() => {
-    getUserInfo()
     const URL ="https://corsproxy.io/?https://zenquotes.io/api/today";
     const fetchData = async () =>{
       const result = await fetch(URL);
       result.json().then(json => {
-     // console.log(json[0].a);
       setquoteoftheday(json[0].q + ' - ' + json[0].a);
       })
     }
       fetchData();
     }, []);
 
+  // Fetch User Data From Database
   useEffect(() => {
-    protectedInfo()
+    getUserInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
