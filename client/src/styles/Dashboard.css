@@ -19,4 +19,12 @@ body {
 .text-btn {
   width: 99%;
   color: black;
+
+.banner{
+  background: #04f318;
+  border: 2px solid;
+  padding: 10px;
+  margin: 0px;
+  text-align: center;
+
 }

@@ -9,8 +9,11 @@ import Layout from "./Layout";
 import Post from "./Posts/Post";
 import "../styles/Dashboard.css";
 
+import '../styles/Dashboard.css';
+
 const Dashboard = () => {
   const dispatch = useDispatch()
+  const [quoteoftheday, setquoteoftheday] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
@@ -27,6 +30,8 @@ const Dashboard = () => {
   let like_id = -1;
   
   // Log Out
+  const [protectedData, setProtectedData] = useState(null)
+
   const logout = async () => {
     try {
       await onLogout();
@@ -118,6 +123,19 @@ const Dashboard = () => {
 
   useEffect(() => {
     getUserInfo()
+    const URL ="https://corsproxy.io/?https://zenquotes.io/api/today";
+    const fetchData = async () =>{
+      const result = await fetch(URL);
+      result.json().then(json => {
+     // console.log(json[0].a);
+      setquoteoftheday(json[0].q + ' - ' + json[0].a);
+      })
+    }
+      fetchData();
+    }, []);
+
+  useEffect(() => {
+    protectedInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -127,6 +145,7 @@ const Dashboard = () => {
     </Layout>
   ) : (
     <Layout>
+      <div class="banner"><h1>{quoteoftheday}</h1></div>
       <div>Welcome back {user.name}</div>
       <div className="text-container">
         <textarea className="text" ref={message} placeholder="Whats on your mind?"></textarea>
