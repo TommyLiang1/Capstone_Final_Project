@@ -141,16 +141,16 @@ const Profile = () => {
           </div>
           <br></br>
           <div class ="email">
-              <button type="submit" className="form-btn btn btn-primary profile-btn" onClick={() => cancelEdit()}> Cancel</button>
+              <button type="submit" className="form-btn btn btn-primary" onClick={() => cancelEdit()}> Cancel</button>
               <br></br>
-              <button type="submit" className="form-btn btn btn-primary profile-btn" onClick={(e) => onSubmit(e)}> Submit</button>
+              <button type="submit" className="form-btn btn btn-primary" onClick={(e) => onSubmit(e)}> Submit</button>
           </div>
           <div class = "description" style={{color:'red', margin: '10px 0' }}>{error}</div>
           </div>
         ) : (
           <div>
             <div class ="name"> {userInfo.profile_name}
-            {userInfo.profile_id === protectedData ? (<button onClick={() => setEditMode(true)}> <i class="fas fa-pen"> </i> </button>) : (null)}
+            {userInfo.profile_id === protectedData ? (<button className="edit-btn" onClick={() => setEditMode(true)}> <i class="fas fa-pen"> </i> </button>) : (null)}
             </div>
             <div class = "description" style={{color:'green', margin: '10px 0' }}>{success}</div>
 
