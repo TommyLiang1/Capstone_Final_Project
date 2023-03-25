@@ -1,5 +1,42 @@
-.profile-container {
-  border: 1px solid;
-  padding: 20px;
-  margin: auto;
+.name {
+  text-align: center;
+  font-size: 100px;
+}
+
+.email {
+  text-align: center;
+  font-size: 30px;
+}
+
+.description {
+  text-align: center;
+  font-size: 20px;
+}
+
+.edit {
+  text-align: center;
+  font-size: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+button {
+  text-align: center;
+  border: none;
+  outline: 0 !important;
+  background: none;
+  font-size: 30px;
+  cursor: pointer;
+  padding-right: 50px;
+  padding-right: 50px;
+}
+
+img {
+  padding-bottom: 20px;
+  clip-path: circle();
+  width: 200px;
+}
+
+#center{
+  text-align: center;
 }
