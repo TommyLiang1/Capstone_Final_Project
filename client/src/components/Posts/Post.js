@@ -39,7 +39,7 @@ const Post = (props) => {
       await removeLikePost(post_id)
       await unlikePostFromUser(likeId).then(() => {
         setLikeId(-1)
-      })s
+      })
     }
     setLikeColor(likeColor === 'black' ? 'blue' : 'black')
     reloadPosts()
