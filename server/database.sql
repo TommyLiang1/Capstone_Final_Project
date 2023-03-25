@@ -34,20 +34,27 @@ CREATE TABLE users(
 CREATE TABLE posts(
   post_id SERIAL PRIMARY KEY,
   post_name VARCHAR(255) NOT NULL,
-  title VARCHAR(255),
-  description_text VARCHAR(255) NOT NULL,
+  description_text TEXT NOT NULL,
   likes INT,
   comments INT,
+  user_id INT NOT NULL,
   created_at DATE DEFAULT current_date
 );
 
 CREATE TABLE comments(
   comment_id SERIAL PRIMARY KEY,
   comment_name VARCHAR(255) NOT NULL,
-  description_text VARCHAR(255) NOT NULL,
+  description_text TEXT NOT NULL,
   likes INT,
-  post_id INT,
+  post_id INT NOT NULL,
   created_at DATE DEFAULT current_date
+);
+
+CREATE TABLE likes(
+  like_id SERIAL PRIMARY KEY,
+  user_id INT NOT NULL REFERENCES users(user_id),
+  post_id INT REFERENCES posts(post_id),
+  comment_id INT REFERENCES comments(comment_id)
 );
 
 -- DROP TABLE posts, comments;

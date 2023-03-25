@@ -1,7 +1,30 @@
+body {
+  background-color: rgb(240, 240, 240);
+}
+
+.text-container {
+  width: 500px;
+  margin: auto;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.text {
+  text-align: left;
+  padding: 5px;
+  width: 99%;
+}
+
+.text-btn {
+  width: 99%;
+  color: black;
+
 .banner{
   background: #04f318;
   border: 2px solid;
   padding: 10px;
   margin: 0px;
   text-align: center;
+
 }

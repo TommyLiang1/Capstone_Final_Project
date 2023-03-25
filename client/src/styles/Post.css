@@ -1,0 +1,81 @@
+.post-container {
+  width: 500px;
+  margin: auto;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+/* POST HEADER */
+.post-name {
+  display: inline-block;
+}
+
+/* LIKE AND COMMENT SECTION */
+.lc {
+  display: inline-block;
+  width: 95%;
+  margin: 10px 10px 0px 10px;
+}
+
+.like {
+  float: left;
+}
+
+.comment {
+  float: right;
+}
+
+.lc-btn-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.lc-btn {
+  margin: 0px 2px;
+  border-radius: 5px;
+}
+
+.message-container {
+  width: 95%;
+  margin: auto;
+}
+
+.message {
+  overflow-x: hidden;
+}
+
+.lc-btn-sep {
+  margin: 0px 10px 10px 10px;
+}
+
+.vc-btn {
+  background-color: white;
+  font-size: 14px;
+}
+
+.vc-btn:hover {
+  background-color: white;
+  text-decoration: underline;
+}
+
+/* Edit and Delete Buttons */
+.extra {
+  float: right;
+}
+
+.post-edit-btn, .post-delete-btn {
+  margin: 0px 5px;
+  border-radius: 5px;
+}
+
+/* Edit Post Modal */
+.edit-post-text {
+  width: 100%;
+  padding: 5px;
+}
+
+.edit-post-btn {
+  width: 100%;
+}

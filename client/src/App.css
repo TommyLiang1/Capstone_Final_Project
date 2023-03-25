@@ -1,0 +1,12 @@
+button {
+  border: none;
+}
+
+button:hover {
+  background-color: darkgrey;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: none;
+}

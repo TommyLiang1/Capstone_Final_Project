@@ -20,7 +20,6 @@ removeComment = async (req, res) => {
       'UPDATE posts SET comments = comments - 1 WHERE post_id = $1',
       [req]
     )
-
   } catch (err) {
     console.log(err.message);
   }
@@ -48,8 +47,8 @@ exports.getCommentsByPostId = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      commentsFromPost: rows,
-    })    
+      comments: rows,
+    })
 
   } catch (err) {
     console.log(err.message);
@@ -57,10 +56,11 @@ exports.getCommentsByPostId = async (req, res) => {
 }
 
 exports.getCommentById = async (req, res) => {
+  const { commentId } = req.body;
   try {
     const { rows } = await db.query(
       'SELECT * FROM comments WHERE comment_id = $1',
-      [req.params.id]
+      [commentId]
     );
 
     return res.status(200).json({
@@ -74,11 +74,11 @@ exports.getCommentById = async (req, res) => {
 }
 
 exports.createComment = async (req, res) => {
-  const {username, description} = req.body;
+  const {username, comment} = req.body;
   try {
     await db.query(
       'INSERT INTO comments (comment_name, description_text, likes, post_id) VALUES ($1, $2, $3, $4)',
-      [username, description, 0, req.params.id]
+      [username, comment, 0, req.params.id]
     )
 
     addComment(req.params.id);
@@ -93,11 +93,11 @@ exports.createComment = async (req, res) => {
 }
 
 exports.editComment = async (req, res) => {
-  const {description} = req.body;
+  const {message} = req.body;
   try {
     await db.query(
       'UPDATE comments SET description_text = $1 WHERE comment_id = $2',
-      [description, req.params.id]
+      [message, req.params.id]
     )
 
     return res.status(200).json({
@@ -143,12 +143,16 @@ exports.removeLike = async (req, res) => {
 
 exports.deleteComment = async (req, res) => {
   try {
+    const { rows } = await db.query(
+      'SELECT post_id FROM comments WHERE comment_id = $1',
+      [req.params.id]
+    )
     await db.query(
       'DELETE FROM comments WHERE comment_id = $1',
       [req.params.id]
     )
 
-    removeComment(req.params.id)
+    removeComment(rows[0].post_id)
 
     return res.status(200).json({
       success: true,
