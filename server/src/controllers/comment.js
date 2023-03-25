@@ -143,12 +143,16 @@ exports.removeLike = async (req, res) => {
 
 exports.deleteComment = async (req, res) => {
   try {
+    const { rows } = await db.query(
+      'SELECT post_id FROM comments WHERE comment_id = $1',
+      [req.params.id]
+    )
     await db.query(
       'DELETE FROM comments WHERE comment_id = $1',
       [req.params.id]
     )
 
-    removeComment(req.params.id)
+    removeComment(rows[0].post_id)
 
     return res.status(200).json({
       success: true,

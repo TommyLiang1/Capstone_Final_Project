@@ -1,30 +1,16 @@
 import React, {useState, useEffect, useRef} from "react";
-// import { addLikePost, removeLikePost } from "../../api/post";
+import { addLikePost, removeLikePost, deletePost, editPost } from "../../api/post";
 import { getCommentsByPostId, createComment} from "../../api/comment";
-import { deletePost, editPost } from "../../api/post";
+import { likePostFromUser, unlikePostFromUser } from "../../api/like";
 import Comment from "../Comments/Comment";
 import Modal from "../Modal";
 
 import '../../styles/Post.css';
 
-// document.addEventListener("click", e => {
-//   const isDropDownButton = e.target.matches("[data-dropdown-button]")
-//   if(!isDropDownButton && e.target.closest('[data-dropdown]') != null) return
-
-//   let currentDropDown
-//   if(isDropDownButton) {
-//     currentDropDown = e.target.closest('[data-dropdown]')
-//     currentDropDown.classList.toggle('active')
-//   }
-
-//   document.querySelectorAll("[data-dropdown].active").forEach(dropdown => {
-//     if(dropdown === currentDropDown) return
-//     dropdown.classList.remove('active')
-//   })
-// })
-
 const Post = (props) => {
   const { post_id, post_name, description_text, likes, comments } = props.postData;
+  const initialLikeId = props.likeId;
+  const initialColor = props.likeId === -1 ? "black" : "blue";
   const reloadPosts = props.reloadPosts;
   const [commentVisibility, setCommentVisibility] = useState(false);
   const [postComments, setPostComments] = useState([]);
@@ -34,16 +20,29 @@ const Post = (props) => {
   const [editPostError, setEditPostError] = useState("");
   const comment = useRef("");
   const [commentError, setCommentError] = useState("");
+  const [likeId, setLikeId] = useState(initialLikeId);
+  const [likeColor, setLikeColor] = useState(initialColor);
 
-  // TODO: IMPLEMENT POST/COMMENT LIKE LOGIC
-  const likePost = (e) => {
+  // Like Post
+  const likePost = async(e) => {
     e.preventDefault()
-    e.target.style.color = e.target.style.color === 'black' ? 'blue' : 'black'
-    // if(e.target.style.color === 'black')
-    //   removeLikePost(post_id)
-    // else
-    //   addLikePost(post_id)
-    // props.ReloadPosts();
+    let likeData = {
+        userId: props.userId,
+        postId: post_id
+      }
+    if(likeColor === 'black') {
+      await addLikePost(post_id)
+      await likePostFromUser(likeData).then((res) => {
+        setLikeId(res.data.likeId)
+      })
+    } else {
+      await removeLikePost(post_id)
+      await unlikePostFromUser(likeId).then(() => {
+        setLikeId(-1)
+      })
+    }
+    setLikeColor(likeColor === 'black' ? 'blue' : 'black')
+    reloadPosts()
   }
 
   // Toggle View Comment Button
@@ -98,7 +97,7 @@ const Post = (props) => {
       })
   }
 
-  // Get all Comments
+  // Get All Comments
   const getComments = async () => {
     await getCommentsByPostId(post_id)
       .then(res => {
@@ -110,6 +109,13 @@ const Post = (props) => {
     getComments();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if(initialLikeId !== -1) {
+      setLikeId(initialLikeId);
+      setLikeColor("blue");
+    }
+  }, [initialLikeId])
 
   return (
     <div className="post-container">
@@ -125,7 +131,7 @@ const Post = (props) => {
       </div>
      
       <div styles={{position: 'relative', zindex: 1}}>
-         {/* EDIT POST MODAL */}
+        {/* EDIT POST MODAL */}
         <Modal open={openPostModal}
           closeModal={() => {
             setEditPostText(description_text)
@@ -177,7 +183,7 @@ const Post = (props) => {
       </div>
       <hr className="lc-btn-sep"/>
       <div className="lc-btn-container">
-        <button className="lc-btn" color={'black'} onClick={(e) => likePost(e)}>Like</button>
+        <button className="lc-btn" style={{color: likeColor}} onClick={(e) => likePost(e)}>Like</button>
         <button className="lc-btn" onClick={() => setOpenCommentModal(true)}>Comment</button>
       </div>
       <button className="vc-btn" onClick={() => toggleCommentVisibility()} hidden={postComments.length === 0 ? true : false}>View comments</button>

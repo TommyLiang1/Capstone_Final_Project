@@ -65,7 +65,7 @@ exports.editPost = async (req, res) => {
 
 exports.addLike = async (req, res) => {
   try {
-    console.log("add Like to: " + req.params.id)
+    // console.log("add Like to: " + req.params.id)
     await db.query(
       'UPDATE posts SET likes = likes + 1 WHERE post_id = $1', 
       [req.params.id]
@@ -82,7 +82,7 @@ exports.addLike = async (req, res) => {
 
 exports.removeLike = async (req, res) => {
   try {
-    console.log("remove Like to: " + req.params.id)
+    // console.log("remove Like to: " + req.params.id)
     await db.query(
       'UPDATE posts SET likes = likes - 1 WHERE post_id = $1', 
       [req.params.id]
@@ -100,12 +100,17 @@ exports.removeLike = async (req, res) => {
 exports.deletePost = async (req, res) => {
   try {
     await db.query(
-      'DELETE FROM posts WHERE post_id = $1',
+      'DELETE FROM likes WHERE post_id = $1',
       [req.params.id]
     )
 
     await db.query(
       'DELETE FROM comments WHERE post_id = $1',
+      [req.params.id]
+    )
+
+    await db.query(
+      'DELETE FROM posts WHERE post_id = $1',
       [req.params.id]
     )
 

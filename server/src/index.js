@@ -11,7 +11,7 @@ require('./middleware/passport-middleware')
 //initialize middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: CLIENT_URL, credentials:true }))
+app.use(cors({ origin: CLIENT_URL, credentials:true }));
 app.use(passport.initialize());
 
 //import routes
@@ -19,12 +19,14 @@ const authRoutes = require('./routes/auth')
 const profileRoutes = require('./routes/profile')
 const postRoutes = require('./routes/post')
 const commentRoutes = require('./routes/comment')
+const likeRoutes = require('./routes/like')
 
 //initialize routes
 app.use('/api', authRoutes)
 app.use('/api', profileRoutes)
 app.use('/api', postRoutes)
 app.use('/api', commentRoutes)
+app.use('/api', likeRoutes);
 
 
 //app Start

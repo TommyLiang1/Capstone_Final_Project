@@ -2,6 +2,7 @@ import React, {useEffect, useState, useRef} from "react";
 import { useDispatch } from "react-redux";
 import { fetchProtectedInfo, onLogout, getUserById } from "../api/auth";
 import { getPosts, createPost } from "../api/post";
+import { getPostsLikedByUser } from "../api/like";
 // import { getProfile } from "../api/profile";
 import { unauthenticateUser } from "../redux/slices/authSlice";
 import Layout from "./Layout";
@@ -15,12 +16,15 @@ const Dashboard = () => {
   const [success, setSuccess] = useState("")
   const message = useRef("")
   const [posts, setPosts] = useState([])
+  const [postIds, setPostIds] = useState([]);
+  const [likeIds, setLikeIds] = useState([]);
   const [user, setUser] = useState({
     id: '',
     name: '',
     email: '',
     profId: '',
   })
+  let like_id = -1;
   
   // Log Out
   const logout = async () => {
@@ -55,6 +59,7 @@ const Dashboard = () => {
       })
   }
 
+  // Refresh posts
   const reloadPosts = () => {
     getPosts()
       .then(res => {
@@ -87,11 +92,27 @@ const Dashboard = () => {
         console.log(err)
         logout()
       })
+
     setLoading(false)
 
+    // Get all Posts
     await getPosts()
       .then(res => {
         setPosts(res.data.posts)
+      })
+    
+    // Get postIds like by User
+    await getPostsLikedByUser(tmpId)
+      .then(res => {
+        if(res.data.postIds.length === 0) return;
+        let tmpPostIds = [];
+        let tmpLikeIds = [];
+        res.data.postIds.forEach(postId => {
+          tmpPostIds = [...tmpPostIds, postId.post_id]
+          tmpLikeIds = [...tmpLikeIds, postId.like_id]
+        })
+        setPostIds(tmpPostIds)
+        setLikeIds(tmpLikeIds)
       })
   }
 
@@ -115,7 +136,9 @@ const Dashboard = () => {
       </div>
       {
         posts.map(post => {
-          return <Post key={post.post_id} postData={post} userName={user.name} reloadPosts={reloadPosts}/>
+          // retreive like_id if post is liked by current user
+          like_id = postIds.includes(post.post_id) ? likeIds[postIds.indexOf(post.post_id)] : -1
+          return <Post key={post.post_id} userId={user.id} userName={user.name} postData={post} likeId={like_id} reloadPosts={reloadPosts} />
         })
       }
     </Layout>
