@@ -12,6 +12,7 @@
 ## Creating Our Database
 - get to psql shell (instructions below)
 - `CREATE DATABASE capstonefinalproject;` (CAPS for psql defined commands is convention and NOT mandatory, "capstonefinalproject" is dbname(name it whatever you want), and ";" is at the end of psql commands) 
+- `\c capstonefinalproject` in the psql console to connect to the capstonefinalproject database
 - go to server directory and find database.sql
 - copy and paste `CREATE TABLE` with everything in parentheses and run the command. This will create the table for each of the elements we need
 
