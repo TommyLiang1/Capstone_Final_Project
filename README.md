@@ -26,7 +26,7 @@
 
 ### To use PostgreSQL with psql shell
 - `sudo service postgresql start`
-- `sudo service postgres psql` (postgresql database must be running aka use above command first or check status to see if its running)
+- `sudo -u postgres psql` (postgresql database must be running aka use above command first or check status to see if its running)
 
 ### Additional psql commands
 - to quit psql shell = `\q` 
