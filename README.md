@@ -1,15 +1,14 @@
 # Capstone_Final_Project
-## To run server:
-- cd into server directory
-- `npm install` to install dependencies (only need to do once)
-- use `npm run dev` to run server (back-end)
 
-## To run client:
-- cd into server directory
-- `npm install` to install dependencies (only need to do once)
-- use `npm start` to run client
+## To install necessary dependancies
 
-## Creating Our Database
+### Installing npm
+- change directory into client and server
+- run `npm i` in both client and server to install npm
+- run `npm install pm2` in both client and server to manage both processes
+- run `npm install serve` in client to install what we are using to host the webpage
+
+### Creating Our Database
 - get to psql shell (instructions below)
 - `CREATE DATABASE capstonefinalproject;` (CAPS for psql defined commands is convention and NOT mandatory, "capstonefinalproject" is dbname(name it whatever you want), and ";" is at the end of psql commands) 
 - go to server directory and find database.sql
@@ -40,3 +39,11 @@ More psql commands below
 - restart terminal  
 More postgres details below
 `https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-postgresql`
+
+
+## To run server:
+- use `pm2 start server.js` to run server (back-end)
+
+## To run client:
+- run `npm run build` to build the code into a static web page
+- use `pm2 serve build 3000` to run client on port 3000
