@@ -1,5 +1,12 @@
 # Capstone_Final_Project
 
+## To run server:
+- use `pm2 start server.js` to run server (back-end)
+
+## To run client:
+- run `npm run build` to build the code into a static web page
+- use `pm2 serve build 3000` to run client on port 3000
+
 ## To install necessary dependancies
 
 ### Installing npm
@@ -40,11 +47,3 @@ More psql commands below
 - restart terminal  
 More postgres details below
 `https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-postgresql`
-
-
-## To run server:
-- use `pm2 start server.js` to run server (back-end)
-
-## To run client:
-- run `npm run build` to build the code into a static web page
-- use `pm2 serve build 3000` to run client on port 3000
