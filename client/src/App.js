@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from './components/Dashboard';
 import Profile from './components/Profile';
+import Activities from './components/Activities';
 import { useSelector } from 'react-redux';
 
 const PrivateRoutes = () => {
@@ -30,6 +31,7 @@ function App() {
         <Route element={<PrivateRoutes />}>
           <Route exact path="/dashboard" element={<Dashboard />} />
           <Route exact path="/profile/:id" element={<Profile />} />
+          <Route exact path="/activities" element={<Activities />} />
         </Route>
 
         <Route element={<RestrictedRoutes />}>

@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "name": "Meditation",
+    "detail": "Action of clearing your mind from all things. The general idea is to distracte yourself from anything around you."
+  },
+  {
+    "id": 2,
+    "name": "Socialize",
+    "detail": "Sometimes simply talking to someone else would help relieve mental stress plague you."
+  }
+]

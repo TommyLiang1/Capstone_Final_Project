@@ -9,7 +9,6 @@ import Layout from "./Layout";
 import Post from "./Posts/Post";
 import "../styles/Dashboard.css";
 
-import '../styles/Dashboard.css';
 
 const Dashboard = () => {
   const dispatch = useDispatch()
