@@ -5,7 +5,7 @@ import "../styles/Activities.css";
 
 const Activities = () => {
   const [flip, setFlip] = useState(false)
-
+  
   return(
     <div>
       <h1>Hello World</h1>
@@ -20,7 +20,6 @@ const Activities = () => {
               <div className="back">
                 {activity.detail}
               </div>
-              {flip ? activity.detail : activity.name}
             </div>
           )
         })

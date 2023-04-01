@@ -2,6 +2,11 @@ body {
   background-color: #C8D0D2;
 } 
 
+h1 {
+  position: relative;
+  text-align: center;
+}
+
 .container {
   max-width: 900px;
   margin: 1rem 2rem;
@@ -24,7 +29,7 @@ body {
   background-color: white;
   transform-style: preserve-3d;
   height: 150px;
-  transition: 150ms;
+  transition: 200ms;
   cursor: pointer;
   transform: perspective(1000px) rotateY(var(--rotate-y, 0))
   translateY(var(--translate-y, 0));
@@ -39,9 +44,9 @@ body {
   --rotate-y: 180deg;
 }
 
-.card .front {
+/* .card .front {
   left: 0;
-}
+} */
 
 .card .front,
 .card .back {
