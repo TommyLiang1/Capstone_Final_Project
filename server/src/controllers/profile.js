@@ -19,6 +19,13 @@ exports.editProfile = async (req, res) => {
       'UPDATE users SET user_name = $1, user_email = $2, img = $3, city = $4, education = $5, bio = $6, hobbies = $7 WHERE user_id = $8',
       [req.body.profile_name, req.body.profile_email, req.body.img, req.body.city, req.body.education, req.body.bio, req.body.hobbies, req.params.id])
 
+      await db.query(
+        'UPDATE posts SET post_name = $1 WHERE user_id = $2',
+        [req.body.profile_name, req.params.id])
+      /*await db.query(
+        'UPDATE comments SET comment_name = $1 WHERE user_id = $2',
+        [req.body.profile_name, req.params.id])*/
+
     return res.status(201).json({
       success: true,
       message: "Edit profile was successful"
