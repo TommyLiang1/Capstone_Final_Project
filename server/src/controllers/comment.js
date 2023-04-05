@@ -147,6 +147,12 @@ exports.deleteComment = async (req, res) => {
       'SELECT post_id FROM comments WHERE comment_id = $1',
       [req.params.id]
     )
+
+    await db.query(
+      'DELETE FROM likes WHERE comment_id = $1',
+      [req.params.id]
+    )
+
     await db.query(
       'DELETE FROM comments WHERE comment_id = $1',
       [req.params.id]
