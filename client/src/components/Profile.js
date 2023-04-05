@@ -79,18 +79,19 @@ const Profile = () => {
   }
 
   const retrieveInfo = async () => {
-    const {data} = await getProfile(id);
-    setUserInfo({
-      profile_id: data.profile.profile_id,
-      profile_name: data.profile.profile_name,
-      profile_email: data.profile.profile_email,
-      img: data.profile.img,
-      city: data.profile.city,
-      bio: data.profile.bio,
-      education: data.profile.education,
-      hobbies: data.profile.hobbies,
-    });
-    
+    await getProfile(id)
+      .then(res => {
+        setUserInfo({
+          profile_id: res.data.profile[0].user_id,
+          profile_name: res.data.profile[0].user_name,
+          profile_email: res.data.profile[0].user_email,
+          img: res.data.profile[0].img,
+          city: res.data.profile[0].city,
+          bio: res.data.profile[0].bio,
+          education: res.data.profile[0].education,
+          hobbies: res.data.profile[0].hobbies
+        })  
+      })
   }
 
   function importAll(r) {
@@ -104,6 +105,7 @@ const Profile = () => {
   const protectedInfo = async () => {
     try {
       const {data} = await fetchProtectedInfo()
+      console.log(data)
       setProtectedData(data.info)
     } catch (err) {
     }
