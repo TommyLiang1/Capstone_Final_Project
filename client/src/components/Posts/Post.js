@@ -2,13 +2,16 @@ import React, {useState, useEffect, useRef} from "react";
 import { addLikePost, removeLikePost, deletePost, editPost } from "../../api/post";
 import { getCommentsByPostId, createComment} from "../../api/comment";
 import { likePostFromUser, unlikePostFromUser } from "../../api/like";
+import { useNavigate } from "react-router-dom";
 import Comment from "../Comments/Comment";
 import Modal from "../Modal";
+
 
 import '../../styles/Post.css';
 
 const Post = (props) => {
-  const { post_id, post_name, description_text, likes, comments } = props.postData;
+  
+  const { post_id, post_name, description_text, likes, comments, user_id, created_at } = props.postData;
   const initialLikeId = props.likeId;
   const initialColor = props.likeId === -1 ? "black" : "blue";
   const reloadPosts = props.reloadPosts;
@@ -22,6 +25,7 @@ const Post = (props) => {
   const [commentError, setCommentError] = useState("");
   const [likeId, setLikeId] = useState(initialLikeId);
   const [likeColor, setLikeColor] = useState(initialColor);
+  let navigate = useNavigate(); 
 
   // Like Post
   const likePost = async(e) => {
@@ -117,13 +121,19 @@ const Post = (props) => {
     }
   }, [initialLikeId])
 
+ function test() {
+  let path = `/profile/${user_id}`; 
+  navigate(path);
+ }
+
   return (
     <div className="post-container">
       <div className="post-header">
-        <h5 className="post-name"> {post_name} </h5>
+        <h5 className="post-name" onClick={test}> {post_name} </h5>
         {
           props.userName === post_name && 
           <div className="extra">
+            <span className="timeposted">{created_at}</span>
             <button className="post-edit-btn" onClick={() => setOpenPostModal(true)}>Edit</button>
             <button className="post-delete-btn" onClick={(e) => handleDeletePost(e)}>Delete</button>
           </div>

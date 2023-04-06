@@ -5,10 +5,11 @@ import Modal from "../Modal";
 import '../../styles/Comment.css';
 
 const Comment = (props) => {
-  const { comment_id, comment_name, description_text, likes } = props.commentData;
+  const { comment_id, comment_name, description_text, likes, created_at } = props.commentData;
   const [openEditCommentModal, setOpenEditCommentModal] = useState(false);
   const [editCommentText, setEditCommentText] = useState(description_text);
   const [editCommentError, setEditCommentError] = useState("");
+
 
   // Delete Comment
   const handleDeleteComment = async(e) => {
@@ -49,6 +50,7 @@ const Comment = (props) => {
         {
           props.userName === comment_name && !props.modal &&
           <div className="extra">
+            <span className="comment-time-posted">{created_at}</span>
             <button className="comment-edit-btn" onClick={() => setOpenEditCommentModal(true)}>Edit</button>
             <button className="comment-delete-btn" onClick={(e) => handleDeleteComment(e)}>Delete</button>
           </div>
