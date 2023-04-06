@@ -142,7 +142,7 @@ const Dashboard = () => {
     </Layout>
   ) : (
     <Layout>
-      <div class="banner"><h1>{quoteoftheday}</h1></div>
+      <div className="banner"><h1>{quoteoftheday}</h1></div>
       <div>Welcome back {user.name}</div>
       <div className="text-container">
         <textarea className="text" ref={message} placeholder="Whats on your mind?"></textarea>

@@ -15,16 +15,18 @@ exports.getProfile = async (req, res) => {
 
 exports.editProfile = async (req, res) => {
   try {
+    const {profile_name, img, city, education, bio, hobby} = req.body;
     await db.query(
-      'UPDATE users SET user_name = $1, user_email = $2, img = $3, city = $4, education = $5, bio = $6, hobbies = $7 WHERE user_id = $8',
-      [req.body.profile_name, req.body.profile_email, req.body.img, req.body.city, req.body.education, req.body.bio, req.body.hobbies, req.params.id])
+      'UPDATE users SET user_name = $1, img = $2, city = $3, education = $4, bio = $5, hobbies = $6 WHERE user_id = $7',
+      [profile_name, img, city, education, bio, hobby, req.params.id])
 
-      await db.query(
-        'UPDATE posts SET post_name = $1 WHERE user_id = $2',
-        [req.body.profile_name, req.params.id])
-      /*await db.query(
-        'UPDATE comments SET comment_name = $1 WHERE user_id = $2',
-        [req.body.profile_name, req.params.id])*/
+    await db.query(
+      'UPDATE posts SET post_name = $1 WHERE user_id = $2',
+      [profile_name, req.params.id])
+
+    /*await db.query(
+      'UPDATE comments SET comment_name = $1 WHERE user_id = $2',
+      [req.body.profile_name, req.params.id])*/
 
     return res.status(201).json({
       success: true,
