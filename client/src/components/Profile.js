@@ -6,9 +6,107 @@ import { getProfile } from "../api/profile";
 import { fetchProtectedInfo } from "../api/auth";
 import axios from 'axios';
 
+import Post from "./Posts/Post";
+import { getPosts, createPost } from "../api/post";
+import { getPostsLikedByUser } from "../api/like";
+import {useRef} from "react";
+import { useDispatch } from "react-redux";
+import { getUserById } from "../api/auth";
+
 import '../styles/Profile.css';
 
 const Profile = () => {
+  const dispatch = useDispatch()
+  const [quoteoftheday, setquoteoftheday] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const message = useRef("")
+  const [posts, setPosts] = useState([])
+  const [postIds, setPostIds] = useState([]);
+  const [likeIds, setLikeIds] = useState([]);
+  const [user, setUser] = useState({
+    id: '',
+    name: '',
+    email: '',
+    profId: '',
+  })
+  let like_id = -1;
+
+  // Creating a new post
+  const submitPost = async(e) => {
+    e.preventDefault()
+    if(message.current.value === "") {
+      setError("Please enter a message!")
+      setSuccess("")
+      return;
+    }
+    let postData = {
+      id: user.id,
+      username: user.name,
+      message: message.current.value,
+    }
+    await createPost(postData)
+      .then(() => {
+        message.current.value = "";
+        setSuccess("Post created successfully");
+        setError("");
+        reloadPosts();
+      })
+  }
+
+  // Refresh posts
+  const reloadPosts = () => {
+    getPosts()
+      .then(res => {
+        setPosts(res.data.posts)
+      })
+  }
+
+  // Use effect function to get the user
+  const getUserInfo = async () => {
+    let tmpId;
+    await fetchProtectedInfo()
+      .then(res => {
+        tmpId = res.data.info
+      })
+      .catch(err => {
+        console.log(err)
+      })
+      
+    await getUserById(tmpId)
+      .then(res => {
+        setUser({
+          id: res.data.user[0].user_id,
+          name: res.data.user[0].user_name,
+          email: res.data.user[0].user_email
+        })  
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+    setLoading(false)
+
+    // Get all Posts
+    await getPosts()
+      .then(res => {
+        setPosts(res.data.posts)
+      })
+    
+    // Get postIds like by User
+    await getPostsLikedByUser(tmpId)
+      .then(res => {
+        if(res.data.postIds.length === 0) return;
+        let tmpPostIds = [];
+        let tmpLikeIds = [];
+        res.data.postIds.forEach(postId => {
+          tmpPostIds = [...tmpPostIds, postId.post_id]
+          tmpLikeIds = [...tmpLikeIds, postId.like_id]
+        })
+        setPostIds(tmpPostIds)
+        setLikeIds(tmpLikeIds)
+      })
+  }
+
   const {id} = useParams();
   const [userInfo, setUserInfo] = useState({
     profile_id: '',
@@ -114,6 +212,7 @@ const Profile = () => {
   useEffect(() => {
     retrieveInfo()
     protectedInfo()
+    getUserInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -167,6 +266,16 @@ const Profile = () => {
             {userInfo.city != null ? (<div class ="description"><i class="fas fa-city"></i> {userInfo.city} </div>) : (<div class ="description"><i class="fas fa-city"></i> No City Listed</div>)}
             {userInfo.education != null ? (<div class ="description"><i class="fas fa-graduation-cap"></i> {userInfo.education} </div>) : (<div class ="description"><i class="fas fa-graduation-cap"></i> No Education Listed</div>)}
             {userInfo.hobbies != null ? (<div class ="description"><i class="fas fa-book"></i> {userInfo.hobbies} </div>) : (<div class ="description"><i class="fas fa-book"></i> No Hobbies Listed</div>)}
+            <br></br>
+            {
+              posts.map(post => {
+                // retreive like_id if post is liked by current user
+                like_id = postIds.includes(post.post_id) ? likeIds[postIds.indexOf(post.post_id)] : -1
+                if(post.user_id ==userInfo.profile_id){
+                  return <Post key={post.post_id} userId={user.id} userName={user.name} postData={post} likeId={like_id} reloadPosts={reloadPosts} />
+                }
+              })
+            }
           </div>
         )
       }
