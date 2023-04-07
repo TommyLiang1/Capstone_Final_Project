@@ -16,7 +16,7 @@ CREATE TABLE users(
 
 CREATE TABLE posts(
   post_id SERIAL PRIMARY KEY,
-  post_name VARCHAR(255) NOT NULL REFERENCES users(user_name),
+  post_name VARCHAR(255) NOT NULL,
   description_text TEXT NOT NULL,
   likes INT,
   comments INT,
@@ -26,7 +26,7 @@ CREATE TABLE posts(
 
 CREATE TABLE comments(
   comment_id SERIAL PRIMARY KEY,
-  comment_name VARCHAR(255) NOT NULL REFERENCES users(user_name),
+  comment_name VARCHAR(255) NOT NULL,
   description_text TEXT NOT NULL,
   likes INT,
   post_id INT NOT NULL REFERENCES posts(post_id),
