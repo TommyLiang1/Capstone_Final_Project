@@ -34,10 +34,6 @@ const Profile = () => {
   const editHobby = useRef(null);
   const [editImgUrl, setEditImgUrl] = useState('');
   
-  
-  // const onChange = (e) => {
-  //   setUserInfo({...editUserInfo, [e.target.name]: e.target.value})
-  // }
 
   function isFileImage(file) {
     return file && file['type'].split('/')[0] === 'image';
@@ -131,7 +127,6 @@ const Profile = () => {
   const protectedInfo = async () => {
     try {
       const {data} = await fetchProtectedInfo()
-      // console.log(data)
       setProtectedData(data.info)
     } catch (err) {
     }

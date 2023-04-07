@@ -55,29 +55,8 @@ const loginFieldsCheck = check('email').custom(async (value, {req}) => {
   req.user = user.rows[0]
 })
 
-//edit username validation
-
-// const editUserCheck = () => {
-//   const userId = check('user_id')
-
-//   const user = check('user_name').custom(async (value) => {
-//     console.log(value)
-//     const user = await db.query(
-//       'SELECT * FROM users WHERE user_name = $1', 
-//       [value]
-//     )
-//   })
-
-//   // console.log(user)
-
-//   // if(user.rows > 0) {
-//   //   throw new Error('Username already exists')
-//   // }
-// }
-
 module.exports = {
   registerValidation: [username, email, password, emailExists, userExists],
   loginValidation: [loginFieldsCheck],
-  // profileEditValidation: [editUserCheck],
 }
 
