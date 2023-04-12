@@ -53,5 +53,10 @@
     "id": 11,
     "name": "Remove Things Adding to Your Stress",
     "detail": "Sometimes, the best way to reduce your stress is to cut something out of your life. Changing your daily rountine may help if your stop doing an activity that adds to your stress, like constantly being connected to your phone."
+  },
+  {
+    "id": 12,
+    "name": "Go Outside",
+    "detail": "Being outdoors and away from where you usually are may help reduce stress. Sometimes as little as 10 minutes of frsh air can improve your well-being."
   }
 ]
