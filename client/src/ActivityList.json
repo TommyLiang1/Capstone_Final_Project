@@ -38,5 +38,20 @@
     "id": 8,
     "name": "Counseling/Therapy",
     "detail": "Consider therapy or counseling. Sometimes you may not know why you are feeling the way you are and getting a professional counselor or therapist can help identify sources of your stress and provide ways to reduce stress."
+  },
+  {
+    "id": 9,
+    "name": "Eat a Balanced Diet",
+    "detail": "It may sound weird, but keeping a healthy diet can help with stress in the long run. Stress eating may provide a temporary sense of relief, but may also add to long-term stress."
+  },
+  {
+    "id": 10,
+    "name": "Reassess Your Schedule",
+    "detail": "Trying to get a lot done in a short amount of time is going to make you more stressed. Spreading out your workload can be a way to reduce the amount of stress you get and with a more spread out workload, you may have more time to take breaks to clear your mind and refocus."
+  },
+  {
+    "id": 11,
+    "name": "Remove Things Adding to Your Stress",
+    "detail": "Sometimes, the best way to reduce your stress is to cut something out of your life. Changing your daily rountine may help if your stop doing an activity that adds to your stress, like constantly being connected to your phone."
   }
 ]
