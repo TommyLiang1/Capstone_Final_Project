@@ -2,21 +2,41 @@
   {
     "id": 1,
     "name": "Meditation",
-    "detail": "Action of clearing your mind from all things. The general idea is to distracte yourself from anything around you."
+    "detail": "A practice that involves focusing or clearing your mind. There are many ways to meditate, but generally involves breathing techniques and allowing your mind to wander."
   },
   {
     "id": 2,
-    "name": "Socialize",
-    "detail": "Sometimes simply talking to someone else would help relieve mental stress plague you."
+    "name": "Be Active",
+    "detail": "Sometimes any form of physical activity can be a stress reliever. Exercising can allow your mind to refocus, which can improve your mood."
   },
   {
     "id": 3,
-    "name": "Testing",
-    "detail": "Sometimes simply talking to someone else would help relieve mental stress plague you."
+    "name": "Music",
+    "detail": "Listening to music is a great mental distraction. Instead of constantly focusing on stressors, your mind will wander and focus on the music or anything else the music makes you feel. Additionally, listening to music can also reduce muscle tension and decress stree hormones."
   },
   {
     "id": 4,
-    "name": "Testing123",
-    "detail": "Sometimes simply talking to someone else would help relieve mental stress plague you."
+    "name": "Keeping a Journal",
+    "detail": "Writing/typing your thoughts onto a journal or text file is a good way to release your built-up emotions. Simply write whatever comes to mind without thinking. No one else needs to read it anyway, so afterward you can either trash it or save it for a self-reflection at a later date."
+  },
+  {
+    "id": 5,
+    "name": "Sleeping",
+    "detail": "Stress can cause one to have trouble sleeping due too having a lot to think about during your sleep. As such, you should consider creating a quiet and relaxing bedtime routine. Maybe listen to some soothing music while you sleep; everyone is different, so try experimenting."
+  },
+  {
+    "id": 6,
+    "name": "Try getting a new hobby",
+    "detail": "Having a new hobby or activity to focus on is another good way to put your mind away from anything stressing you while enjoying yourself. Hobbies are a good way to do what you want without needing to worry about anything else and that is what makes this a good stress reliever."
+  },
+  {
+    "id": 7,
+    "name": "Connecting with others",
+    "detail": "Sometimes when one is stressed, the instictive thing to do is to isolate oneself. Instead of isolation, try reaching out with family and friends. Talking with others is a good way to distrct your mind or if they are willing to listen on your troubles, it can be a good way to vent out all the built-up stress (similar to keeping a journal)."
+  },
+  {
+    "id": 8,
+    "name": "Counseling",
+    "detail": "Consider therapy or counseling. Sometimes you may not know why you are feeling the way you are and getting a professional counselor or therapist can help identify sources of your stress and provide ways to reduce stress."
   }
 ]
