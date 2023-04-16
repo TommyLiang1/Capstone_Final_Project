@@ -5,6 +5,7 @@
 .activity-header {
   position: relative;
   text-align: center;
+  margin-top: .5rem;
 }
 
 .card-grid{

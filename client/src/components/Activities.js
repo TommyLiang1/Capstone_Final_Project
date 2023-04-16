@@ -6,7 +6,7 @@ import "../styles/Activities.css";
 const Activities = () => {
   return(
     <Layout>   
-      <h1 className="activity-header">Mental Health Activities</h1>
+      <h1 className="activity-header">Stress Relief Activities</h1>
       <br></br>
       <div className="card-grid">
         {
