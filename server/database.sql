@@ -7,7 +7,7 @@ CREATE TABLE users(
   user_name VARCHAR(255) NOT NULL,
   user_email VARCHAR(255) NOT NULL,
   user_password VARCHAR(255) NOT NULL,
-  created_at DATE DEFAULT current_date,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp,
   img VARCHAR(255),
   city VARCHAR(255),
   education VARCHAR(255),
@@ -27,7 +27,7 @@ CREATE TABLE posts(
   likes INT,
   comments INT,
   user_id INT NOT NULL REFERENCES users(user_id),
-  created_at DATE DEFAULT current_date
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp
 );
 
 CREATE TABLE comments(
@@ -36,7 +36,7 @@ CREATE TABLE comments(
   description_text TEXT NOT NULL,
   likes INT,
   post_id INT NOT NULL REFERENCES posts(post_id),
-  created_at DATE DEFAULT current_date
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp
 );
 
 CREATE TABLE likes(
