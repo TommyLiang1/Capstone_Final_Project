@@ -21,7 +21,7 @@
   },
   {
     "id": 5,
-    "name": "Sleeping",
+    "name": "Sleep",
     "detail": "Stress can cause one to have trouble sleeping due too having a lot to think about during your sleep. As such, you should consider creating a quiet and relaxing bedtime routine. Maybe listen to some soothing music while you sleep; everyone is different, so try experimenting."
   },
   {
@@ -58,5 +58,15 @@
     "id": 12,
     "name": "Go Outside",
     "detail": "Being outdoors and away from where you usually are may help reduce stress. Sometimes as little as 10 minutes of frsh air can improve your well-being."
+  },
+  {
+    "ud": 13,
+    "name": "Creating Art",
+    "detail": "Drawing and coloring is another greate activity to keep you mind of any stressors, resulting in stress relief."
+  },
+  {
+    "id": 14,
+    "name": "Yoga",
+    "detail": "Yoga combines physical movement, meditation, light exercise, and controlled breathing which all provide excellent stress relief."
   }
 ]
