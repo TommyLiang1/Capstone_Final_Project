@@ -27,7 +27,7 @@ removeComment = async (req, res) => {
 
 exports.getComments = async (req, res) => {
   try {
-    const { rows } = await db.query('SELECT * FROM comments');
+    const { rows } = await db.query('SELECT * FROM comments ORDER BY comment_id DESC');
 
     return res.status(200).json({
       success: true,
@@ -41,7 +41,7 @@ exports.getComments = async (req, res) => {
 exports.getCommentsByPostId = async (req, res) => {
   try {
     const { rows } = await db.query(
-      'SELECT * FROM comments WHERE post_id = $1',
+      'SELECT * FROM comments WHERE post_id = $1 ORDER BY comment_id DESC',
       [req.params.id]
     );
 

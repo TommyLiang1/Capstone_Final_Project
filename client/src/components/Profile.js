@@ -217,10 +217,8 @@ const Profile = () => {
   }, [])
 
   return (
-    <Layout>
-      {
         editMode ? (
-          <div>
+          <Layout>
           <div class ="name"> Edit Profile </div>
           <div class ="edit">
             Username: <input onChange={(e) => onChange(e)} id="profile_name" name="profile_name" type='text' placeholder="Username" required />
@@ -247,39 +245,42 @@ const Profile = () => {
               <button type="submit" className="form-btn btn btn-primary" onClick={(e) => onSubmit(e)}> Submit</button>
           </div>
           <div class = "description" style={{color:'red', margin: '10px 0' }}>{error}</div>
-          </div>
+          </Layout>
         ) : (
-          <div>
-            <div class ="name"> {userInfo.profile_name}
-            {userInfo.profile_id === protectedData ? (<button className="edit-btn" onClick={() => setEditMode(true)}> <i class="fas fa-pen"> </i> </button>) : (null)}
-            </div>
-            <div class = "description" style={{color:'green', margin: '10px 0' }}>{success}</div>
-
-            <div id = "center">
-              {images[userInfo.img] !== undefined ? (<img src={images[userInfo.img]} alt="..."/>) :  (<img src={images["default-profile-picture.jpg"]} alt="..."/>)}
-            </div>
-
-            <div class ="email"><i class="fas fa-envelope"></i> {userInfo.profile_email} </div>
-            <br></br>
-            {userInfo.bio != null ? (<div class ="description"> {userInfo.bio} </div>) : (<div class ="description">No Description Listed</div>)}
-            <br></br>
-            {userInfo.city != null ? (<div class ="description"><i class="fas fa-city"></i> {userInfo.city} </div>) : (<div class ="description"><i class="fas fa-city"></i> No City Listed</div>)}
-            {userInfo.education != null ? (<div class ="description"><i class="fas fa-graduation-cap"></i> {userInfo.education} </div>) : (<div class ="description"><i class="fas fa-graduation-cap"></i> No Education Listed</div>)}
-            {userInfo.hobbies != null ? (<div class ="description"><i class="fas fa-book"></i> {userInfo.hobbies} </div>) : (<div class ="description"><i class="fas fa-book"></i> No Hobbies Listed</div>)}
+          <Layout>
+            <div class="flex-container">
+              <div class ="section">
+                <div class ="name"> {userInfo.profile_name}
+                {userInfo.profile_id === protectedData ? (<button className="edit-btn" onClick={() => setEditMode(true)}> <i class="fas fa-pen"> </i> </button>) : (null)}
+                </div>
+                <div class = "description" style={{color:'green', margin: '10px 0' }}>{success}</div>
+                <div id = "center">
+                  {images[userInfo.img] !== undefined ? (<img src={images[userInfo.img]} alt="..."/>) :  (<img src={images["default-profile-picture.jpg"]} alt="..."/>)}
+                </div>
+              </div>
+              <div class ="section">
+                <div class ="email"><i class="fas fa-envelope"></i> {userInfo.profile_email} </div>
+                <br></br>
+                {userInfo.bio != null ? (<div class ="description"> {userInfo.bio} </div>) : (<div class ="description">No Description Listed</div>)}
+                <br></br>
+                {userInfo.city != null ? (<div class ="description"><i class="fas fa-city"></i> {userInfo.city} </div>) : (<div class ="description"><i class="fas fa-city"></i> No City Listed</div>)}
+                {userInfo.education != null ? (<div class ="description"><i class="fas fa-graduation-cap"></i> {userInfo.education} </div>) : (<div class ="description"><i class="fas fa-graduation-cap"></i> No Education Listed</div>)}
+                {userInfo.hobbies != null ? (<div class ="description"><i class="fas fa-book"></i> {userInfo.hobbies} </div>) : (<div class ="description"><i class="fas fa-book"></i> No Hobbies Listed</div>)}
+                </div>
+              </div>
             <br></br>
             {
               posts.map(post => {
-                // retreive like_id if post is liked by current user
                 like_id = postIds.includes(post.post_id) ? likeIds[postIds.indexOf(post.post_id)] : -1
                 if(post.user_id ==userInfo.profile_id){
                   return <Post key={post.post_id} userId={user.id} userName={user.name} postData={post} likeId={like_id} reloadPosts={reloadPosts} />
                 }
               })
             }
-          </div>
+            <br></br>
+            <br></br>
+          </Layout>
         )
-      }
-    </Layout>
   )
 }
 
