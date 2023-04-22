@@ -36,6 +36,7 @@ CREATE TABLE comments(
   description_text TEXT NOT NULL,
   likes INT,
   post_id INT NOT NULL REFERENCES posts(post_id),
+  user_id INT NOT NULL REFERENCES users(user_id),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp
 );
 

@@ -88,6 +88,7 @@ const Post = (props) => {
       return;
     }
     let commentData = {
+      id: props.userId,
       username: props.userName,
       comment: comment.current.value
     }
@@ -122,7 +123,7 @@ const Post = (props) => {
   }, [initialLikeId])
 
 // Function that goes to user profile when their username is clicked
- function test() {
+ function toProfile() {
   let path = `/profile/${user_id}`; 
   navigate(path);
  }
@@ -140,7 +141,7 @@ const Post = (props) => {
     <div className="post-container">
       <div className="post-header">
       <img className="post-profile-img" src={images["profile-picture-" + user_id]} alt="..."/>
-        <h5 className="post-name" onClick={test}> {post_name} </h5>
+        <h5 className="post-name" onClick={toProfile}> {post_name} </h5>
         {
           props.userName === post_name && 
           <div className="extra">
