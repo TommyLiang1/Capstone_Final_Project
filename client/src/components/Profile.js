@@ -180,7 +180,7 @@ const Profile = () => {
             </div>
             <div className="description" style={{color:'green', margin: '10px 0' }}>{success}</div>
 
-            <div id = "center">
+            <div id="center">
               {images[userInfo.img] !== undefined ? (<img src={images[userInfo.img]} alt="..."/>) :  (<img src={images["default-profile-picture.jpg"]} alt="..."/>)}
             </div>
 
