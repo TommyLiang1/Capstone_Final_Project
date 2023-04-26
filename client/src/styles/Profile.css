@@ -1,6 +1,6 @@
 .name {
   text-align: center;
-  font-size: 100px;
+  font-size: 50px;
 }
 
 .email {
@@ -14,10 +14,19 @@
 }
 
 .edit {
+  width: 450px;
+  margin: auto;
+  font-size: 18px;
   text-align: center;
-  font-size: 20px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+}
+
+.edit-item {
+  margin: 10px 0px;
+  /* text-align: center; */
+}
+
+.edit-item-label {
+  width: 100px;
 }
 
 .edit-btn {
@@ -27,8 +36,7 @@
   background: none;
   font-size: 30px;
   cursor: pointer;
-  padding-right: 50px;
-  padding-right: 50px;
+  padding: 5px;
 }
 
 img {

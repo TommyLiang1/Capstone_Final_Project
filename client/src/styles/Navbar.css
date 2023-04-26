@@ -7,28 +7,16 @@
 }
 
 .nav-item-right {
-  margin-left: auto;
+  float: right;
 }
 
 .nav-item {
   color:black;
+  margin: 0px 25px;
 }
 
 .nav-item:hover {
   color: black;
-}
-
-.nav-item {
-  margin: 15px 25px;
-}
-
-.logout-btn {
-  border: none;
-  padding: 3px 10px;
-  border-radius: 20px;
-  background-color: white;
-}
-
-.logout-btn:hover {
-  background-color: lightgray;
+  text-decoration: underline rgba(0, 69, 138, 0.7);
+  text-underline-offset: 15px;
 }

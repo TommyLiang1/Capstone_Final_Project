@@ -1,11 +1,10 @@
 --CREATE DATABASE CapstoneFinalProject;
 
 -- Made some database changes including user/profile merge, would drop all and recreate all
--- Create Users Table
 CREATE TABLE users(
   user_id SERIAL PRIMARY KEY,
-  user_name VARCHAR(255) NOT NULL,
-  user_email VARCHAR(255) NOT NULL,
+  user_name VARCHAR(255) UNIQUE NOT NULL,
+  user_email VARCHAR(255) UNIQUE NOT NULL,
   user_password VARCHAR(255) NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp,
   img VARCHAR(255),
@@ -14,11 +13,6 @@ CREATE TABLE users(
   bio VARCHAR(255),
   hobbies VARCHAR(255)
 );
-
---insert fake users
---INSERT INTO users (user_name, user_email, user_password) VALUES ('tommy', 'tommy@gmail.com', 'tommy');
-
--- DROP TABLE users, profiles;
 
 CREATE TABLE posts(
   post_id SERIAL PRIMARY KEY,
@@ -47,4 +41,4 @@ CREATE TABLE likes(
   comment_id INT REFERENCES comments(comment_id)
 );
 
--- DROP TABLE posts, comments;
+-- DROP TABLE posts, comments, users, likes;

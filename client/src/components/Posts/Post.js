@@ -180,6 +180,7 @@ const Post = (props) => {
             <div>{description_text}</div>
             <textarea className='edit-post-text' ref={comment} placeholder="Write your comment here."></textarea>
             <div style={{color:'red', margin: '5px 0' }}>{commentError}</div>
+            <button className='edit-post-btn' onClick={(e) => handleCreateComment(e)}>Comment</button>
             {
               postComments.map(comment => {
                 return (
@@ -189,7 +190,6 @@ const Post = (props) => {
                 )
               })
             }
-            <button className='edit-post-btn' onClick={(e) => handleCreateComment(e)}>Comment</button>
           </div>
         </Modal>
       </div>
