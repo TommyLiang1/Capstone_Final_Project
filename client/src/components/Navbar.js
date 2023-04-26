@@ -34,11 +34,11 @@ const Navbar = () => {
 
   return (
     <nav>
-      {isAuth ? (
+      {isAuth && (
         <div className="main-nav">
           <div>
             <NavLink className="nav-item" to='/dashboard'>
-              <span>Dashboard</span>
+              <span>Mending</span>
             </NavLink>
           </div>
 
@@ -54,24 +54,6 @@ const Navbar = () => {
             <button onClick={() => logout()} className='logout-btn'>
               Log Out
             </button>
-          </div>
-        </div>
-      ) : (
-        <div className="main-nav">
-          <div>
-            <NavLink className="nav-item" to='/'>
-              <span>Home</span>
-            </NavLink>
-          </div>
-
-          <div className="nav-item-right">
-            <NavLink className="nav-item" to='/login'>
-              <span>Login</span>
-            </NavLink>
-
-            <NavLink className="nav-item" to='/register'>
-              <span>Register</span>
-            </NavLink>
           </div>
         </div>
       )}

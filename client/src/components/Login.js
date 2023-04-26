@@ -1,12 +1,10 @@
-import React, {useState} from "react";
-import Layout from "./Layout";
-import { onLogin } from "../api/auth";
-import { GoogleLogin } from '@react-oauth/google';
-//import jwt_decode from "jwt-decode";
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { authenticateUser } from "../redux/slices/authSlice";
+import { GoogleLogin } from '@react-oauth/google';
+import { onLogin } from "../api/auth";
 
-import '../styles/Form.css';
 import '../styles/Login.css';
 
 const Login = () => {
@@ -16,6 +14,7 @@ const Login = () => {
     password: ''
   })
   const [error, setError] = useState(false);
+  const navigate = useNavigate();
 
   const onChange = (e) => {
     setValues({...values, [e.target.name]: e.target.value})
@@ -24,13 +23,13 @@ const Login = () => {
   const dispatch = useDispatch()
   const onSubmit = async (e) => {
     e.preventDefault()
-
     try {
       await onLogin(values)
       dispatch(authenticateUser())
       localStorage.setItem('isAuth', 'true')
+      navigate("/dashboard")
     } catch (err) {
-      console.error(err.response.data.errors[0].msg)
+      console.log(err.response.data.errors[0].msg)
       setError(err.response.data.errors[0].msg)
     }
   }
@@ -44,7 +43,7 @@ const Login = () => {
       // dispatch(authenticateUser())
       // localStorage.setItem('isAuth', 'true')
     } catch (err) {
-      console.error(err)
+      console.log(err)
     }
   }
 
@@ -53,45 +52,50 @@ const Login = () => {
   }
 
   return (
-    <Layout>
-      <form onSubmit={(e) => onSubmit(e)} className='form-container mt-3'>
-        <h1>Log In</h1>
+    <form onSubmit={(e) => onSubmit(e)} className='form-container mt-3'>
+      <h1>Log In</h1>
 
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email
-          </label>
-          <input onChange={(e) => onChange(e)} id="email" name="email" type='email' className="form-control" value={values.email} placeholder="email" required />
+      <div className="mb-3">
+        <label htmlFor="email" className="form-label">
+          Email
+        </label>
+        <input onChange={(e) => onChange(e)} id="email" name="email" type='email' className="form-control" value={values.email} placeholder="email" required />
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="password" className="form-label">
+          Password
+        </label>
+        <div>
+          <input onChange={(e) => onChange(e)} id="password" name="password" type={passwordShown? 'text' : 'password'} className="form-control" value={values.password} placeholder="password" required />
+          <i onClick={() => togglePasswordVisibility()} className={passwordShown? "far fa-eye-slash" : "far fa-eye"} id="togglePassword" style={{marginLeft: -30}}></i>
         </div>
+      </div>
 
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <div>
-            <input onChange={(e) => onChange(e)} id="password" name="password" type={passwordShown? 'text' : 'password'} className="form-control" value={values.password} placeholder="password" required />
-            <i onClick={() => togglePasswordVisibility()} className={passwordShown? "far fa-eye-slash" : "far fa-eye"} id="togglePassword" style={{marginLeft: -30}}></i>
-          </div>
-        </div>
+      <div style={{color:'red', margin: '10px 0' }}>{error}</div>
 
-        <div style={{color:'red', margin: '10px 0' }}>{error}</div>
+      <button type="submit" className="form-btn btn btn-primary">
+        Log In
+      </button>
 
-        <button type="submit" className="form-btn btn btn-primary">
-          Log In
-        </button>
+      <div className="or">or</div>
 
-        <div className="or">or</div>
+      <GoogleLogin
+        className="form-btn google-btn"
+        onSuccess={(credentialResponse) => onSuccess(credentialResponse)}
+        onError={(err) => {
+          console.log('Login Failed', err);
+        }}
+        useOneTap
+      />
 
-        <GoogleLogin
-          className="form-btn google-btn"
-          onSuccess={(credentialResponse) => onSuccess(credentialResponse)}
-          onError={(err) => {
-            console.log('Login Failed', err);
-          }}
-          useOneTap
-        />
-      </form>
-    </Layout>
+      <div className="login-text">
+        Don't have an account?
+        <NavLink className="register-link" to='/register'>
+          <span>Register</span>
+        </NavLink>
+      </div>
+    </form>
   );
 };
 

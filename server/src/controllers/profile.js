@@ -16,13 +16,14 @@ exports.getProfile = async (req, res) => {
 
 exports.editProfile = async (req, res) => {
   try {
+    // console.log("updating profile...", req.body)
     await db.query(
       'UPDATE profiles SET profile_name = $1, profile_email = $2, img = $3, city = $4, education = $5, bio = $6, hobbies = $7 WHERE profile_id = $8',
-      [req.body.profile_name, req.body.profile_email, req.body.img, req.body.city, req.body.education, req.body.bio, req.body.hobbies, req.params.id])
+      [req.body.profile_name, req.body.profile_email, req.body.img, req.body.city, req.body.education, req.body.bio, req.body.hobbies, req.body.profile_id])
 
     await db.query(
       'UPDATE users SET user_name = $1, user_email = $2 WHERE profile_id = $3',
-      [req.body.profile_name, req.body.profile_email, req.params.id]
+      [req.body.profile_name, req.body.profile_email, req.body.profile_id]
     )
 
     return res.status(201).json({

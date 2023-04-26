@@ -50,4 +50,11 @@ CREATE TABLE comments(
   created_at DATE DEFAULT current_date
 );
 
+CREATE TABLE likes(
+  like_id SERIAL PRIMARY KEY,
+  user_id INT NOT NULL REFERENCES users(user_id),
+  post_id INT REFERENCES posts(post_id),
+  comment_id INT REFERENCES comments(comment_id)
+);
+
 -- DROP TABLE posts, comments;
