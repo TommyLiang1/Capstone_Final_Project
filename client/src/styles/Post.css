@@ -12,6 +12,18 @@
   display: inline-block;
 }
 
+.post-name:hover {
+  color:blue;
+}
+
+/* POST PROFILE IMAGE */
+.post-profile-img {
+  width: 12%;  
+  height: auto;
+  object-fit: contain;
+}
+
+
 /* LIKE AND COMMENT SECTION */
 .lc {
   display: inline-block;

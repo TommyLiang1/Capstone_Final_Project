@@ -1,14 +1,17 @@
 import React, {useState} from "react";
 import { deleteComment, editComment } from "../../api/comment";
+import { useNavigate } from "react-router-dom";
 import Modal from "../Modal";
 
 import '../../styles/Comment.css';
 
 const Comment = (props) => {
-  const { comment_id, comment_name, description_text, likes } = props.commentData;
+  const { comment_id, comment_name, description_text, likes, created_at, user_id} = props.commentData;
   const [openEditCommentModal, setOpenEditCommentModal] = useState(false);
   const [editCommentText, setEditCommentText] = useState(description_text);
   const [editCommentError, setEditCommentError] = useState("");
+  let navigate = useNavigate(); 
+
 
   // Delete Comment
   const handleDeleteComment = async(e) => {
@@ -42,13 +45,30 @@ const Comment = (props) => {
       })
   }
 
+// Function that goes to user profile when their username is clicked
+function toProfile() {
+  let path = `/profile/${user_id}`; 
+  navigate(path);
+ }
+
+ // Imports profile images
+ function importAll(r) {
+  let images = [];
+  r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+  return images;
+}
+  const images = importAll(require.context('../images', false, ));
+
+  
   return (
     <div className="comment-container">
       <div className="comment-header">
-        <h5 className="comment-name"> {comment_name} </h5>
+      <img className="post-profile-img" src={images["profile-picture-" + user_id]} alt="..."/>
+        <h5 className="comment-name" onClick={toProfile}> {comment_name} </h5>
         {
           props.userName === comment_name && !props.modal &&
           <div className="extra">
+            <span className="comment-time-posted">{created_at}</span>
             <button className="comment-edit-btn" onClick={() => setOpenEditCommentModal(true)}>Edit</button>
             <button className="comment-delete-btn" onClick={(e) => handleDeleteComment(e)}>Delete</button>
           </div>
