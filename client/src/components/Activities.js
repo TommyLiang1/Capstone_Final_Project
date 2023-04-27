@@ -5,18 +5,20 @@ import "../styles/Activities.css";
 
 const Activities = () => {
   return(
-    <Layout>   
-      <h1 className="activity-header">Stress Relief Activities</h1>
-      <br></br>
-      <div className="card-grid">
-        {
-          List.map(activity => {
-            return(
-              <Activity key={activity.id} name={activity.name} detail={activity.detail}/>
-            )
-          })
-        }
-      </div>
+    <Layout>  
+      <div className="activity-background">
+        <h1 className="activity-header">Stress Relief Activities</h1>
+        <br></br>
+        <div className="card-grid">
+          {
+            List.map(activity => {
+              return(
+                <Activity key={activity.id} name={activity.name} detail={activity.detail}/>
+              )
+            })
+          }
+        </div>
+      </div> 
     </Layout>
   )
 }

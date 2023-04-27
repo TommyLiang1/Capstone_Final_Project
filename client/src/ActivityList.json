@@ -12,17 +12,17 @@
   {
     "id": 3,
     "name": "Listen to Music",
-    "detail": "Listening to music is a great mental distraction. Instead of constantly focusing on stressors, your mind will wander and focus on the music or anything else the music makes you feel. Additionally, listening to music can also reduce muscle tension and decress stree hormones."
+    "detail": "Listening to music is a great mental distraction. Instead of constantly focusing on stressors, music will allow your mind to relax and can reduce muscle tension and decrease stress hormones."
   },
   {
     "id": 4,
     "name": "Keeping a Journal",
-    "detail": "Writing/typing your thoughts onto a journal or text file is a good way to release your built-up emotions. Simply write whatever comes to mind without thinking. No one else needs to read it anyway, so afterward you can either trash it or save it for a self-reflection at a later date."
+    "detail": "Writing/typing your thoughts onto something is a good way to release your built-up emotions. Simply write whatever comes to mind without thinking. No one else needs to read it anyway, so afterward, you can either trash it or save it for a self-reflection at a later date."
   },
   {
     "id": 5,
     "name": "Sleep",
-    "detail": "Stress can cause one to have trouble sleeping due too having a lot to think about during your sleep. As such, you should consider creating a quiet and relaxing bedtime routine. Maybe listen to some soothing music while you sleep; everyone is different, so try experimenting."
+    "detail": "Stress can cause one to have trouble sleeping due to having a lot to think about during your sleep. As such, you should consider creating a quiet and relaxing bedtime routine. Maybe listen to some soothing music while you sleep; everyone is different, so try experimenting."
   },
   {
     "id": 6,
@@ -32,7 +32,7 @@
   {
     "id": 7,
     "name": "Connect With Others",
-    "detail": "Sometimes one isolates oneself when stressed. Instead of isolation, try reaching out to others; interacting with others can distrct your mind and if they are willing to listen to your troubles, it can be a good way to vent out all the built-up stress (similar to keeping a journal)."
+    "detail": "Similar to keeping a journal, reaching out and interacting with others can distract your mind and if they are willing to listen to your troubles, it can be a good way to vent out all the built-up stress."
   },
   {
     "id": 8,
@@ -47,22 +47,22 @@
   {
     "id": 10,
     "name": "Reassess Your Schedule",
-    "detail": "Trying to get a lot done in a short amount of time is going to make you more stressed. Spreading out your workload can be a way to reduce the amount of stress you get and with a more spread out workload, you may have more time to take breaks to clear your mind and refocus."
+    "detail": "Trying to get a lot done in a short amount of time is going to make you more stressed. Spreading out your workload can be a way to reduce the amount of stress you get and with a more spread out the workload; you may have more time to take breaks to clear your mind and refocus."
   },
   {
     "id": 11,
     "name": "Remove Things Adding to Your Stress",
-    "detail": "Sometimes, the best way to reduce your stress is to cut something out of your life. Changing your daily rountine may help if your stop doing an activity that adds to your stress, like constantly being connected to your phone."
+    "detail": "Sometimes, the best way to reduce your stress is to cut something out of your life. Changing your daily routine may help if your stop doing an activity that adds to your stress like constantly being connected to your phone."
   },
   {
     "id": 12,
     "name": "Go Outside",
-    "detail": "Being outdoors and away from where you usually are may help reduce stress. Sometimes as little as 10 minutes of frsh air can improve your well-being."
+    "detail": "Being outdoors and away from where you usually are may help reduce stress. Sometimes as little as 10 minutes of fresh air can improve your well-being."
   },
   {
-    "ud": 13,
+    "id": 13,
     "name": "Creating Art",
-    "detail": "Drawing and coloring is another greate activity to keep you mind of any stressors, resulting in stress relief."
+    "detail": "Drawing and coloring is another great activity to keep your mind off any stressors, resulting in stress relief."
   },
   {
     "id": 14,
