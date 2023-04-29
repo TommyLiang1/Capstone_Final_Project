@@ -3,31 +3,36 @@ import { useDispatch } from "react-redux";
 import { fetchProtectedInfo, onLogout, getUserById } from "../api/auth";
 import { getPosts, createPost } from "../api/post";
 import { getPostsLikedByUser } from "../api/like";
-// import { getProfile } from "../api/profile";
 import { unauthenticateUser } from "../redux/slices/authSlice";
 import Layout from "./Layout";
 import Post from "./Posts/Post";
 import "../styles/Dashboard.css";
 
-import '../styles/Dashboard.css';
-
 const Dashboard = () => {
   const dispatch = useDispatch()
+
+  // Banner state
   const [quoteoftheday, setquoteoftheday] = useState(0)
+
+  // Loading User Info state
   const [loading, setLoading] = useState(true)
+
+  // Create Post states
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
   const message = useRef("")
   const [posts, setPosts] = useState([])
+
+  // Post Like states
   const [postIds, setPostIds] = useState([]);
   const [likeIds, setLikeIds] = useState([]);
+
+  // User state
   const [user, setUser] = useState({
     id: '',
     name: '',
     email: '',
-    profId: '',
   })
-  let like_id = -1;
 
   // Log Out
   const logout = async () => {
@@ -88,7 +93,6 @@ const Dashboard = () => {
           id: res.data.user[0].user_id,
           name: res.data.user[0].user_name,
           email: res.data.user[0].user_email,
-          profId: res.data.user[0].profile_id,
         })  
       })
       .catch((err) => {
@@ -154,6 +158,7 @@ const Dashboard = () => {
       {
         posts.map(post => {
           // retreive like_id if post is liked by current user
+          let like_id;
           like_id = postIds.includes(post.post_id) ? likeIds[postIds.indexOf(post.post_id)] : -1
           return <Post key={post.post_id} userId={user.id} userName={user.name} postData={post} likeId={like_id} reloadPosts={reloadPosts} />
         })

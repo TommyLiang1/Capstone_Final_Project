@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from "react";
 import { addLikePost, removeLikePost, deletePost, editPost } from "../../api/post";
 import { getCommentsByPostId, createComment} from "../../api/comment";
-import { likePostFromUser, unlikePostFromUser } from "../../api/like";
+import { likePostFromUser, unlikePostFromUser, getCommentsLikedByUser } from "../../api/like";
 import Comment from "../Comments/Comment";
 import Modal from "../Modal";
 
@@ -9,8 +9,6 @@ import '../../styles/Post.css';
 
 const Post = (props) => {
   const { post_id, post_name, description_text, likes, comments } = props.postData;
-  const initialLikeId = props.likeId;
-  const initialColor = props.likeId === -1 ? "black" : "blue";
   const reloadPosts = props.reloadPosts;
   const [commentVisibility, setCommentVisibility] = useState(false);
   const [postComments, setPostComments] = useState([]);
@@ -20,8 +18,12 @@ const Post = (props) => {
   const [editPostError, setEditPostError] = useState("");
   const comment = useRef("");
   const [commentError, setCommentError] = useState("");
+  const initialLikeId = props.likeId;
+  const initialColor = props.likeId === -1 ? "black" : "blue";
   const [likeId, setLikeId] = useState(initialLikeId);
   const [likeColor, setLikeColor] = useState(initialColor);
+  const [commentIds, setCommentIds] = useState([]);
+  const [likeIds, setLikeIds] = useState([]);
 
   // Like Post
   const likePost = async(e) => {
@@ -105,8 +107,25 @@ const Post = (props) => {
       });
   }
 
+  // Get commentIds like by User
+  const getCommentIds = async () => {
+    await getCommentsLikedByUser(props.userId)
+      .then(res => {
+        if(res.data.commentIds.length === 0) return;
+        let tmpCommentIds = [];
+        let tmpLikeIds = [];
+        res.data.commentIds.forEach(commentId => {
+          tmpCommentIds = [...tmpCommentIds, commentId.comment_id]
+          tmpLikeIds = [...tmpLikeIds, commentId.like_id]
+        })
+        setCommentIds(tmpCommentIds)
+        setLikeIds(tmpLikeIds)
+      })
+  }
+
   useEffect(() => {
     getComments();
+    getCommentIds();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -189,9 +208,12 @@ const Post = (props) => {
       <button className="vc-btn" onClick={() => toggleCommentVisibility()} hidden={postComments.length === 0 ? true : false}>View comments</button>
       {
         postComments.map(comment => {
+          let like_id;
+          like_id = commentIds.includes(comment.comment_id) ? likeIds[commentIds.indexOf(comment.comment_id)] : -1
+          console.log(like_id)
           return (
             <div key={comment.comment_id} hidden={!commentVisibility}>
-              <Comment commentData={comment} userName={props.userName} reloadPosts={props.reloadPosts} getComments={getComments} modal={false}/>
+              <Comment commentData={comment} userId={props.userId} userName={props.userName} likeId={like_id} reloadPosts={props.reloadPosts} getComments={getComments} modal={false}/>
             </div>
           )
         })
