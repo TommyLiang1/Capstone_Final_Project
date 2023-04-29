@@ -44,8 +44,8 @@ const Navbar = () => {
           </div>
 
           <div className="nav-item-right">
-            <NavLink className="nav-item" to='/dashboard'>
-              Contact Professional
+            <NavLink className="nav-item " to='/contact'>
+              <span>Contact Professional</span>
             </NavLink>
 
             <NavLink className="nav-item" to={`/profile/${userId}`}>

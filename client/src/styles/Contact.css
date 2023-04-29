@@ -1,0 +1,29 @@
+table.rt td {
+    padding: 20px 11px 20px 11px;
+    font-size: 16px;
+    line-height: 18px;
+    background-color: #e6dadf;
+    border: 2px solid #000000;
+}
+
+td {
+    display: table-cell;
+    vertical-align: inherit;
+}
+
+table.rt th{
+    border: 2px solid #000000;
+    background-color:rgb(52, 173, 78);
+}
+
+table {
+    width: 100%;
+    background-color: transparent;
+    border-spacing: 0;
+}
+
+div {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
