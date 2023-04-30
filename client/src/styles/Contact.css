@@ -22,8 +22,11 @@ table {
     border-spacing: 0;
 }
 
-div {
+.contact-container {
     align-items: center;
     justify-content: center;
     text-align: center;
+    width: 90%;
+    margin: auto;
+    margin-top: 15px;
 }
