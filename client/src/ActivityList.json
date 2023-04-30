@@ -1,68 +1,68 @@
 [
   {
     "id": 1,
-    "name": "Meditation",
-    "detail": "A practice that involves focusing or clearing your mind. There are many ways to meditate, but generally involves breathing techniques and allowing your mind to wander."
+    "name": "Meditating",
+    "detail": "Meditating clears the mind and resets your rhythm. Find a quiet and comfortable space where you can sit, close your eyes, and regulate your breathing through slow inhales and exhales."
   },
   {
     "id": 2,
-    "name": "Be Active",
-    "detail": "Sometimes any form of physical activity can be a stress reliever. Exercising can allow your mind to refocus, which can improve your mood."
+    "name": "Exercising",
+    "detail": "When exercising, whether it may be weight training or cardio, your body releases endorphins which increases the feeling of wellbeing.  Exercising is strongly recommended to keep your body in shape, killing two birds with one stone."
   },
   {
     "id": 3,
-    "name": "Listen to Music",
-    "detail": "Listening to music is a great mental distraction. Instead of constantly focusing on stressors, music will allow your mind to relax and can reduce muscle tension and decrease stress hormones."
+    "name": "Listening to Music",
+    "detail": "Listening to music is a great way to get your mind off of current stressors. Music can help your mind relax, reduce muscle tension, and decrease stress hormones."
   },
   {
     "id": 4,
-    "name": "Keeping a Journal",
-    "detail": "Writing/typing your thoughts onto something is a good way to release your built-up emotions. Simply write whatever comes to mind without thinking. No one else needs to read it anyway, so afterward, you can either trash it or save it for a self-reflection at a later date."
+    "name": "Journaling",
+    "detail": "Journaling is a great way to document your emotions. By journaling, you can write your honest unfiltered thoughts. You can refer back to the journal to  review or self-reflect at a later date."
   },
   {
     "id": 5,
-    "name": "Sleep",
-    "detail": "Stress can cause one to have trouble sleeping due to having a lot to think about during your sleep. As such, you should consider creating a quiet and relaxing bedtime routine. Maybe listen to some soothing music while you sleep; everyone is different, so try experimenting."
+    "name": "Proper Sleep Schedule",
+    "detail": "Stress is a major cause of insomnia or irregular sleeping patterns. If this applies to you, consider having a quiet and relaxing bedtime routine. Listening to some soothing music while you sleep can help; everyone is different, so try experimenting."
   },
   {
     "id": 6,
-    "name": "Try Getting a New Hobby",
-    "detail": "Having a new hobby or activity to focus on is another good way to put your mind away from anything stressing you while enjoying yourself. Hobbies are a good way to do what you want without needing to worry about anything else and that is what makes this a good stress reliever."
+    "name": "Trying Something New",
+    "detail": "Trying a new activity is another good way to prevent yourself from stressing and is great to give yourself a well-deserved break. New activities can eventually turn into hobbies,  they are a stress reliever and a potential to find something new you enjoy"
   },
   {
     "id": 7,
-    "name": "Connect With Others",
-    "detail": "Similar to keeping a journal, reaching out and interacting with others can distract your mind and if they are willing to listen to your troubles, it can be a good way to vent out all the built-up stress."
+    "name": "Connecting With Others",
+    "detail": "Interacting with others and sharing your frustrations can be a good way to vent out all the built-up stress."
   },
   {
     "id": 8,
     "name": "Counseling/Therapy",
-    "detail": "Consider therapy or counseling. Sometimes you may not know why you are feeling the way you are and getting a professional counselor or therapist can help identify sources of your stress and provide ways to reduce stress."
+    "detail": "Consider therapy or counseling. Sometimes you may not know why you are feeling the way you are and getting a professional’s perspective can help identify sources of your stress and provide ways to help solve recurring issues."
   },
   {
     "id": 9,
-    "name": "Eat a Balanced Diet",
-    "detail": "It may sound weird, but keeping a healthy diet can help with stress in the long run. Stress eating may provide a temporary sense of relief, but may also add to long-term stress."
+    "name": "Balanced Diet",
+    "detail": "It may sound weird, but keeping a healthy diet can help with stress in the long run. Stress eating may provide a temporary sense of relief, but will easily cause one’s weight to jump. Some people, during times of stress, may even forget to eat so having a balanced diet is extremely important."
   },
   {
     "id": 10,
-    "name": "Reassess Your Schedule",
-    "detail": "Trying to get a lot done in a short amount of time is going to make you more stressed. Spreading out your workload can be a way to reduce the amount of stress you get and with a more spread out the workload; you may have more time to take breaks to clear your mind and refocus."
+    "name": "Reprioritizing Your Schedule",
+    "detail": "Trying to get a lot done in a short amount of time is going to make you more stressed. Spreading out your workload can be a way to reduce the amount of stress you get and give you more time to relax."
   },
   {
     "id": 11,
-    "name": "Remove Things Adding to Your Stress",
-    "detail": "Sometimes, the best way to reduce your stress is to cut something out of your life. Changing your daily routine may help if your stop doing an activity that adds to your stress like constantly being connected to your phone."
+    "name": "Eliminating Your Burdens",
+    "detail": "Sometimes, the best way to reduce your stress is to cut something out of your life whether its people or things. Humans are very fragile and the time spent on someone or something can’t be given back. Make sure that you are okay with your current situation and if you aren’t, then maybe a change is needed, whether it is time away or clear communication."
   },
   {
     "id": 12,
-    "name": "Go Outside",
-    "detail": "Being outdoors and away from where you usually are may help reduce stress. Sometimes as little as 10 minutes of fresh air can improve your well-being."
+    "name": "Clear Communication",
+    "detail": "If your stress has to do with someone, effective communication is very important to solve the issue(s). It is very common to act out of emotions or freeze in the moment but eventually, the other party needs to be notified that the current situation is affecting you."
   },
   {
     "id": 13,
     "name": "Creating Art",
-    "detail": "Drawing and coloring is another great activity to keep your mind off any stressors, resulting in stress relief."
+    "detail": "Drawing and coloring is another great activity to keep your mind off any stressors."
   },
   {
     "id": 14,
