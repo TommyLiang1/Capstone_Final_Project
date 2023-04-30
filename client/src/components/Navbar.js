@@ -46,7 +46,8 @@ const Navbar = () => {
             <NavLink className="nav-item" to="/activities">
               <span>Activites</span>
             </NavLink>
-            <NavLink className="nav-item " to='/dashboard'>
+            
+            <NavLink className="nav-item " to='/contact'>
               <span>Contact Professional</span>
             </NavLink>
 
