@@ -42,12 +42,10 @@ const Navbar = () => {
             </NavLink>
           </div>
 
-          <div className="Activites">
+          <div className="nav-item-right">
             <NavLink className="nav-item" to="/activities">
               <span>Activites</span>
             </NavLink>
-          </div>
-          <div className="nav-item-right">
             <NavLink className="nav-item " to='/dashboard'>
               <span>Contact Professional</span>
             </NavLink>
