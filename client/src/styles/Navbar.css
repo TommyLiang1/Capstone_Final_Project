@@ -22,14 +22,3 @@
 .nav-item.active {
   color: rgb(111, 0, 255);
 }
-
-.logout-btn {
-  border: none;
-  padding: 3px 10px;
-  border-radius: 20px;
-  background-color: white;
-}
-
-.logout-btn:hover {
-  background-color: lightgray;
-}

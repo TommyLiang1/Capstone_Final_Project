@@ -11,8 +11,6 @@ import '../../styles/Post.css';
 
 const Post = (props) => {
   const { post_id, post_name, description_text, likes, comments, user_id, created_at } = props.postData;
-  const initialLikeId = props.likeId;
-  const initialColor = props.likeId === -1 ? "black" : "blue";
   const reloadPosts = props.reloadPosts;
   const [commentVisibility, setCommentVisibility] = useState(false);
   const [postComments, setPostComments] = useState([]);
@@ -152,7 +150,7 @@ const Post = (props) => {
  // Imports profile images
  function importAll(r) {
   let images = [];
-  r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+  r.keys().forEach((item, index) => { images[item.replace('./', '')] = r(item); });
   return images;
 }
   const images = importAll(require.context('../images', false, ));
@@ -234,7 +232,6 @@ const Post = (props) => {
         postComments.map(comment => {
           let like_id;
           like_id = commentIds.includes(comment.comment_id) ? likeIds[commentIds.indexOf(comment.comment_id)] : -1
-          console.log(like_id)
           return (
             <div key={comment.comment_id} hidden={!commentVisibility}>
               <Comment commentData={comment} userId={props.userId} userName={props.userName} likeId={like_id} reloadPosts={props.reloadPosts} getComments={getComments} modal={false}/>

@@ -1,6 +1,5 @@
-import React, {useState} from "react";
-import { useNavigate } from "react-router-dom";
 import React, {useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import { deleteComment, editComment, addLikeComment, removeLikeComment } from "../../api/comment";
 import { likeCommentFromUser, unlikeCommentFromUser } from "../../api/like";
 import Modal from "../Modal";
@@ -88,7 +87,7 @@ function toProfile() {
  // Imports profile images
  function importAll(r) {
   let images = [];
-  r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+  r.keys().forEach((item, index) => { images[item.replace('./', '')] = r(item); });
   return images;
 }
   const images = importAll(require.context('../images', false, ));

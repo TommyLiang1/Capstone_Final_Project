@@ -13,6 +13,10 @@
   display: inline-block;
 }
 
+.comment-name:hover {
+  color: rgba(0, 0, 0, 0.5);
+}
+
 /* LIKE SECTION */
 .l {
   display: inline-block;
