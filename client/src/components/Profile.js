@@ -70,7 +70,6 @@ const Profile = () => {
       setError(err.response.data.errors[0].msg)
       setSuccess('')
     }
-
   }
 
   const cancelEdit = () => {
