@@ -2,7 +2,7 @@ const db = require('../db/db');
 
 exports.getPosts = async (req, res) => {
   try {
-    const { rows } = await db.query('SELECT * FROM posts');
+    const { rows } = await db.query('SELECT * FROM posts ORDER BY post_id DESC');
 
     return res.status(200).json({
       success: true,
@@ -16,7 +16,7 @@ exports.getPosts = async (req, res) => {
 exports.getPostById = async (req, res) => {
   try {
     const { rows } = await db.query(
-      'SELECT * FROM posts WHERE post_id = $1',
+      'SELECT * FROM posts WHERE post_id = $1 ORDER BY post_id DESC',
       [req.params.id]
     );
 

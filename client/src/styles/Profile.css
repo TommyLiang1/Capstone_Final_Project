@@ -31,20 +31,40 @@
 
 .edit-btn {
   text-align: center;
-  border: none;
+
   outline: 0 !important;
   background: none;
   font-size: 30px;
   cursor: pointer;
+  padding-right: 50px;
+  transition: transform .5s;
+}
+
+.edit-btn:hover {
+  transform: rotate(12deg);
+  background-color: transparent;
   padding: 5px;
 }
 
 img {
   padding-bottom: 20px;
   clip-path: circle();
-  width: 200px;
+  width: 190px;
 }
 
 #center{
   text-align: center;
+}
+
+.flex-container {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.section{
+  align-items: center;
+  justify-content: center;
+  width: 500px;
 }
