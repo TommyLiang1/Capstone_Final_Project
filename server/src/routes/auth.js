@@ -12,6 +12,6 @@ router.get('/protected', userAuth, protected);
 router.get('/logout', logout);
 router.post('/register', registerValidation, validationMiddleware, register);
 router.post('/login', loginValidation, validationMiddleware, login);
-router.post('/google/login', googleLogin);
+// router.post('/google/login', googleLogin);
 
 module.exports = router;

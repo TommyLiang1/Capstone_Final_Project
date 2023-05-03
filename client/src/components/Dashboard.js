@@ -92,7 +92,7 @@ const Dashboard = () => {
         setUser({
           id: res.data.user[0].user_id,
           name: res.data.user[0].user_name,
-          email: res.data.user[0].user_email,
+          email: res.data.user[0].user_email
         })  
       })
       .catch((err) => {
