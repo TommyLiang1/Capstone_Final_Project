@@ -29,5 +29,5 @@ export async function likeCommentFromUser(likeData) {
 
 // Unlike Comment From User
 export async function unlikeCommentFromUser(id) {
-  return await axios.delete(`'http://localhost:8000/api/unlikecomment/${id}`)
+  return await axios.delete(`http://localhost:8000/api/unlikecomment/${id}`)
 }

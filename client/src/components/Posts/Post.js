@@ -1,16 +1,16 @@
 import React, {useState, useEffect, useRef} from "react";
 import { addLikePost, removeLikePost, deletePost, editPost } from "../../api/post";
 import { getCommentsByPostId, createComment} from "../../api/comment";
-import { likePostFromUser, unlikePostFromUser } from "../../api/like";
+import { useNavigate } from "react-router-dom";
+import { likePostFromUser, unlikePostFromUser, getCommentsLikedByUser } from "../../api/like";
 import Comment from "../Comments/Comment";
 import Modal from "../Modal";
+
 
 import '../../styles/Post.css';
 
 const Post = (props) => {
-  const { post_id, post_name, description_text, likes, comments } = props.postData;
-  const initialLikeId = props.likeId;
-  const initialColor = props.likeId === -1 ? "black" : "blue";
+  const { post_id, post_name, description_text, likes, comments, user_id, created_at } = props.postData;
   const reloadPosts = props.reloadPosts;
   const [commentVisibility, setCommentVisibility] = useState(false);
   const [postComments, setPostComments] = useState([]);
@@ -20,8 +20,14 @@ const Post = (props) => {
   const [editPostError, setEditPostError] = useState("");
   const comment = useRef("");
   const [commentError, setCommentError] = useState("");
+  const initialLikeId = props.likeId;
+  const initialColor = props.likeId === -1 ? "black" : "blue";
   const [likeId, setLikeId] = useState(initialLikeId);
   const [likeColor, setLikeColor] = useState(initialColor);
+  const [commentIds, setCommentIds] = useState([]);
+  const [likeIds, setLikeIds] = useState([]);
+  
+  let navigate = useNavigate(); 
 
   // Like Post
   const likePost = async(e) => {
@@ -84,6 +90,7 @@ const Post = (props) => {
       return;
     }
     let commentData = {
+      id: props.userId,
       username: props.userName,
       comment: comment.current.value
     }
@@ -105,8 +112,25 @@ const Post = (props) => {
       });
   }
 
+  // Get commentIds like by User
+  const getCommentIds = async () => {
+    await getCommentsLikedByUser(props.userId)
+      .then(res => {
+        if(res.data.commentIds.length === 0) return;
+        let tmpCommentIds = [];
+        let tmpLikeIds = [];
+        res.data.commentIds.forEach(commentId => {
+          tmpCommentIds = [...tmpCommentIds, commentId.comment_id]
+          tmpLikeIds = [...tmpLikeIds, commentId.like_id]
+        })
+        setCommentIds(tmpCommentIds)
+        setLikeIds(tmpLikeIds)
+      })
+  }
+
   useEffect(() => {
     getComments();
+    getCommentIds();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -117,13 +141,30 @@ const Post = (props) => {
     }
   }, [initialLikeId])
 
+// Function that goes to user profile when their username is clicked
+ function toProfile() {
+  let path = `/profile/${user_id}`; 
+  navigate(path);
+ }
+
+ // Imports profile images
+ function importAll(r) {
+  let images = [];
+  r.keys().forEach((item, index) => { images[item.replace('./', '')] = r(item); });
+  return images;
+}
+  const images = importAll(require.context('../images', false, ));
+
+
   return (
     <div className="post-container">
       <div className="post-header">
-        <h5 className="post-name"> {post_name} </h5>
+      <img className="post-profile-img" src={images["profile-picture-" + user_id]} alt="..."/>
+        <h5 className="post-name" onClick={toProfile}> {post_name} </h5>
         {
           props.userName === post_name && 
           <div className="extra">
+            <span className="timeposted">{created_at}</span>
             <button className="post-edit-btn" onClick={() => setOpenPostModal(true)}>Edit</button>
             <button className="post-delete-btn" onClick={(e) => handleDeletePost(e)}>Delete</button>
           </div>
@@ -158,6 +199,7 @@ const Post = (props) => {
             <div>{description_text}</div>
             <textarea className='edit-post-text' ref={comment} placeholder="Write your comment here."></textarea>
             <div style={{color:'red', margin: '5px 0' }}>{commentError}</div>
+            <button className='edit-post-btn' onClick={(e) => handleCreateComment(e)}>Comment</button>
             {
               postComments.map(comment => {
                 return (
@@ -167,7 +209,6 @@ const Post = (props) => {
                 )
               })
             }
-            <button className='edit-post-btn' onClick={(e) => handleCreateComment(e)}>Comment</button>
           </div>
         </Modal>
       </div>
@@ -189,9 +230,11 @@ const Post = (props) => {
       <button className="vc-btn" onClick={() => toggleCommentVisibility()} hidden={postComments.length === 0 ? true : false}>View comments</button>
       {
         postComments.map(comment => {
+          let like_id;
+          like_id = commentIds.includes(comment.comment_id) ? likeIds[commentIds.indexOf(comment.comment_id)] : -1
           return (
             <div key={comment.comment_id} hidden={!commentVisibility}>
-              <Comment commentData={comment} userName={props.userName} reloadPosts={props.reloadPosts} getComments={getComments} modal={false}/>
+              <Comment commentData={comment} userId={props.userId} userName={props.userName} likeId={like_id} reloadPosts={props.reloadPosts} getComments={getComments} modal={false}/>
             </div>
           )
         })

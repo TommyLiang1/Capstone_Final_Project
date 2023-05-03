@@ -74,11 +74,11 @@ exports.getCommentById = async (req, res) => {
 }
 
 exports.createComment = async (req, res) => {
-  const {username, comment} = req.body;
+  const {id, username, comment} = req.body;
   try {
     await db.query(
-      'INSERT INTO comments (comment_name, description_text, likes, post_id) VALUES ($1, $2, $3, $4)',
-      [username, comment, 0, req.params.id]
+      'INSERT INTO comments (comment_name, description_text, likes, post_id, user_id) VALUES ($1, $2, $3, $4, $5)',
+      [username, comment, 0, req.params.id, id]
     )
 
     addComment(req.params.id);
@@ -147,6 +147,12 @@ exports.deleteComment = async (req, res) => {
       'SELECT post_id FROM comments WHERE comment_id = $1',
       [req.params.id]
     )
+
+    await db.query(
+      'DELETE FROM likes WHERE comment_id = $1',
+      [req.params.id]
+    )
+
     await db.query(
       'DELETE FROM comments WHERE comment_id = $1',
       [req.params.id]

@@ -59,3 +59,4 @@ module.exports = {
   registerValidation: [username, email, password, emailExists, userExists],
   loginValidation: [loginFieldsCheck],
 }
+

@@ -1,24 +1,18 @@
 --CREATE DATABASE CapstoneFinalProject;
 
 -- Made some database changes including user/profile merge, would drop all and recreate all
--- Create Users Table
 CREATE TABLE users(
   user_id SERIAL PRIMARY KEY,
-  user_name VARCHAR(255) NOT NULL,
-  user_email VARCHAR(255) NOT NULL,
+  user_name VARCHAR(255) UNIQUE NOT NULL,
+  user_email VARCHAR(255) UNIQUE NOT NULL,
   user_password VARCHAR(255) NOT NULL,
-  created_at DATE DEFAULT current_date,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp,
   img VARCHAR(255),
   city VARCHAR(255),
   education VARCHAR(255),
   bio VARCHAR(255),
   hobbies VARCHAR(255)
 );
-
---insert fake users
---INSERT INTO users (user_name, user_email, user_password) VALUES ('tommy', 'tommy@gmail.com', 'tommy');
-
--- DROP TABLE users, profiles;
 
 CREATE TABLE posts(
   post_id SERIAL PRIMARY KEY,
@@ -27,7 +21,7 @@ CREATE TABLE posts(
   likes INT,
   comments INT,
   user_id INT NOT NULL REFERENCES users(user_id),
-  created_at DATE DEFAULT current_date
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp
 );
 
 CREATE TABLE comments(
@@ -36,7 +30,8 @@ CREATE TABLE comments(
   description_text TEXT NOT NULL,
   likes INT,
   post_id INT NOT NULL REFERENCES posts(post_id),
-  created_at DATE DEFAULT current_date
+  user_id INT NOT NULL REFERENCES users(user_id),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp
 );
 
 CREATE TABLE likes(
@@ -46,4 +41,4 @@ CREATE TABLE likes(
   comment_id INT REFERENCES comments(comment_id)
 );
 
--- DROP TABLE posts, comments;
+-- DROP TABLE posts, comments, users, likes;

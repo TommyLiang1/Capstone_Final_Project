@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { editProfile } from "../api/profile";
 import Layout from "./Layout";
 import { useParams } from "react-router-dom";
@@ -109,13 +109,13 @@ const Profile = () => {
 
   const {id} = useParams();
   const [userInfo, setUserInfo] = useState({
-    profile_id: '',
-    profile_name: '',
-    profile_email: '',
+    user_id: '',
+    user_name: '',
+    user_email: '',
     img: '',
     city: '',
-    bio: '',
     education: '',
+    bio: '',
     hobbies: ''
   })
 
@@ -124,10 +124,14 @@ const Profile = () => {
   const [success, setSuccess] = useState(false);
   const [image, setImage] = useState('');
   const [protectedData, setProtectedData] = useState(null)
+
+  const editName = useRef(null);
+  const editCity = useRef(null);
+  const editEducation = useRef(null);
+  const editBio = useRef(null);
+  const editHobby = useRef(null);
+  const [editImgUrl, setEditImgUrl] = useState('');
   
-  const onChange = (e) => {
-    setUserInfo({...userInfo, [e.target.name]: e.target.value})
-  }
 
   function isFileImage(file) {
     return file && file['type'].split('/')[0] === 'image';
@@ -137,9 +141,9 @@ const Profile = () => {
     if(e.target.files[0].name === undefined || !isFileImage(e.target.files[0])){
       return;
     }
-    console.log(e.target.files[0].name)
-    userInfo.img = "profile-picture-" + userInfo.profile_id + "_" + e.target.files[0].name
-    console.log(userInfo.img)
+    // console.log(e.target.files[0].name)
+    setEditImgUrl("profile-picture-" + userInfo.user_id + "_" + e.target.files[0].name)
+    // console.log(userInfo.img)
     const formData = new FormData();
     formData.append('my-image-file', e.target.files[0], userInfo.img);
     setImage(formData);
@@ -154,25 +158,43 @@ const Profile = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
     handleSubmit();
 
-    try {
-      const res = await editProfile(id, userInfo)
-      setError('')
-      setSuccess(res.data.message)
-      setEditMode(false);
-
-    } catch (err) {
-      console.error(err.response.data.errors[0].msg)
-      setError(err.response.data.errors[0].msg)
-      setSuccess('')
+    console.log(editName.current.value)
+    let editUserInfo = {
+      user_id: userInfo.user_id,
+      user_name: editName.current.value === userInfo.user_name ? '' : editName.current.value,
+      img: editImgUrl === '' ? userInfo.img : editImgUrl,
+      city: editCity.current.value === '' ? userInfo.city : editCity.current.value,
+      education: editEducation.current.value === '' ? userInfo.education : editEducation.current.value,
+      bio: editBio.current.value === '' ? userInfo.bio : editBio.current.value,
+      hobbies: editHobby.current.value === '' ? userInfo.hobbies : editHobby.current.value
     }
 
+    try {
+      const res = await editProfile(id, editUserInfo)
+      setError('')
+      setSuccess(res.data.message)
+      setUserInfo({
+        user_id: userInfo.user_id,
+        user_name: editUserInfo.user_name === '' ? userInfo.user_name : editUserInfo.user_name,
+        user_email: userInfo.user_email,
+        img: editImgUrl,
+        city: editUserInfo.city,
+        education: editUserInfo.education,
+        bio: editUserInfo.bio,
+        hobbies: editUserInfo.hobbies
+      })
+      setEditMode(false);
+    } catch (err) {
+      setError(err.response.data.message)
+      setSuccess('')
+    }
   }
 
   const cancelEdit = () => {
     setEditMode(false);
+    setError('');
     setSuccess()
   }
 
@@ -180,13 +202,13 @@ const Profile = () => {
     await getProfile(id)
       .then(res => {
         setUserInfo({
-          profile_id: res.data.profile[0].user_id,
-          profile_name: res.data.profile[0].user_name,
-          profile_email: res.data.profile[0].user_email,
+          user_id: res.data.profile[0].user_id,
+          user_name: res.data.profile[0].user_name,
+          user_email: res.data.profile[0].user_email,
           img: res.data.profile[0].img,
           city: res.data.profile[0].city,
-          bio: res.data.profile[0].bio,
           education: res.data.profile[0].education,
+          bio: res.data.profile[0].bio,
           hobbies: res.data.profile[0].hobbies
         })  
       })
@@ -194,7 +216,7 @@ const Profile = () => {
 
   function importAll(r) {
     let images = [];
-    r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+    r.keys().forEach((item, index) => { images[item.replace('./', '')] = r(item); });
     return images;
   }
 
@@ -203,7 +225,6 @@ const Profile = () => {
   const protectedInfo = async () => {
     try {
       const {data} = await fetchProtectedInfo()
-      console.log(data)
       setProtectedData(data.info)
     } catch (err) {
     }
@@ -218,68 +239,56 @@ const Profile = () => {
 
   return (
         editMode ? (
-          <Layout>
-          <div class ="name"> Edit Profile </div>
-          <div class ="edit">
-            Username: <input onChange={(e) => onChange(e)} id="profile_name" name="profile_name" type='text' placeholder="Username" required />
+          <div className="edit">
+            <div className="name"> Edit Profile </div>
+            <div className="edit-item">
+              <label className="edit-item-label">Username</label>
+              <input ref={editName} id="profile_name" name="profile_name" type='text' placeholder={userInfo.user_name} required />
+            </div>
+            <div className="edit-item">
+              <label className="edit-item-label">City</label>
+              <input ref={editCity} id="city" name="city" type='text' placeholder={userInfo.city} required />
+            </div>
+            <div className="edit-item">
+              <label className="edit-item-label">Education</label>
+              <input ref={editEducation} id="education" name="education" type='text' placeholder={userInfo.education} required />
+            </div>
+            <div className="edit-item">
+              <label className="edit-item-label">Bio</label>
+              <input ref={editBio} id="bio" name="bio" type='text' placeholder={userInfo.bio} required />
+            </div>
+            <div className="edit-item">
+              <label className="edit-item-label">Hobbies</label>
+              <input ref={editHobby} id="hobbies" name="hobbies" type='text' placeholder={userInfo.hobbies} required />
+            </div>
+            <div className="edit-item">
+              <label className="edit-item-label">Image</label>
+              <input onChange={imageUpload} type='file'/>
+            </div>
+            <div className="description" style={{color:'red', margin: '10px 0px' }}>{error}</div>
+            <button type="submit" className="form-btn btn btn-primary" onClick={() => cancelEdit()}> Cancel</button>
+            <br />
+            <button type="submit" className="form-btn btn btn-primary" onClick={(e) => onSubmit(e)}> Submit</button>
           </div>
-          <div class ="edit">
-            Bio: <input onChange={(e) => onChange(e)} id="bio" name="bio" type='text' placeholder="Bio" required />
-          </div>
-          <div class ="edit">
-            City: <input onChange={(e) => onChange(e)} id="city" name="city" type='text' placeholder="City" required />
-          </div>
-          <div class ="edit">
-            Education: <input onChange={(e) => onChange(e)} id="education" name="education" type='text' placeholder="Education" required />
-          </div>
-          <div class ="edit">
-            Hobbies: <input onChange={(e) => onChange(e)} id="hobbies" name="hobbies" type='text' placeholder="Hobbies" required />
-          </div>
-          <div class ="edit">
-            Image: <input onChange={imageUpload} type='file'/>
-          </div>
-          <br></br>
-          <div class ="email">
-              <button type="submit" className="form-btn btn btn-primary" onClick={() => cancelEdit()}> Cancel</button>
-              <br></br>
-              <button type="submit" className="form-btn btn btn-primary" onClick={(e) => onSubmit(e)}> Submit</button>
-          </div>
-          <div class = "description" style={{color:'red', margin: '10px 0' }}>{error}</div>
-          </Layout>
         ) : (
-          <Layout>
-            <div class="flex-container">
-              <div class ="section">
-                <div class ="name"> {userInfo.profile_name}
-                {userInfo.profile_id === protectedData ? (<button className="edit-btn" onClick={() => setEditMode(true)}> <i class="fas fa-pen"> </i> </button>) : (null)}
-                </div>
-                <div class = "description" style={{color:'green', margin: '10px 0' }}>{success}</div>
-                <div id = "center">
-                  {images[userInfo.img] !== undefined ? (<img src={images[userInfo.img]} alt="..."/>) :  (<img src={images["default-profile-picture.jpg"]} alt="..."/>)}
-                </div>
-              </div>
-              <div class ="section">
-                <div class ="email"><i class="fas fa-envelope"></i> {userInfo.profile_email} </div>
-                <br></br>
-                {userInfo.bio != null ? (<div class ="description"> {userInfo.bio} </div>) : (<div class ="description">No Description Listed</div>)}
-                <br></br>
-                {userInfo.city != null ? (<div class ="description"><i class="fas fa-city"></i> {userInfo.city} </div>) : (<div class ="description"><i class="fas fa-city"></i> No City Listed</div>)}
-                {userInfo.education != null ? (<div class ="description"><i class="fas fa-graduation-cap"></i> {userInfo.education} </div>) : (<div class ="description"><i class="fas fa-graduation-cap"></i> No Education Listed</div>)}
-                {userInfo.hobbies != null ? (<div class ="description"><i class="fas fa-book"></i> {userInfo.hobbies} </div>) : (<div class ="description"><i class="fas fa-book"></i> No Hobbies Listed</div>)}
-                </div>
-              </div>
+          <div>
+            <div className="name"> {userInfo.user_name}
+            {userInfo.user_id === protectedData ? (<button className="edit-btn" onClick={() => setEditMode(true)}> <i className="fas fa-pen"> </i> </button>) : (null)}
+            </div>
+            <div className="description" style={{color:'green', margin: '10px 0' }}>{success}</div>
+
+            <div id="center">
+              {images[userInfo.img] !== undefined ? (<img src={images[userInfo.img]} alt="..."/>) :  (<img src={images["default-profile-picture.jpg"]} alt="..."/>)}
+            </div>
+
+            <div className="email"><i className="fas fa-envelope"></i> {userInfo.user_email} </div>
             <br></br>
-            {
-              posts.map(post => {
-                like_id = postIds.includes(post.post_id) ? likeIds[postIds.indexOf(post.post_id)] : -1
-                if(post.user_id ==userInfo.profile_id){
-                  return <Post key={post.post_id} userId={user.id} userName={user.name} postData={post} likeId={like_id} reloadPosts={reloadPosts} />
-                }
-              })
-            }
+            {userInfo.bio != null ? (<div className="description"> {userInfo.bio} </div>) : (<div className="description">No Description Listed</div>)}
             <br></br>
-            <br></br>
-          </Layout>
+            {userInfo.city != null ? (<div className="description"><i className="fas fa-city"></i> {userInfo.city} </div>) : (<div className="description"><i className="fas fa-city"></i> No City Listed</div>)}
+            {userInfo.education != null ? (<div className="description"><i className="fas fa-graduation-cap"></i> {userInfo.education} </div>) : (<div className="description"><i className="fas fa-graduation-cap"></i> No Education Listed</div>)}
+            {userInfo.hobbies != null ? (<div className="description"><i className="fas fa-book"></i> {userInfo.hobbies} </div>) : (<div className="description"><i className="fas fa-book"></i> No Hobbies Listed</div>)}
+          </div>
         )
   )
 }

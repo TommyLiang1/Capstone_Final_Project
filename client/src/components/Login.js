@@ -59,27 +59,24 @@ const Login = () => {
         <label htmlFor="email" className="form-label">
           Email
         </label>
-        <input onChange={(e) => onChange(e)} id="email" name="email" type='email' className="form-control" value={values.email} placeholder="email" required />
+        <input onChange={(e) => onChange(e)} className="form-control" id="email" name="email" type='email' value={values.email} placeholder="email" required />
       </div>
-
       <div className="mb-3">
         <label htmlFor="password" className="form-label">
           Password
         </label>
         <div>
-          <input onChange={(e) => onChange(e)} id="password" name="password" type={passwordShown? 'text' : 'password'} className="form-control" value={values.password} placeholder="password" required />
+          <input onChange={(e) => onChange(e)} className="form-control" id="password" name="password" type={passwordShown? 'text' : 'password'} value={values.password} placeholder="password" required />
           <i onClick={() => togglePasswordVisibility()} className={passwordShown? "far fa-eye-slash" : "far fa-eye"} id="togglePassword" style={{marginLeft: -30}}></i>
         </div>
       </div>
-
       <div style={{color:'red', margin: '10px 0' }}>{error}</div>
-
       <button type="submit" className="form-btn btn btn-primary">
         Log In
       </button>
 
-      <div className="or">or</div>
 
+      <div className="or">or</div>
       <GoogleLogin
         className="form-btn google-btn"
         onSuccess={(credentialResponse) => onSuccess(credentialResponse)}

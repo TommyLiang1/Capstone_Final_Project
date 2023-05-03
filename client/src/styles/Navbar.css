@@ -2,33 +2,23 @@
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  background-color: white;
+  background: linear-gradient(to right, aqua, skyblue);
   box-shadow: 0px 1px 2px;
 }
 
-.nav-item-right {
-  margin-left: auto;
-}
 
 .nav-item {
   color:black;
+  margin: 0px 25px;
 }
 
 .nav-item:hover {
+  text-underline-offset: 12px;
   color: black;
+  text-decoration: underline rgba(0, 69, 138, 0.7);
+  text-underline-offset: 15px;
 }
 
-.nav-item {
-  margin: 15px 25px;
-}
-
-.logout-btn {
-  border: none;
-  padding: 3px 10px;
-  border-radius: 20px;
-  background-color: white;
-}
-
-.logout-btn:hover {
-  background-color: lightgray;
+.nav-item.active {
+  color: rgb(111, 0, 255);
 }
