@@ -9,7 +9,6 @@ import axios from 'axios';
 import Post from "./Posts/Post";
 import { getPosts, createPost } from "../api/post";
 import { getPostsLikedByUser } from "../api/like";
-import {useRef} from "react";
 import { useDispatch } from "react-redux";
 import { getUserById } from "../api/auth";
 
@@ -160,7 +159,6 @@ const Profile = () => {
     e.preventDefault();
     handleSubmit();
 
-    console.log(editName.current.value)
     let editUserInfo = {
       user_id: userInfo.user_id,
       user_name: editName.current.value === userInfo.user_name ? '' : editName.current.value,
@@ -238,6 +236,8 @@ const Profile = () => {
   }, [])
 
   return (
+    <Layout>
+      {
         editMode ? (
           <div className="edit">
             <div className="name"> Edit Profile </div>
@@ -290,6 +290,8 @@ const Profile = () => {
             {userInfo.hobbies != null ? (<div className="description"><i className="fas fa-book"></i> {userInfo.hobbies} </div>) : (<div className="description"><i className="fas fa-book"></i> No Hobbies Listed</div>)}
           </div>
         )
+      }
+    </Layout>
   )
 }
 
