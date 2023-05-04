@@ -15,7 +15,7 @@ exports.getProfile = async (req, res) => {
 
 exports.editProfile = async (req, res) => {
   try {
-    const {user_name, img, city, education, bio, hobby} = req.body;
+    const {user_name, img, city, education, bio, hobbies} = req.body;
     const oldUserName = await db.query('SELECT user_name FROM users WHERE user_id = $1', [req.params.id])
     const newUserName = user_name === '' ? oldUserName.rows[0].user_name : user_name
     
@@ -38,7 +38,7 @@ exports.editProfile = async (req, res) => {
     
     await db.query(
       'UPDATE users SET user_name = $1, img = $2, city = $3, education = $4, bio = $5, hobbies = $6 WHERE user_id = $7',
-      [newUserName, img, city, education, bio, hobby, req.params.id]
+      [newUserName, img, city, education, bio, hobbies, req.params.id]
     )
 
     return res.status(201).json({

@@ -43,7 +43,6 @@
 .edit-btn:hover {
   transform: rotate(12deg);
   background-color: transparent;
-  padding: 5px;
 }
 
 img {
