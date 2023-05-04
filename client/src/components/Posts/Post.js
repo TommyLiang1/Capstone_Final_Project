@@ -161,14 +161,16 @@ const Post = (props) => {
       <div className="post-header">
       <img className="post-profile-img" src={images["profile-picture-" + user_id]} alt="..."/>
         <h5 className="post-name" onClick={toProfile}> {post_name} </h5>
-        {
-          props.userName === post_name && 
-          <div className="extra">
-            <span className="timeposted">{created_at}</span>
-            <button className="post-edit-btn" onClick={() => setOpenPostModal(true)}>Edit</button>
-            <button className="post-delete-btn" onClick={(e) => handleDeletePost(e)}>Delete</button>
-          </div>
-        }
+        <div className="extra">
+          <span className="timeposted">{created_at}</span>
+          {
+            props.userName === post_name && 
+            <span>
+              <button className="post-edit-btn" onClick={() => setOpenPostModal(true)}>Edit</button>
+              <button className="post-delete-btn" onClick={(e) => handleDeletePost(e)}>Delete</button>
+            </span>
+          }
+        </div>
       </div>
      
       <div styles={{position: 'relative', zindex: 1}}>

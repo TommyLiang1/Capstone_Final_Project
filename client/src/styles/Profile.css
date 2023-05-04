@@ -68,3 +68,7 @@ img {
   justify-content: center;
   width: 500px;
 }
+
+.profile-post-header {
+  text-align: center;
+}
