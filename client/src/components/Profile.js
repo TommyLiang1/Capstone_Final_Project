@@ -117,7 +117,6 @@ const Profile = () => {
       bio: editBio.current.value === '' ? userInfo.bio : editBio.current.value,
       hobbies: editHobby.current.value === '' ? userInfo.hobbies : editHobby.current.value
     }
-
     try {
       const res = await editProfile(id, editUserInfo)
       setError('')
@@ -134,10 +133,12 @@ const Profile = () => {
       })
       reloadPosts();
       setEditMode(false);
-    } catch (err) {
+    } 
+    catch (err) {
       setError(err.response.data.message)
       setSuccess('')
     }
+    retrieveInfo()
   }
 
   const cancelEdit = () => {
