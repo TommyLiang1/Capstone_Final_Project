@@ -90,7 +90,7 @@ const Profile = () => {
       return;
     }
     // console.log(e.target.files[0].name)
-    setEditImgUrl("profile-picture-" + userInfo.user_id + "_" + e.target.files[0].name)
+    setEditImgUrl("profile-picture-" + userInfo.user_id)
     // console.log(userInfo.img)
     const formData = new FormData();
     formData.append('my-image-file', e.target.files[0], userInfo.img);
