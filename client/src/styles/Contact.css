@@ -2,7 +2,7 @@ table.rt td {
     padding: 20px 11px 20px 11px;
     font-size: 16px;
     line-height: 18px;
-    background-color: #e6dadf;
+    background: linear-gradient(150deg, rgb(214, 226, 226), rgb(202, 218, 224));
     border: 2px solid #000000;
 }
 
@@ -13,20 +13,18 @@ td {
 
 table.rt th{
     border: 2px solid #000000;
-    background-color:rgb(52, 173, 78);
+    background:skyblue;
 }
 
 table {
     width: 100%;
-    background-color: transparent;
-    border-spacing: 0;
 }
 
 .contact-container {
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 90%;
+    width: 70%;
     margin: auto;
     margin-top: 15px;
 }
