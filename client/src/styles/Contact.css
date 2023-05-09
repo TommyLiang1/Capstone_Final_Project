@@ -18,6 +18,7 @@ table.rt th{
 
 table {
     width: 100%;
+    table-layout: fixed;
 }
 
 .contact-container {
