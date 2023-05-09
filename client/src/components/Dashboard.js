@@ -147,8 +147,10 @@ const Dashboard = () => {
     </Layout>
   ) : (
     <Layout>
-      <div className="banner"><h1>{quoteoftheday}</h1></div>
-      <div style={{textAlign:"center"}}>Welcome back {user.name}</div>
+      <div className="banner-container">
+        <h1 className="banner-desc">{quoteoftheday}</h1>
+      </div>
+      <div className="welcome-back">Welcome back <span className="dash-name">{user.name}</span>!</div>
       <div className="text-container">
         <textarea className="text" ref={message} placeholder="Whats on your mind?"></textarea>
         <div style={{color:'red', margin: '5px 0' }}>{error}</div>

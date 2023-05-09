@@ -21,10 +21,26 @@ body {
   color: black;
 }
 
-.banner{
-  background: #04f318;
-  border: 2px solid;
+.banner-container {
+  background: #fcf1d3;
+  border: 1px solid;
   padding: 10px;
-  margin: 0px;
   text-align: center;
+  font-style: italic;
+}
+
+.banner-desc {
+  width: 1000px;
+  font-size: 35px;
+  margin: auto
+}
+
+.welcome-back {
+  text-align: center;
+  margin: 10px 0px;
+  font-weight: bold;
+}
+
+.dash-name {
+  font-size: 150%;
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { getProfile, editProfile } from "../api/profile";
-import { fetchProtectedInfo } from "../api/auth";
+import { fetchProtectedInfo, getUserById } from "../api/auth";
 import Post from "./Posts/Post";
 import Layout from "./Layout";
 import { getPosts } from "../api/post";
@@ -12,7 +12,6 @@ import '../styles/Profile.css';
 
 const Profile = () => {
   const {id} = useParams();
-  const [currentUserId, setCurrentUserId] = useState(null)
   const [posts, setPosts] = useState([])
   const [postIds, setPostIds] = useState([]);
   const [likeIds, setLikeIds] = useState([]);  
@@ -28,6 +27,12 @@ const Profile = () => {
   const editBio = useRef(null);
   const editHobby = useRef(null);
   const [editImgUrl, setEditImgUrl] = useState('');
+
+  const [currentUser, setCurrentUser] = useState({
+    id: '',
+    name: '',
+    email: '',
+  })
 
   const [userInfo, setUserInfo] = useState({
     user_id: '',
@@ -53,10 +58,21 @@ const Profile = () => {
     let tmpId;
     await fetchProtectedInfo()
       .then(res => {
-        setCurrentUserId(res.data.info)
         tmpId = res.data.info
       })
       .catch(err => {
+        console.log(err)
+      })
+
+    await getUserById(tmpId)
+      .then(res => {
+        setCurrentUser({
+          id: res.data.user[0].user_id,
+          name: res.data.user[0].user_name,
+          email: res.data.user[0].user_email
+        })  
+      })
+      .catch((err) => {
         console.log(err)
       })
 
@@ -89,9 +105,9 @@ const Profile = () => {
     if(e.target.files[0].name === undefined || !isFileImage(e.target.files[0])){
       return;
     }
-    // console.log(e.target.files[0].name)
+    console.log(e.target.files[0].name)
     setEditImgUrl("profile-picture-" + userInfo.user_id)
-    // console.log(userInfo.img)
+    console.log(userInfo.img)
     const formData = new FormData();
     formData.append('my-image-file', e.target.files[0], userInfo.img);
     setImage(formData);
@@ -218,7 +234,7 @@ const Profile = () => {
           <div className="section">
             <div className="name"> 
               {userInfo.user_name}
-              {userInfo.user_id === currentUserId ? (<button className="edit-btn" onClick={() => setEditMode(true)}> <i className="fas fa-pen"> </i> </button>) : (null)}
+              {userInfo.user_id === currentUser.id ? (<button className="edit-btn" onClick={() => setEditMode(true)}> <i className="fas fa-pen"> </i> </button>) : (null)}
             </div>
             <div className="description" style={{color:'green', margin: '10px 0' }}>{success}</div>
 
@@ -238,7 +254,12 @@ const Profile = () => {
           </div>
         </div>
         <br />
-        <h5 className="profile-post-header">Your Posts</h5>
+        { 
+          posts.filter(post => {
+            if(post.user_id === userInfo.user_id) return true;
+            return false;
+          }).length > 0 && <h5 className="profile-post-header">Your Posts</h5>
+        }
         {
           posts.filter(post => {
               if(post.user_id === userInfo.user_id) return true;
@@ -246,8 +267,8 @@ const Profile = () => {
             })
             .map(post => {
               like_id = postIds.includes(post.post_id) ? likeIds[postIds.indexOf(post.post_id)] : -1
-              return <Post key={post.post_id} userId={userInfo.user_id} userName={userInfo.user_name} postData={post} likeId={like_id} reloadPosts={reloadPosts} />
-            })
+              return <Post key={post.post_id} userId={currentUser.id} userName={currentUser.name} postData={post} likeId={like_id} reloadPosts={reloadPosts} />
+            })            
         }
         <br />
       </Layout>  

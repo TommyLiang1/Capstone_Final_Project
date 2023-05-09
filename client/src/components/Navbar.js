@@ -44,14 +44,14 @@ const Navbar = () => {
           </div>
 
           <div>
-            <NavLink className="nav-item" to="/activities">
-              <span>Activities</span>
-            </NavLink>
-            
             <NavLink className="nav-item " to='/contact'>
               <span>Contact Professional</span>
             </NavLink>
 
+            <NavLink className="nav-item" to="/activities">
+              <span>Activities</span>
+            </NavLink>
+            
             <NavLink className="nav-item" to={`/profile/${userId}`}>
               Profile
             </NavLink>

@@ -8,8 +8,30 @@
 }
 
 /* POST HEADER */
+.post-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.post-body-1 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.post-body-2 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.post-btns {
+  display: flex;
+}
+
 .post-name {
-  display: inline-block;
+  margin-bottom: 1px;
+  margin-left: 5px;
 }
 
 .post-name:hover {
@@ -18,9 +40,14 @@
 
 /* POST PROFILE IMAGE */
 .post-profile-img {
-  width: 12%;  
-  height: auto;
-  object-fit: contain;
+  width: 12%;
+  padding-bottom: 0px;
+}
+
+/* RELATIVE TIME */
+.post-time {
+  font-size: 11px;
+  margin-left: 5px;
 }
 
 
@@ -50,8 +77,7 @@
 }
 
 .message-container {
-  width: 95%;
-  margin: auto;
+  margin-top: 5px;
 }
 
 .message {

@@ -22,7 +22,6 @@
 
 .edit-item {
   margin: 10px 0px;
-  /* text-align: center; */
 }
 
 .edit-item-label {
@@ -31,7 +30,6 @@
 
 .edit-btn {
   text-align: center;
-
   outline: 0 !important;
   background: none;
   font-size: 30px;

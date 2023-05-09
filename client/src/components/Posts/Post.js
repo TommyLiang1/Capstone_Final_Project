@@ -3,9 +3,9 @@ import { addLikePost, removeLikePost, deletePost, editPost } from "../../api/pos
 import { getCommentsByPostId, createComment} from "../../api/comment";
 import { useNavigate } from "react-router-dom";
 import { likePostFromUser, unlikePostFromUser, getCommentsLikedByUser } from "../../api/like";
+import moment from 'moment'
 import Comment from "../Comments/Comment";
 import Modal from "../Modal";
-
 
 import '../../styles/Post.css';
 
@@ -159,18 +159,22 @@ const Post = (props) => {
   return (
     <div className="post-container">
       <div className="post-header">
-      <img className="post-profile-img" src={images["profile-picture-" + user_id]} alt="..."/>
-        <h5 className="post-name" onClick={toProfile}> {post_name} </h5>
-        <div className="extra">
-          <span className="timeposted">{created_at}</span>
-          {
-            props.userName === post_name && 
-            <span>
-              <button className="post-edit-btn" onClick={() => setOpenPostModal(true)}>Edit</button>
-              <button className="post-delete-btn" onClick={(e) => handleDeletePost(e)}>Delete</button>
-            </span>
-          }
-        </div>
+          <div className="post-body-1">
+            <img className="post-profile-img" src={images["profile-picture-" + user_id] !== undefined ? images["profile-picture-" + user_id] : images["default-profile-picture.jpg"]} alt="..." />
+            <div>
+              <h5 className="post-name" onClick={toProfile}> {post_name} </h5>
+              <div className="post-time">{moment(created_at).fromNow()}</div>
+            </div>
+          </div>
+          <div className="post-body-2">
+            {
+              props.userName === post_name && 
+              <div className="post-btns">
+                <button className="post-edit-btn" onClick={() => setOpenPostModal(true)}>Edit</button>
+                <button className="post-delete-btn" onClick={(e) => handleDeletePost(e)}>Delete</button>
+              </div>
+            }
+          </div>
       </div>
      
       <div styles={{position: 'relative', zindex: 1}}>

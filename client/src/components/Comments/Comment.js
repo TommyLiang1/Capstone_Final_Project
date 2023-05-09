@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteComment, editComment, addLikeComment, removeLikeComment } from "../../api/comment";
 import { likeCommentFromUser, unlikeCommentFromUser } from "../../api/like";
+import moment from 'moment';
 import Modal from "../Modal";
 
 import '../../styles/Comment.css';
@@ -102,33 +103,40 @@ function toProfile() {
   return (
     <div className="comment-container">
       <div className="comment-header">
-      <img className="post-profile-img" src={images["profile-picture-" + user_id]} alt="..."/>
-        <h5 className="comment-name" onClick={toProfile}> {comment_name} </h5>
-        {
-          props.userName === comment_name && !props.modal &&
-          <div className="extra">
-            <span className="comment-time-posted">{created_at}</span>
-            <button className="comment-edit-btn" onClick={() => setOpenEditCommentModal(true)}>Edit</button>
-            <button className="comment-delete-btn" onClick={(e) => handleDeleteComment(e)}>Delete</button>
+        <div className="comment-body-1">
+          <img className="comment-profile-img" src={images["profile-picture-" + user_id] !== undefined ? images["profile-picture-" + user_id] : images["default-profile-picture.jpg"]} alt="..." />
+          <div>
+            <h5 className="comment-name" onClick={toProfile}> {comment_name} </h5>
+            <div className="comment-time">{moment(created_at).fromNow()}</div>
           </div>
-        }
-        <div styles={{position: 'relative', zindex: 1}}>
-          {/* EDIT COMMENT MODAL */}
-          <Modal open={openEditCommentModal} 
-            closeModal={() => {
-              setEditCommentText(description_text)
-              setEditCommentError("")
-              setOpenEditCommentModal(false)
-            }}
-          >
-            <h5>{comment_name}</h5>
-            <textarea className='edit-comment-text' value={editCommentText} onChange={(e) => setEditCommentText(e.target.value)}></textarea>
-            <div style={{color:'red', margin: '5px 0px' }}>{editCommentError}</div>
-            <button className='edit-comment-btn' onClick={(e) => handleEditComment(e)}>Edit Comment</button>
-          </Modal>
         </div>
-
+        <div className="comment-body-2">
+          {
+            props.userName === comment_name && !props.modal &&
+            <div className="comment-btns">
+              <button className="comment-edit-btn" onClick={() => setOpenEditCommentModal(true)}>Edit</button>
+              <button className="comment-delete-btn" onClick={(e) => handleDeleteComment(e)}>Delete</button>
+            </div>
+          }
+        </div>
       </div>
+
+      <div styles={{position: 'relative', zindex: 1}}>
+        {/* EDIT COMMENT MODAL */}
+        <Modal open={openEditCommentModal} 
+          closeModal={() => {
+            setEditCommentText(description_text)
+            setEditCommentError("")
+            setOpenEditCommentModal(false)
+          }}
+        >
+          <h5>{comment_name}</h5>
+          <textarea className='edit-comment-text' value={editCommentText} onChange={(e) => setEditCommentText(e.target.value)}></textarea>
+          <div style={{color:'red', margin: '5px 0px' }}>{editCommentError}</div>
+          <button className='edit-comment-btn' onClick={(e) => handleEditComment(e)}>Edit Comment</button>
+        </Modal>
+      </div> 
+
       <div className="message-container">
         <div className="message">
           {description_text}

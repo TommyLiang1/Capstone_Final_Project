@@ -72,7 +72,7 @@ exports.getLikesToComments = async (req, res) => {
     if(rows.length === 0) {
       return res.status(200).json({
         success: true,
-        rows: rows,
+        commentIds: rows,
         message: "User hasn't like a comment yet"
       })
     }
