@@ -1,0 +1,31 @@
+table.rt td {
+    padding: 20px 11px 20px 11px;
+    font-size: 18px;
+    line-height: 18px;
+    background: linear-gradient(150deg, rgb(214, 226, 226), rgb(202, 218, 224));
+    border: 2px solid #000000;
+}
+
+td {
+    display: table-cell;
+    vertical-align: inherit;
+}
+
+table.rt th{
+    border: 2px solid #000000;
+    background:skyblue;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.contact-container {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 70%;
+    margin: auto;
+    margin-top: 15px;
+}

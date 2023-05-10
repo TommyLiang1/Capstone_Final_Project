@@ -2,7 +2,7 @@ const db = require('../db/db');
 
 exports.getPosts = async (req, res) => {
   try {
-    const { rows } = await db.query('SELECT * FROM posts');
+    const { rows } = await db.query('SELECT * FROM posts ORDER BY post_id DESC');
 
     return res.status(200).json({
       success: true,
@@ -16,7 +16,7 @@ exports.getPosts = async (req, res) => {
 exports.getPostById = async (req, res) => {
   try {
     const { rows } = await db.query(
-      'SELECT * FROM posts WHERE post_id = $1',
+      'SELECT * FROM posts WHERE post_id = $1 ORDER BY post_id DESC',
       [req.params.id]
     );
 
@@ -65,7 +65,7 @@ exports.editPost = async (req, res) => {
 
 exports.addLike = async (req, res) => {
   try {
-    console.log("add Like to: " + req.params.id)
+    // console.log("add Like to: " + req.params.id)
     await db.query(
       'UPDATE posts SET likes = likes + 1 WHERE post_id = $1', 
       [req.params.id]
@@ -82,7 +82,7 @@ exports.addLike = async (req, res) => {
 
 exports.removeLike = async (req, res) => {
   try {
-    console.log("remove Like to: " + req.params.id)
+    // console.log("remove Like to: " + req.params.id)
     await db.query(
       'UPDATE posts SET likes = likes - 1 WHERE post_id = $1', 
       [req.params.id]
@@ -100,12 +100,31 @@ exports.removeLike = async (req, res) => {
 exports.deletePost = async (req, res) => {
   try {
     await db.query(
-      'DELETE FROM posts WHERE post_id = $1',
+      'DELETE FROM likes WHERE post_id = $1',
       [req.params.id]
     )
 
     await db.query(
+      'SELECT comment_id FROM comments WHERE post_id = $1',
+      [req.params.id]
+    ).then(res => {
+      res.rows.map(async postData => {
+        await db.query(
+          'DELETE FROM likes WHERE comment_id = $1',
+          [postData.comment_id]
+        )
+      })
+    })
+
+    
+    
+    await db.query(
       'DELETE FROM comments WHERE post_id = $1',
+      [req.params.id]
+    )
+
+    await db.query(
+      'DELETE FROM posts WHERE post_id = $1',
       [req.params.id]
     )
 

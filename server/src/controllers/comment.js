@@ -27,7 +27,7 @@ removeComment = async (req, res) => {
 
 exports.getComments = async (req, res) => {
   try {
-    const { rows } = await db.query('SELECT * FROM comments');
+    const { rows } = await db.query('SELECT * FROM comments ORDER BY comment_id DESC');
 
     return res.status(200).json({
       success: true,
@@ -41,7 +41,7 @@ exports.getComments = async (req, res) => {
 exports.getCommentsByPostId = async (req, res) => {
   try {
     const { rows } = await db.query(
-      'SELECT * FROM comments WHERE post_id = $1',
+      'SELECT * FROM comments WHERE post_id = $1 ORDER BY comment_id DESC',
       [req.params.id]
     );
 
@@ -74,11 +74,11 @@ exports.getCommentById = async (req, res) => {
 }
 
 exports.createComment = async (req, res) => {
-  const {username, comment} = req.body;
+  const {id, username, comment} = req.body;
   try {
     await db.query(
-      'INSERT INTO comments (comment_name, description_text, likes, post_id) VALUES ($1, $2, $3, $4)',
-      [username, comment, 0, req.params.id]
+      'INSERT INTO comments (comment_name, description_text, likes, post_id, user_id) VALUES ($1, $2, $3, $4, $5)',
+      [username, comment, 0, req.params.id, id]
     )
 
     addComment(req.params.id);
@@ -143,12 +143,22 @@ exports.removeLike = async (req, res) => {
 
 exports.deleteComment = async (req, res) => {
   try {
+    const { rows } = await db.query(
+      'SELECT post_id FROM comments WHERE comment_id = $1',
+      [req.params.id]
+    )
+
+    await db.query(
+      'DELETE FROM likes WHERE comment_id = $1',
+      [req.params.id]
+    )
+
     await db.query(
       'DELETE FROM comments WHERE comment_id = $1',
       [req.params.id]
     )
 
-    removeComment(req.params.id)
+    removeComment(rows[0].post_id)
 
     return res.status(200).json({
       success: true,

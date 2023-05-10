@@ -1,34 +1,24 @@
 .main-nav {
   display: flex;
   justify-content: space-between;
+  flex-direction: row;
   padding: 10px;
-  background-color: lightgrey;
-}
-
-.nav-item-right {
-  margin-left: auto;
+  background: linear-gradient(to right, #cbf7f7, skyblue);
+  box-shadow: 0px 1px 2px;
 }
 
 .nav-item {
   color:black;
+  margin: 0px 25px;
 }
 
 .nav-item:hover {
+  text-underline-offset: 12px;
   color: black;
+  text-decoration: underline rgba(0, 69, 138, 0.7);
+  text-underline-offset: 12px;
 }
 
-.nav-item {
-  margin: 15px 25px;
-}
-
-.logout-btn {
-  border: none;
-  padding: 3px 10px;
-  border-radius: 20px;
-  background-color: lightgrey;
-}
-
-.logout-btn:hover {
-  border: none;
-  background-color: darkgray;
+.nav-item.active {
+  color: rgb(111, 0, 255);
 }

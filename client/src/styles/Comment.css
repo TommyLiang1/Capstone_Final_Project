@@ -5,11 +5,50 @@
   margin-top: 10px;
   padding: 10px;
   float: right;
+  background-color: rgb(195, 238, 255);
 }
 
 /* COMMENT HEADER */
+.comment-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.comment-body-1 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.comment-body-2 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.comment-btns {
+  display: flex;
+}
+
 .comment-name {
-  display: inline-block;
+  margin-bottom: 1px;
+  margin-left: 5px;
+}
+
+.comment-name:hover {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+/* POST PROFILE IMAGE */
+.comment-profile-img {
+  width: 12%;
+  padding-bottom: 0px;
+}
+
+/* RELATIVE TIME */
+.comment-time {
+  font-size: 12px;
+  margin-left: 5px;
 }
 
 /* LIKE SECTION */
@@ -25,27 +64,8 @@
   border-radius: 5px;
 }
 
-.message-container {
-  width: 95%;
-  margin: auto;
-}
-
-.message {
-  overflow-x: hidden;
-}
-
 .l-btn-sep {
   margin: 0px 10px 10px 10px;
-}
-
-.vc-btn {
-  background-color: white;
-  font-size: 14px;
-}
-
-.vc-btn:hover {
-  background-color: white;
-  text-decoration: underline;
 }
 
 /* Edit and Delete buttons */

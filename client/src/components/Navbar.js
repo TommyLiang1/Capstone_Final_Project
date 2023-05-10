@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProtectedInfo, onLogout } from "../api/auth";
 import { unauthenticateUser } from "../redux/slices/authSlice";
+import { Button } from 'react-bootstrap';
 
 import '../styles/Navbar.css';
 
@@ -34,44 +35,28 @@ const Navbar = () => {
 
   return (
     <nav>
-      {isAuth ? (
-        <div className="main-nav">
+      {isAuth && (
+        <div className="main-nav"> 
           <div>
             <NavLink className="nav-item" to='/dashboard'>
-              <span>Dashboard</span>
+              Mending
             </NavLink>
           </div>
 
-          <div className="nav-item-right">
-            <NavLink className="nav-item " to='/'>
+          <div>
+            <NavLink className="nav-item " to='/contact'>
               <span>Contact Professional</span>
             </NavLink>
 
+            <NavLink className="nav-item" to="/activities">
+              <span>Activities</span>
+            </NavLink>
+
             <NavLink className="nav-item" to={`/profile/${userId}`}>
-              <span>Profile</span>
+              Profile
             </NavLink>
 
-            <button onClick={() => logout()} className='logout-btn'>
-              Log Out
-            </button>
-          </div>
-        </div>
-      ) : (
-        <div className="main-nav">
-          <div>
-            <NavLink className="nav-item" to='/'>
-              <span>Home</span>
-            </NavLink>
-          </div>
-
-          <div className="nav-item-right">
-            <NavLink className="nav-item" to='/login'>
-              <span>Login</span>
-            </NavLink>
-
-            <NavLink className="nav-item" to='/register'>
-              <span>Register</span>
-            </NavLink>
+            <Button variant="outline-dark" onClick={() => logout()}>Log Out</Button>
           </div>
         </div>
       )}

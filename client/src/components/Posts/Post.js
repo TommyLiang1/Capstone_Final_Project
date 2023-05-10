@@ -1,30 +1,16 @@
 import React, {useState, useEffect, useRef} from "react";
-// import { addLikePost, removeLikePost } from "../../api/post";
+import { addLikePost, removeLikePost, deletePost, editPost } from "../../api/post";
 import { getCommentsByPostId, createComment} from "../../api/comment";
-import { deletePost, editPost } from "../../api/post";
+import { useNavigate } from "react-router-dom";
+import { likePostFromUser, unlikePostFromUser, getCommentsLikedByUser } from "../../api/like";
+import moment from 'moment'
 import Comment from "../Comments/Comment";
 import Modal from "../Modal";
 
 import '../../styles/Post.css';
 
-// document.addEventListener("click", e => {
-//   const isDropDownButton = e.target.matches("[data-dropdown-button]")
-//   if(!isDropDownButton && e.target.closest('[data-dropdown]') != null) return
-
-//   let currentDropDown
-//   if(isDropDownButton) {
-//     currentDropDown = e.target.closest('[data-dropdown]')
-//     currentDropDown.classList.toggle('active')
-//   }
-
-//   document.querySelectorAll("[data-dropdown].active").forEach(dropdown => {
-//     if(dropdown === currentDropDown) return
-//     dropdown.classList.remove('active')
-//   })
-// })
-
 const Post = (props) => {
-  const { post_id, post_name, description_text, likes, comments } = props.postData;
+  const { post_id, post_name, description_text, likes, comments, user_id, created_at } = props.postData;
   const reloadPosts = props.reloadPosts;
   const [commentVisibility, setCommentVisibility] = useState(false);
   const [postComments, setPostComments] = useState([]);
@@ -34,16 +20,35 @@ const Post = (props) => {
   const [editPostError, setEditPostError] = useState("");
   const comment = useRef("");
   const [commentError, setCommentError] = useState("");
+  const initialLikeId = props.likeId;
+  const initialColor = props.likeId === -1 ? "black" : "blue";
+  const [likeId, setLikeId] = useState(initialLikeId);
+  const [likeColor, setLikeColor] = useState(initialColor);
+  const [commentIds, setCommentIds] = useState([]);
+  const [likeIds, setLikeIds] = useState([]);
+  
+  let navigate = useNavigate(); 
 
-  // TODO: IMPLEMENT POST/COMMENT LIKE LOGIC
-  const likePost = (e) => {
+  // Like Post
+  const likePost = async(e) => {
     e.preventDefault()
-    e.target.style.color = e.target.style.color === 'black' ? 'blue' : 'black'
-    // if(e.target.style.color === 'black')
-    //   removeLikePost(post_id)
-    // else
-    //   addLikePost(post_id)
-    // props.ReloadPosts();
+    let likeData = {
+        userId: props.userId,
+        postId: post_id
+      }
+    if(likeColor === 'black') {
+      await addLikePost(post_id)
+      await likePostFromUser(likeData).then((res) => {
+        setLikeId(res.data.likeId)
+      })
+    } else {
+      await removeLikePost(post_id)
+      await unlikePostFromUser(likeId).then(() => {
+        setLikeId(-1)
+      })
+    }
+    setLikeColor(likeColor === 'black' ? 'blue' : 'black')
+    reloadPosts()
   }
 
   // Toggle View Comment Button
@@ -85,6 +90,7 @@ const Post = (props) => {
       return;
     }
     let commentData = {
+      id: props.userId,
       username: props.userName,
       comment: comment.current.value
     }
@@ -98,7 +104,7 @@ const Post = (props) => {
       })
   }
 
-  // Get all Comments
+  // Get All Comments
   const getComments = async () => {
     await getCommentsByPostId(post_id)
       .then(res => {
@@ -106,26 +112,73 @@ const Post = (props) => {
       });
   }
 
+  // Get commentIds like by User
+  const getCommentIds = async () => {
+    await getCommentsLikedByUser(props.userId)
+      .then(res => {
+        if(res.data.commentIds.length === 0) return;
+        let tmpCommentIds = [];
+        let tmpLikeIds = [];
+        res.data.commentIds.forEach(commentId => {
+          tmpCommentIds = [...tmpCommentIds, commentId.comment_id]
+          tmpLikeIds = [...tmpLikeIds, commentId.like_id]
+        })
+        setCommentIds(tmpCommentIds)
+        setLikeIds(tmpLikeIds)
+      })
+  }
+
   useEffect(() => {
     getComments();
+    getCommentIds();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if(initialLikeId !== -1) {
+      setLikeId(initialLikeId);
+      setLikeColor("blue");
+    }
+  }, [initialLikeId])
+
+// Function that goes to user profile when their username is clicked
+ function toProfile() {
+  let path = `/profile/${user_id}`; 
+  navigate(path);
+ }
+
+ // Imports profile images
+ function importAll(r) {
+  let images = [];
+  r.keys().forEach((item, index) => { images[item.replace('./', '')] = r(item); });
+  return images;
+}
+  const images = importAll(require.context('../images', false, ));
+
 
   return (
     <div className="post-container">
       <div className="post-header">
-        <h5 className="post-name"> {post_name} </h5>
-        {
-          props.userName === post_name && 
-          <div className="extra">
-            <button className="post-edit-btn" onClick={() => setOpenPostModal(true)}>Edit</button>
-            <button className="post-delete-btn" onClick={(e) => handleDeletePost(e)}>Delete</button>
+          <div className="post-body-1">
+            <img className="post-profile-img" src={images["profile-picture-" + user_id] !== undefined ? images["profile-picture-" + user_id] : images["default-profile-picture.jpg"]} alt="..." />
+            <div>
+              <h5 className="post-name" onClick={toProfile}> {post_name} </h5>
+              <div className="post-time">{moment(created_at).fromNow()}</div>
+            </div>
           </div>
-        }
+          <div className="post-body-2">
+            {
+              props.userName === post_name && 
+              <div className="post-btns">
+                <button className="post-edit-btn" onClick={() => setOpenPostModal(true)}>Edit</button>
+                <button className="post-delete-btn" onClick={(e) => handleDeletePost(e)}>Delete</button>
+              </div>
+            }
+          </div>
       </div>
      
       <div styles={{position: 'relative', zindex: 1}}>
-         {/* EDIT POST MODAL */}
+        {/* EDIT POST MODAL */}
         <Modal open={openPostModal}
           closeModal={() => {
             setEditPostText(description_text)
@@ -152,6 +205,7 @@ const Post = (props) => {
             <div>{description_text}</div>
             <textarea className='edit-post-text' ref={comment} placeholder="Write your comment here."></textarea>
             <div style={{color:'red', margin: '5px 0' }}>{commentError}</div>
+            <button className='edit-post-btn' onClick={(e) => handleCreateComment(e)}>Comment</button>
             {
               postComments.map(comment => {
                 return (
@@ -161,7 +215,6 @@ const Post = (props) => {
                 )
               })
             }
-            <button className='edit-post-btn' onClick={(e) => handleCreateComment(e)}>Comment</button>
           </div>
         </Modal>
       </div>
@@ -177,15 +230,17 @@ const Post = (props) => {
       </div>
       <hr className="lc-btn-sep"/>
       <div className="lc-btn-container">
-        <button className="lc-btn" color={'black'} onClick={(e) => likePost(e)}>Like</button>
+        <button className="lc-btn" style={{color: likeColor}} onClick={(e) => likePost(e)}>Like</button>
         <button className="lc-btn" onClick={() => setOpenCommentModal(true)}>Comment</button>
       </div>
       <button className="vc-btn" onClick={() => toggleCommentVisibility()} hidden={postComments.length === 0 ? true : false}>View comments</button>
       {
         postComments.map(comment => {
+          let like_id;
+          like_id = commentIds.includes(comment.comment_id) ? likeIds[commentIds.indexOf(comment.comment_id)] : -1
           return (
             <div key={comment.comment_id} hidden={!commentVisibility}>
-              <Comment commentData={comment} userName={props.userName} reloadPosts={props.reloadPosts} getComments={getComments} modal={false}/>
+              <Comment commentData={comment} userId={props.userId} userName={props.userName} likeId={like_id} reloadPosts={props.reloadPosts} getComments={getComments} modal={false}/>
             </div>
           )
         })
