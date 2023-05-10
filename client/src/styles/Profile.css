@@ -16,11 +16,13 @@
 .edit {
   width: 450px;
   margin: auto;
-  font-size: 18px;
   text-align: center;
 }
 
 .edit-item {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   margin: 10px 0px;
 }
 
@@ -64,8 +66,10 @@ img {
   align-items: center;
   justify-content: center;
   width: 500px;
+  margin-top: 5px;
 }
 
 .profile-post-header {
   text-align: center;
+  font-weight: bold;
 }

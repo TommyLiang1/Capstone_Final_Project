@@ -1,5 +1,5 @@
 .post-container {
-  width: 500px;
+  width: 700px;
   margin: auto;
   margin-top: 10px;
   padding: 10px;
@@ -46,7 +46,7 @@
 
 /* RELATIVE TIME */
 .post-time {
-  font-size: 11px;
+  font-size: 12px;
   margin-left: 5px;
 }
 
@@ -90,7 +90,7 @@
 
 .vc-btn {
   background-color: white;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .vc-btn:hover {

@@ -47,7 +47,7 @@
 
 /* RELATIVE TIME */
 .comment-time {
-  font-size: 11px;
+  font-size: 12px;
   margin-left: 5px;
 }
 
@@ -66,16 +66,6 @@
 
 .l-btn-sep {
   margin: 0px 10px 10px 10px;
-}
-
-.vc-btn {
-  background-color: white;
-  font-size: 14px;
-}
-
-.vc-btn:hover {
-  background-color: white;
-  text-decoration: underline;
 }
 
 /* Edit and Delete buttons */

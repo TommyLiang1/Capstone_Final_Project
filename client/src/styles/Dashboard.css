@@ -3,7 +3,7 @@ body {
 }
 
 .text-container {
-  width: 500px;
+  width: 700px;
   margin: auto;
   background-color: white;
   border-radius: 5px;
@@ -30,7 +30,7 @@ body {
 }
 
 .banner-desc {
-  width: 1000px;
+  max-width: 1000px;
   font-size: 35px;
   margin: auto
 }
@@ -39,6 +39,7 @@ body {
   text-align: center;
   margin: 10px 0px;
   font-weight: bold;
+  font-size: 24px;
 }
 
 .dash-name {

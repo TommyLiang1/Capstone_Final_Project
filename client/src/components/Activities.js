@@ -8,13 +8,10 @@ const Activities = () => {
     <Layout>  
       <div className="activity-background">
         <h1 className="activity-header">Stress Relief Activities</h1>
-        <br></br>
         <div className="card-grid">
           {
             List.map(activity => {
-              return(
-                <Activity key={activity.id} name={activity.name} detail={activity.detail}/>
-              )
+              return <Activity key={activity.id} name={activity.name} detail={activity.detail}/>
             })
           }
         </div>

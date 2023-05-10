@@ -51,12 +51,12 @@ const Navbar = () => {
             <NavLink className="nav-item" to="/activities">
               <span>Activities</span>
             </NavLink>
-            
+
             <NavLink className="nav-item" to={`/profile/${userId}`}>
               Profile
             </NavLink>
 
-            <Button variant="outline-dark" size="sm" onClick={() => logout()}>Log Out</Button>
+            <Button variant="outline-dark" onClick={() => logout()}>Log Out</Button>
           </div>
         </div>
       )}

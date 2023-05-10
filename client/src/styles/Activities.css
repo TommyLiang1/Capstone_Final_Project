@@ -5,15 +5,15 @@
 .activity-header {
   position: relative;
   text-align: center;
-  margin-top: .5rem;
+  margin-top: 2rem;
 }
 
 .card-grid{
   display: grid;
   align-items: center;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 1rem;
-  margin: 0rem 3rem;
+  margin: 2rem 3rem;
 }
 
 .card {
@@ -25,7 +25,7 @@
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
   background-color: white;
   transform-style: preserve-3d;
-  height: 200px;
+  height: 250px;
   transition: 200ms;
   cursor: pointer;
   transform: perspective(1000px) rotateY(var(--rotate-y, 0))
