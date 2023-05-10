@@ -1,8 +1,13 @@
 # Capstone_Final_Project
+
+## Dependancy Installations
+- following commands needs to be done in each server and client directory once
+- `npm install` for the node package manager
+- `npm install pm2@latest` for the process manager we use
+
 ## To run server:
 - cd into server directory
-- `npm install` to install dependencies (only need to do once)
-- use `npm run dev` to run server (back-end)
+- use `pm2 start server.js` to start the server on pm2
 
 ## To run client:
 - cd into server directory
@@ -40,4 +45,8 @@ More psql commands below
 - Enter new password
 - restart terminal  
 More postgres details below
+
 `https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-postgresql`
+- cd into client directory
+- use `npm build` to build client
+- use `pm2 serve build 8080` in client folder to host built site on port 8080
