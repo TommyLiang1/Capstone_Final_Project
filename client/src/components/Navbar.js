@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchProtectedInfo, onLogout } from "../api/auth";
 import { unauthenticateUser } from "../redux/slices/authSlice";
 import { Button } from 'react-bootstrap';
+import Logo from './images/mendinglogo.png';
 
 import '../styles/Navbar.css';
 
@@ -38,8 +39,8 @@ const Navbar = () => {
       {isAuth && (
         <div className="main-nav"> 
           <div>
-            <NavLink className="nav-item" to='/dashboard'>
-              Mending
+            <NavLink className="nav-logo" to='/dashboard'>
+              <img src={Logo} alt = "" class ="nav-logo"/>
             </NavLink>
           </div>
 

@@ -22,3 +22,9 @@
 .nav-item.active {
   color: rgb(111, 0, 255);
 }
+
+.nav-logo {
+  margin: 0px 5px;
+  clip-path: none;
+  padding-bottom: 0px;
+}

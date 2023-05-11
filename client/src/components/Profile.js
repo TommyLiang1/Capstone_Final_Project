@@ -223,7 +223,7 @@ const Profile = () => {
             <input onChange={imageUpload} type='file'/>
           </div>
           <div className="description" style={{color:'red', margin: '10px 0px' }}>{error}</div>
-          <button type="submit" className="form-btn btn btn-primary" onClick={() => cancelEdit()}> Cancel</button>
+          <button type="submit" className="form-btn btn btn-primary m-2" onClick={() => cancelEdit()}> Cancel</button>
           <br />
           <button type="submit" className="form-btn btn btn-primary" onClick={(e) => onSubmit(e)}> Submit</button>
         </div>
