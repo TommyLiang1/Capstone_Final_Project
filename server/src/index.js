@@ -35,14 +35,14 @@ app.use('/api', likeRoutes);
 const appStart = () => {
   try {
     app.listen(PORT, () =>{
-      console.log(`The app is running at http://localhost:${PORT}`);
+      console.log(`The app is running at http://mendinghealth.space`);
     })
   } catch (err) {
     console.error(`Error: ${err.message}`);
   }
 }
 
-const corsOrigin = 'http://localhost:3000';
+const corsOrigin = 'http://mendinghealth.space';
 app.use(cors({
   origin:[corsOrigin],
   methods:['GET','POST'],

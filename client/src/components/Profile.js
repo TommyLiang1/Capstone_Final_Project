@@ -114,7 +114,7 @@ const Profile = () => {
   }
 
   const handleSubmit = () => {
-    axios.post('http://localhost:4000/image-upload', image)
+    axios.post('http://mendinghealth.space:4000/image-upload', image)
     .then(res => {
       console.log('Axios response: ', res)
     })
