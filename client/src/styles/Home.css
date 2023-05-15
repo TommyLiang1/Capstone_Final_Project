@@ -1,0 +1,13 @@
+.home-page {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  text-align: center;
+}
+
+.app-name {
+  font-size: 35px;
+}

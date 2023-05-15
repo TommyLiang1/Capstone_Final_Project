@@ -1,0 +1,85 @@
+.comment-container {
+  border-radius: 5px;
+  width: 95%;
+  margin: auto;
+  margin-top: 10px;
+  padding: 10px;
+  float: right;
+  background-color: rgb(195, 238, 255);
+}
+
+/* COMMENT HEADER */
+.comment-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.comment-body-1 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.comment-body-2 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.comment-btns {
+  display: flex;
+}
+
+.comment-name {
+  margin-bottom: 1px;
+  margin-left: 5px;
+}
+
+.comment-name:hover {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+/* POST PROFILE IMAGE */
+.comment-profile-img {
+  width: 12%;
+  padding-bottom: 0px;
+}
+
+/* RELATIVE TIME */
+.comment-time {
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+/* LIKE SECTION */
+.l {
+  display: inline-block;
+  width: 95%;
+  margin: 10px 10px 0px 10px;
+}
+
+.l-btn {
+  width: 100%;
+  margin: 0px 2px;
+  border-radius: 5px;
+}
+
+.l-btn-sep {
+  margin: 0px 10px 10px 10px;
+}
+
+/* Edit and Delete buttons */
+.comment-edit-btn, .comment-delete-btn {
+  margin: 0px 5px;
+  border-radius: 5px;
+}
+
+/* Edit Comment Modal */
+.edit-comment-text {
+  width: 100%;
+  padding: 5px;
+}
+
+.edit-comment-btn {
+  width: 100%;
+}

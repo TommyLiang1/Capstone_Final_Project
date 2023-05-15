@@ -1,0 +1,47 @@
+body {
+  background-color: rgb(240, 240, 240);
+}
+
+.text-container {
+  width: 700px;
+  margin: auto;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.text {
+  text-align: left;
+  padding: 5px;
+  width: 99%;
+}
+
+.text-btn {
+  width: 99%;
+  color: black;
+}
+
+.banner-container {
+  background: #fcf1d3;
+  border: 1px solid;
+  padding: 10px;
+  text-align: center;
+  font-style: italic;
+}
+
+.banner-desc {
+  max-width: 1000px;
+  font-size: 35px;
+  margin: auto
+}
+
+.welcome-back {
+  text-align: center;
+  margin: 10px 0px;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.dash-name {
+  font-size: 150%;
+}
